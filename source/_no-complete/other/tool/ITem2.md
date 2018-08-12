@@ -7,6 +7,6 @@
 #alias
 alias meili="cd ~/Desktop/meili"
 alias learn="cd ~/Desktop/learning"
-alias meilijie="cd ~/Desktop/meili/mgj-pay-meilijie"
+alias mlj="cd ~/Desktop/meili/mgj-pay-meilijie"
 ```
 
