@@ -27,6 +27,7 @@ colorPicker：颜色板选择颜色器
 
 markdownEditing: markdown语法高亮
 
+fileIcons、LESS、scheme、afterglow、typescript、vuejs syntax,select theme
 ## windows常用操作命令：
 
 快速回到桌面：win+d
@@ -72,3 +73,4 @@ shift+鼠标右键，下拉。光标会出现在多个对象编辑区，输入�
 原样粘贴：
 
 ctrl+shift+v
+
