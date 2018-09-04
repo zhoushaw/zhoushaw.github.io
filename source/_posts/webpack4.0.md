@@ -498,3 +498,43 @@ module.exports = {
 };
 ```
 
+## 设置别名
+
+> webpack.config.js
+
+
+```
+module.exports = {
+    resolve: {
+             extensions: [‘.js‘, ‘.vue‘],
+             alias: {
+                 ‘@‘: path.resolve(__dirname, ‘src‘),
+                 ‘@scss‘: path.resolve(__dirname, ‘src‘, ‘scss‘),
+             }
+    }
+}
+```
+
+> 配置了resolve.alias 后，在js中我们可以这样用
+
+
+```
+// 原本这样写
+import hongAlert from ‘./../src/scss/icon.scss‘
+
+// 现在可以这样写
+import hongAlert from ‘@scss/icon.scss‘
+```
+
+> 在scss中需要这样写，注意是~@
+
+
+```
+// 原本这样写
+@import ‘./../../../scss/mixin.scss‘;
+
+// 现在可以这样写，注意是~@
+@import ‘~@scss/icon.scss‘;
+```
+
+
