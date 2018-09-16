@@ -29,3 +29,7 @@ module.exports = {
 
 使用npm run analyz
 
+## 检测打包时间
+
+在package.json内加入--profile，它会告诉你编译过程中哪些步骤耗时最长。
+

@@ -61,3 +61,10 @@ categories: other
 
 `npm install eslint babel-eslint --save-dev`
 
+## 自定义代码片段
+
+
+> 起步
+
+`Code=>首选项=>用户代码片段`
+
