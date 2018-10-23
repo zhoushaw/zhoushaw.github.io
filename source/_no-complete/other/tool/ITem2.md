@@ -4,9 +4,10 @@
 2.
 
 ```
-#alias
-alias meili="cd ~/Desktop/meili"
 alias learn="cd ~/Desktop/learning"
 alias mlj="cd ~/Desktop/meili/mgj-pay-meilijie"
+alias ml="cd ~/Desktop/meili"
+alias mljms="cd ~/Desktop/meili/mgj-pay-meilijie-mashang"
+alias mysql='/usr/local/mysql/bin/mysql'
 ```
 

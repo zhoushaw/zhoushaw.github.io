@@ -23,4 +23,18 @@ registry=https://registry.npm.taobao.org
 //registry=https://registry.npmjs.org/
 ```
 
+## 端口占用查询
+
+> 查询端口占用
+
+`lsof -i:3000`
+
+
+> 解除端口占用(PID在查询端口出现)
+
+`sudo kill -9 PID`
+
+
+
+
 
