@@ -1,6 +1,6 @@
 ---
-title: javascript
-date: 2017-07-13 8:07:0
+title: throttle 和 debounce
+date: 2018-10-23 8:07:0
 tags: js
 categories: js
 ---
