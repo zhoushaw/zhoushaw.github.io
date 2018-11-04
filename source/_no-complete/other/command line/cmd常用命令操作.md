@@ -15,7 +15,6 @@ categories: other
 - md <fielname>				:新建文件夹
 - rd /s 	<path>			:删除文件夹以及文件夹下所有的子文件夹
 - del <path>				:删除文件，或者文件夹下面的文件
-- 
 
 ## mac环境变量配置
 
