@@ -366,3 +366,18 @@ rechart为例
 
 组件的 state，就相当于组件的记忆，其存在意义就是被修改，每一次通过 this. setState 函数修改 state 就改变了组件的状态，然后通过渲染过程把这种变化体现出来 。
 
+## setState改变复杂对象赋值
+
+
+```
+let targetTopic = this.state.dynamicList[0].topic
+this.setState(Object.assign(
+  targetTopic,
+  {
+      topicLikeCounts: dotCounts
+  }
+))
+```
+
+
+
