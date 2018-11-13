@@ -79,3 +79,37 @@ config.routerPlus = {
 > 按照egg的本地开发从上到下配置好 [本地开发](https://eggjs.org/zh-cn/core/development.html)
 
 
+## 配置跨域
+
+> plugin配置
+
+
+```
+// plugin.js
+cors: {
+    enable: true,
+    package: "egg-cors"
+}
+```
+
+> 配置跨域
+
+```
+config.security= {
+    csrf: {
+     enable: false,
+     ignoreJSON: true
+    },
+    domainWhiteList: ['http://localhost:7000']
+}
+
+  config.cors = {
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+  };
+```
+
+## 配置cookie属于哪个域
+
+在进行instagram开发时，陷入了误区。主观认为，网站a.com请求b.com时，b.com可以设置cookie到a.com
+
+
