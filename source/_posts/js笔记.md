@@ -57,6 +57,9 @@ str.char At();里面输入下标，找到对象字符串里面对应位置的值
 ### 类型转换
 
 分类：number、boolean、string、objcet（null，[],{}）、undefind、函数
+
+![](https://s10.mogucdn.com/mlcdn/c45406/190129_7k9h71ch5flb581635kihdkgaific_1127x447.jpg)
+
 #### 字符串转数字：
 
 显示类型转换、强制类型转换

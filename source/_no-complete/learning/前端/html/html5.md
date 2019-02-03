@@ -81,7 +81,7 @@ Open 属性默认展开
 
 
 <progress><progress>定义进度条
-<progress max="100" value="76">
+<progress max="100" value="20">
          <span>76</span>%
 </progress>
 
@@ -206,3 +206,4 @@ localStorage是window上的。所以不需要写this.localStorage，你这里的
 方案二、
 存储：localStorage.setItem('data',JSON.stringify(data.body.data));
 获取：JSON.parse(localStorage.getItem('data'));
+

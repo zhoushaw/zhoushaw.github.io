@@ -352,6 +352,7 @@ super:
 
 > 什么是Symbol?
 
+Symbol是es6中引入的类型，它是一切非字符串对象的key的集合
 Symbol,表示独一无二的值，它是JS中第七种数据类型
 
 基本数据类型：null，undefined，string，number，boolean,symbol
