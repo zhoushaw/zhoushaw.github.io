@@ -113,7 +113,9 @@ instanceof运算符用于测试构造函数的prototype属性是否出现在对�
 
 -------
 
+分类：number、boolean、string、objcet（null，[],{}）、undefind、函数
 
+![](https://s10.mogucdn.com/mlcdn/c45406/190129_7k9h71ch5flb581635kihdkgaific_1127x447.jpg)
 
 #### 字符串转数字：
 

@@ -9,6 +9,7 @@ alias mlj="cd ~/Desktop/meili/mgj-pay-meilijie"
 alias ml="cd ~/Desktop/meili"
 alias mljms="cd ~/Desktop/meili/mgj-pay-meilijie-mashang"
 alias mysql='/usr/local/mysql/bin/mysql'
+alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 ```
 
 
