@@ -57,6 +57,7 @@ var vm =new Vue({
 ## Vue模板语法
 
 Vue实例，以下都是通过这个实例实现的：
+
 ```javascript
 var vm = new Vue({
 	el:"#app",
@@ -75,11 +76,13 @@ var vm = new Vue({
 ```
 
 1.v-text:加入指定的内容
+
 ```javascript
 <div id="app">
 	今天的日期是: <span v-text="msg"></span>
 </div>
 ```
+
 2.
 v-if="flag":加一个boolean值，如果为真是显示,并且在文档中
 v-else="flag"的与v-if相反(v-if="!flag")，不在文档中
@@ -94,6 +97,7 @@ b.而v-if指令表示的元素，只有true才会被加载到文档中，不为 
 
 3.template，在实际的dom中不会显示这个，可使用这个批量操作，隐藏等:,并且template只能配合v-if使用，不能配合v-show使用
 实例：
+
 ```javascript
 <ul>
 	<li v-show="flag"></li>
@@ -112,7 +116,9 @@ b.而v-if指令表示的元素，只有true才会被加载到文档中，不为 
 
 4.v-for="n in 10" v-text="n",会创建10个li，内容1-10，n从1开始
 实例：
-```javascript
+
+
+```
 <ul>
 	<li v-for="n in 10" v-text="n"></li>
 </ul>
@@ -126,11 +132,13 @@ b.而v-if指令表示的元素，只有true才会被加载到文档中，不为 
 ```
 
 
+
 5.v-bind:可以绑定自己需要的值，使用vue绑定的数据(简写:':')
 
 v-on:click绑定事件使用methods里面的方法(简写:'@')
 
 实例：
+
 ```javascript
 <table>
 	<tr v-for="item in data">
@@ -142,7 +150,9 @@ v-on:click绑定事件使用methods里面的方法(简写:'@')
 	</tr>
 </table>
 ```	
+
 实例二：
+
 ```javascript
 <table>
 	<tr v-for="item in data">
@@ -218,3 +228,5 @@ mutations、getters
 </div>
 
 ```
+
+

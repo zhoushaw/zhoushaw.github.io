@@ -54,9 +54,67 @@ Math.random();
 
 str.char At();里面输入下标，找到对象字符串里面对应位置的值
 
-### 类型转换
+### javascript数据类型
 
-分类：number、boolean、string、objcet（null，[],{}）、undefind、函数
+在javscript中有七种数据类型：
+
+> 原始类型
+
+string、number、boolean、undefined、null(不属于Object，typeof null ==='object'为javascript历史bug)、symbol
+
+> 复杂类型
+
+object
+
+> 类型判断
+
+```
+Undefined	"undefined"
+Null	"object"（见下文）
+Boolean	"boolean"
+Number	"number"
+String	"string"
+Symbol （ECMAScript 6 新增）	"symbol"
+宿主对象（由JS环境提供）	Implementation-dependent
+函数对象（[[Call]] 在ECMA-262条款中实现了）	"function"
+任何其他对象	"object"
+```
+
+```
+在 JavaScript 最初的实现中，JavaScript 中的值是由一个表示类型的标签和实际数据值表示的。对象的类型标签是 0。由于 null 代表的是空指针（大多数平台下值为 0x00），因此，null的类型标签也成为了 0，typeof null就错误的返回了"object"
+```
+
+> 类型判断
+
+```
+Object.prototype.toString.call(1) // "[object Number]"
+
+Object.prototype.toString.call('hi') // "[object String]"
+
+Object.prototype.toString.call({a:'hi'}) // "[object Object]"
+
+Object.prototype.toString.call([1,'a']) // "[object Array]"
+
+Object.prototype.toString.call(true) // "[object Boolean]"
+
+Object.prototype.toString.call(() => {}) // "[object Function]"
+
+Object.prototype.toString.call(null) // "[object Null]"
+
+Object.prototype.toString.call(undefined) // "[object Undefined]"
+
+Object.prototype.toString.call(Symbol(1)) // "[object Symbol]"
+
+```
+
+#### instanceOf
+
+instanceof运算符用于测试构造函数的prototype属性是否出现在对象的原型链中的任何位置
+
+-------
+
+
+
 #### 字符串转数字：
 
 显示类型转换、强制类型转换
