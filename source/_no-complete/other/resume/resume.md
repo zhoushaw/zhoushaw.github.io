@@ -1,7 +1,3 @@
-title: resume
-date: 2019-1-19 16:49:02
-tags:
----
 
 ## 联系方式
 
@@ -15,7 +11,9 @@ tags:
 
 * 周晓 / 男 / 1995
 
-* 本科 / 江西农业大学 / 18届
+* 本科 / 江西农业大学 / 18届 
+
+* 专业：计算机科学与技术专业
 
 * 工作经验：2017.09 - &
 
@@ -23,22 +21,9 @@ tags:
 
 * 期望 Base：杭州
 
-* 博客：https://zhoushaw.github.io/
+* 博客：https://zhoushaw.github.io
 
 * Github：https://github.com/zhoushaw
-
-## 开源项目
-
-#### [Instagram](https://github.com/zhoushaw/Instagram)
-
-Instagram前后端分离的论坛类全栈项目
-
-* <p><iframe src="https://ghbtns.com/github-btn.html?user=zhoushaw&repo=Instagram&type=star&count=true" frameborder="0" style="height: 24px;display: inline-block;vertical-align: middle;max-width: auto;margin: 0;"></iframe></p> 
-
-* <p><iframe src="https://ghbtns.com/github-btn.html?user=zhoushaw&repo=Instagram&type=fork&count=true" frameborder="0" style="height: 24px;display: inline-block;vertical-align: middle;max-width: auto;margin: 0;"></iframe></p>
-
-* 地址: https://github.com/zhoushaw/Instagram
-
 
 ## 写在前面
 
@@ -46,7 +31,7 @@ Instagram前后端分离的论坛类全栈项目
 
 近阶段的感悟是，除了掌握前端领域的语言、框架知识外，更重要的是**对整个应用生命周期的控制**。
 
-总是有不合理的请求产生？积极参与业务讨论，明确业务方向，向产品、运营输送基本技术知识。
+总是有不合理的需求产生？积极参与业务讨论，明确业务方向，向产品、运营输送基本技术知识。
 
 开发时一个动作每天要进行好多次？开发更高效的开发工具。
 
@@ -64,28 +49,33 @@ Instagram前后端分离的论坛类全栈项目
 
 ## 蘑菇街（2018.05 - 至今）
 
-17年选择从北京来到杭州发展，并在杭州定居。4月入职蘑菇街支付金融前端部门，负责个人金融、风控以及参与前端架构工作。
+18年5月入职蘑菇街支付金融前端部门，负责个人金融、以及参与前端架构工作。后转至内容技术部，负责蘑菇街主站
 
 #### 业务线
 
-* **蘑菇街内容主页**
+* **蘑菇街主站** 
     **关键字：性能、可维护性、SEO、兼容**
+    
+    * 第一次接手大用户量的应用，主要负责PC端的开发
 
-    * 基于vue，多页应用。采用向下兼容的方式兼容至ie9 
-    * 瀑布流。适配多屏幕尺寸，通过计算屏幕宽度，设置body类名，设置不同的瀑布流行数
-    * SEO搜索优化，提升搜索排名
+    * 基于vue，多页应用。采用向下兼容，兼容至ie9 
+    
+    * 适配多屏幕尺寸
+    
     
 * **美丽借**（业务属性与【阿里借呗】一致）
 
     **关键字：性能、可维护性**
 
-    * 基于 `vue`，以单页方式组织项目，根据页面访问量排名，产出一主三子四个静态资源包，按需加载，提升访问性能
-
+    * 基于 `vue`，以单页方式组织项目
+    
     * 利用集团 APP 的 hybrid 插件，以及 微信SDK 等，在不同 app 中提供贴近原生的体验，如支付、还款、头部自定义等
 
     * 账单页等公共页面产出独立 `vue` 组件，供其他业务线调用，保证视觉一致，功能一致
 
     * 公共行为（开通、冻结、调额等）产出独立 js sdk，方便各活动页、其他产品线调用
+    * 与后端同学一起参与业务的讨论，并在系统中提前加入各种营销特性，推动业务发展
+
 
 #### 技术线
 
@@ -111,33 +101,37 @@ Instagram前后端分离的论坛类全栈项目
 
 * 同时，积极组织团队内技术分享、团建等，提升团队氛围方面做了很多努力，保证组内在协调工作时及时顺畅。
 
-#### 后台类
+## 蛋壳创意科技（2017.09 - 2018.04）
 
-在国美参与了大量的内部中后台项目的开发，详细情况如下：
+第一份前端实习工作
 
-* **打点平台**
+#### 业务线
 
-    **关键字：打点、无痕埋点、大规模日志、Kafka、Elasticsearch**
-
-    * 与产品团队、运营团队、数据团队梳理当前数据打点的痛点与需求，正式立项开发打点平台，结束数据打点混乱的现象
-
-    * 整理前端团队手动打点的规范，提供打点 SDK，统一打点需求的开发流程
-
-    * 提供无痕埋点方案，运营人员通过配置页面元素事件触发打点事件，简单打点需求无需开发人员介入
-
-    * 借助数据平台，产出不同维度的报表，助力业务发展，数据平台详情见下
-
-    * 配合 Java 、PE 部署 Kafka/Elasticsearch 系统及相应管理后台，服务打点平台的同时，为公司其他有对应需求的团队提供服务
-
-* **数据平台**
-
-    **关键字：数据可视化、模块化、面向配置编程、报表、可视化 SQL**
-
-    * 在原有的 express + ejs 架构的基础上，将 view 层抽离，做前后端分离，提升开发效率
-
-    * 提出配置化 + 模块化方案，前端提供业务组件，暴露相关参数（筛选、图、表等），新建数据报表仅需为前端提供相应配置即可
-
-    * 开发可视化SQL系统，运营人员可以自由定制报表的数据来源，配合上一条模块化的解决方案，简单报表可直接产出，无需开发人员介入
+* **顺丰专送** 
+    **关键字：小程序、可维护性**
     
-    * 以 RPC 远程调用的方式将数据计算类任务交给 java 服务，解放 NodeJS 服务端性能，也不用推到整个已有架构
+    * 顺丰旗下一款小程序应用，负责该项目的前端部分第一期代码重构 和第二期项目的开发
+    * 对原有项目进行了网络层的重构
+    * 在已存在产品的基础上做了很多优化工作，包括重写老的组件
+    * 简化代码，提高代码可读性
+    
+* **保速达后台管理系统** 
+    **关键字：可视化、可维护性**
+    
+    * 使用 vue.js、axios、element、echart 搭建的数据可视化的后台管理系统
+    * 后台管理 app 端数据，审核 app 端注册申请
+    * 对 app 端 订单进行管理操作
+    
+
+## 开源项目
+
+#### [Instagram](https://github.com/zhoushaw/Instagram)
+
+Instagram是react+egg.js+mysql前后端分离的社区类全栈项目。有登录、注册、修改个人信息、发帖、搜索、关注、评论、点赞等功能
+
+* <p><iframe src="https://ghbtns.com/github-btn.html?user=zhoushaw&repo=Instagram&type=star&count=true" frameborder="0" style="height: 24px;display: inline-block;vertical-align: middle;max-width: auto;margin: 0;"></iframe></p> 
+
+* <p><iframe src="https://ghbtns.com/github-btn.html?user=zhoushaw&repo=Instagram&type=fork&count=true" frameborder="0" style="height: 24px;display: inline-block;vertical-align: middle;max-width: auto;margin: 0;"></iframe></p>
+
+* 地址: https://github.com/zhoushaw/Instagram
 
