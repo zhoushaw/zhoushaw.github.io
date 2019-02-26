@@ -1,18 +1,19 @@
 ---
-title: 译文：you don't know js 至 Into YDKJS
+title: 译文：you don't know js 之 Into YDKJS
 date: 2019-02-26 10:42:35
 tags: book
 categories: js
 ---
 
 
-<div><!-- more--></div>
 
 # Chapter 3: Into YDKJS
 
 What is this series all about? Put simply, it's about taking seriously the task of learning all parts of JavaScript, not just some subset of the language that someone called "the good parts," and not just whatever minimal amount you need to get your job done at work.
 
 这一系列书主要用于谈论什么呢？简单来说，这一系列书主要用户讲述如何学好javascript，而不是学习一些人称之为javascript中好的部分，也不仅仅能让你搞定工作的那一小部分内容。
+
+<div><!-- more--></div>
 
 Serious developers in other languages expect to put in the effort to learn most or all of the language(s) they primarily write in, but JS developers seem to stand out from the crowd in the sense of typically not learning very much of the language. This is not a good thing, and it's not something we should continue to allow to be the norm.
 
