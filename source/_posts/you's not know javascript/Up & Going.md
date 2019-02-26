@@ -1,3 +1,13 @@
+---
+title: 译文：you don't know js 至 Into YDKJS
+date: 2019-02-26 10:42:35
+tags: book
+categories: js
+---
+
+
+<div><!-- more--></div>
+
 # Chapter 3: Into YDKJS
 
 What is this series all about? Put simply, it's about taking seriously the task of learning all parts of JavaScript, not just some subset of the language that someone called "the good parts," and not just whatever minimal amount you need to get your job done at work.
@@ -131,11 +141,71 @@ Generators介绍了一个行的JS函数执行模式，凭借generator能通过yi
 
 But it's the combination of promises and generators that "yields" our most effective asynchronous coding pattern to date in JavaScript. In fact, much of the future sophistication of asynchrony coming in ES7 and later will certainly be built on this foundation. To be serious about programming effectively in an async world, you're going to need to get really comfortable with combining promises and generators.
 
+但是yields结合了promise和generators是我们至今为止在JS中最有效的异步代码风格。事实上，不远将来，在es7或者后面版本中将会迎来更复杂的异步的，可以确定的是都将建立在这个基础之上。认真对待异步世界中的有效编程,你需要去适应promise和generator的混合。
+
 If promises and generators are about expressing patterns that let our programs run more concurrently and thus get more processing accomplished in a shorter period, JS has many other facets of performance optimization worth exploring.
 
+如果promise和generator是关于表达模式，使我们的程序能够更并发地运行，从而在更短的时间内完成更多的处理，JS有很多其他性能优化的内容值得探索。
+
+
 Chapter 5 delves into topics like program parallelism with Web Workers and data parallelism with SIMD, as well as low-level optimization techniques like ASM.js. Chapter 6 takes a look at performance optimization from the perspective of proper benchmarking techniques, including what kinds of performance to worry about and what to ignore.
+第五章将进入并行主题的web工作和并行数据的SIMD，与低级别的压缩技术想ASM.js。第六章从基准技术来看一看性能优化，包括哪些性能是需要担忧的哪些是可以忽略的。
+
 
 Writing JavaScript effectively means writing code that can break the constraint barriers of being run dynamically in a wide range of browsers and other environments. It requires a lot of intricate and detailed planning and effort on our parts to take a program from "it works" to "it works well."
 
+编写有效的javascript意味着编写能够打破能动态运行在大多数浏览器和其他环境的障碍。它能工作到它能工作的很好，需要很多复杂详细的计划和努力。
+
 The Async & Performance title is designed to give you all the tools and skills you need to write reasonable and performant JavaScript code.
+
+这异步和性能标题是为了给你需要编写合理和高性能的js代码所需要的工具和技能。
+
+ES6 & Beyond
+No matter how much you feel you've mastered JavaScript to this point, the truth is that JavaScript is never going to stop evolving, and moreover, the rate of evolution is increasing rapidly. This fact is almost a metaphor for the spirit of this series, to embrace that we'll never fully know every part of JS, because as soon as you master it all, there's going to be new stuff coming down the line that you'll need to learn.
+
+无论你感觉你多精通javascript，真理是javascript绝不停止更新，而且，更新的速度变得越来越快。事实从这一系列去拥抱我们踊跃都不可能知道Js的所有部分，因为你不可能精通它所有的部分，很快就可能有新的功能你需要去学习的。
+
+
+This title is dedicated to both the short- and mid-term visions of where the language is headed, not just the known stuff like ES6 but the likely stuff beyond.
+
+这个标题是专注于这门语言短期和中期房展方向的，不仅仅知道es6这样的东西还有其他可能得东西
+
+While all the titles of this series embrace the state of JavaScript at the time of this writing, which is mid-way through ES6 adoption, the primary focus in the series has been more on ES5. Now, we want to turn our attention to ES6, ES7, and ...
+
+而本系列的所有标题包含了这一时期协作的javascript状态，哪些中等方法通过了es6的采用，着一些列主要关注更多的在于es5，现在我们将要转变我们的注意到es6、es7更多
+
+Since ES6 is nearly complete at the time of this writing, ES6 & Beyond starts by dividing up the concrete stuff from the ES6 landscape into several key categories, including new syntax, new data structures (collections), and new processing capabilities and APIs. We cover each of these new ES6 features, in varying levels of detail, including reviewing details that are touched on in other books of this series.
+
+因为在写作之时es6已经接近完成，es6和beyond开始分割es6功能为几个关键分类，包括新的预发，新的数据结果和新的处理能力和api。我们覆盖了所有新的es6功能，在不变的详细等级，包括在这一系列的其他书上触摸到的细节。
+
+Some exciting ES6 things to look forward to reading about: destructuring, default parameter values, symbols, concise methods, computed properties, arrow functions, block scoping, promises, generators, iterators, modules, proxies, weakmaps, and much, much more! Phew, ES6 packs quite a punch!
+
+一些令人兴奋盼望去阅读的es6事物：解构、参数默认值、符号、简单方法、计算属性、箭头函数、块作用域、承诺、生成器、遍历、模块化、代理。es6很有冲击力
+
+
+The first part of the book is a roadmap for all the stuff you need to learn to get ready for the new and improved JavaScript you'll be writing and exploring over the next couple of years.
+
+本书的第一部分是一张路线图，列出了你所有需要学习的内容。为了在未来几年编写和研究新的javascript内容和改进javascript做好准备。
+
+The latter part of the book turns attention to briefly glance at things that we can likely expect to see in the near future of JavaScript. The most important realization here is that post-ES6, JS is likely going to evolve feature by feature rather than version by version, which means we can expect to see these near-future things coming much sooner than you might imagine.
+
+本书的最后一部分转变注意力到，简单浏览一下在不远将来我们能在javascript中看到的内容。es6的发布是最重要的关系，JS看起来就像进入了一个功能接一个功能一个版本接一个版本。这意味着我们能探索的不远将来的事情很快就会到来，比你想象的还要快。
+
+The future for JavaScript is bright. Isn't it time we start learning it!?
+
+Javascript的未来是明亮的。现在不是我们开始学习的时候了吗？
+
+Review
+The YDKJS series is dedicated to the proposition that all JS developers can and should learn all of the parts of this great language. No person's opinion, no framework's assumptions, and no project's deadline should be the excuse for why you never learn and deeply understand JavaScript.
+
+你不懂js系列是专注于所有JS开发者能并且应该学习这一伟大语言的所有部分的这一命题。没有个人之见，没有框架假设，没有项目期限能成为你为什么学习并且深入理解javascript的原因。
+
+We take each important area of focus in the language and dedicate a short but very dense book to fully explore all the parts of it that you perhaps thought you knew but probably didn't fully.
+
+我们谈论这门语言应该关注的重点地方并且致力于简短，但是非常浓密的书去充分探索有可能认为你知道倒是可能不全面的所有部分。
+
+"You Don't Know JS" isn't a criticism or an insult. It's a realization that all of us, myself included, must come to terms with. Learning JavaScript isn't an end goal but a process. We don't know JavaScript, yet. But we will!
+
+你不懂JS不是批评和侮辱。这是我们所有人人认知的，我自己也不例外。学习javascript不是一个最终目标但是是一个过程。我们不懂javascript，但是我们将会懂得。
+
 
