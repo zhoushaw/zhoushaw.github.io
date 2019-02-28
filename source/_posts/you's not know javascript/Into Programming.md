@@ -7,7 +7,7 @@ categories: js
 
 
 
-# Chapter 1: Into Programming
+## Chapter 1: Into Programming
 
 Welcome to the You Don't Know JS (YDKJS) series.
 
