@@ -47,39 +47,67 @@ A program, often referred to as source code or just code, is a set of special in
 
 The rules for valid format and combinations of instructions is called a computer language, sometimes referred to as its syntax, much the same as English tells you how to spell words and how to create valid sentences using words and punctuation.
 
-Statements
+有效的格式和混合的指令被称之为计算机语言，有时被作为它的预发，更像是英语告诉你如何使用单词和标点拼写单词并且如何创造有效的句子。
+
+##Statements
+
 In a computer language, a group of words, numbers, and operators that performs a specific task is a statement. In JavaScript, a statement might look as follows:
 
+在计算机中，一组单词、数字和运算符执行一个特殊的任务是一个句子。在javascript中一个句子可能看来像下面这样：
 
 ```
 a = b * 2;
 ```
 
+
 The characters a and b are called variables (see "Variables"), which are like simple boxes you can store any of your stuff in. In programs, variables hold values (like the number 42) to be used by the program. Think of them as symbolic placeholders for the values themselves.
+
+字符a和b被称之为变量，就像是一个你能存储任何东西在里面的盒子。在程序中，变量存放值(像数字42)来给程序用。将他们看做值本身的符号占位符。
 
 By contrast, the 2 is just a value itself, called a literal value, because it stands alone without being stored in a variable.
 
+相比之下，2就是这个值的本身，称之为字面量。因为它独立存在没有存在任何变量中。
+
 The = and * characters are operators (see "Operators") -- they perform actions with the values and variables such as assignment and mathematic multiplication.
+
+=和*字符是操作符 -- 他们使用值和变量执行运算相比如赋值和乘法运算。
 
 Most statements in JavaScript conclude with a semicolon (;) at the end.
 
+大多javascript声明的结尾带有;号。
+
 The statement a = b * 2; tells the computer, roughly, to get the current value stored in the variable b, multiply that value by 2, then store the result back into another variable we call a.
+a = b *2声明告诉计算机，概略的是，获取当前值存储在变量b中，乘2，然后存储到我们称之为a的变量中。
+
 
 Programs are just collections of many such statements, which together describe all the steps that it takes to perform your program's purpose.
 
-Expressions
+程序就是有相当多的声明，这些声明一同描述了它执行你程序目的的所有步骤。
+
+
+## Expressions
+
 Statements are made up of one or more expressions. An expression is any reference to a variable or value, or a set of variable(s) and value(s) combined with operators.
 
-For example:
+声明是由一个或多个表达式构成的。
 
+For example:
 
 ```
 a = b * 2;
 ```
 This statement has four expressions in it:
 
+这个声明有四个表达式：
+
 2 is a literal value expression
+
+2是一个字面量表达式
+
 b is a variable expression, which means to retrieve its current value
+
+
+
 b * 2 is an arithmetic expression, which means to do the multiplication
 a = b * 2 is an assignment expression, which means to assign the result of the b * 2 expression to the variable a (more on assignments later)
 A general expression that stands alone is also called an expression statement, such as the following:
