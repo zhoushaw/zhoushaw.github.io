@@ -1,4 +1,13 @@
 
+---
+title: resume
+date: 2020-06-02 11:24:35
+tags: life
+categories: life
+---
+
+<div><!-- more--></div>
+
 ## 联系方式
 
 * 手机号：17679122584
@@ -125,7 +134,7 @@
 
 ## 开源项目
 
-#### [Instagram](https://github.com/zhoushaw/Instagram)
+### [Instagram](https://github.com/zhoushaw/Instagram)
 
 Instagram是react+egg.js+mysql前后端分离的社区类全栈项目。有登录、注册、修改个人信息、发帖、搜索、关注、评论、点赞等功能
 
