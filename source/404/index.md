@@ -54,16 +54,10 @@ fancybox: false
 ***
 
 <div class="pic">
-<img src="/img/Mihawk-Wind.gif" title="Mihawk-Wind">
+<img src="https://s10.mogucdn.com/mlcdn/c45406/190317_329857b9fc0h265age1bkk542jlij_400x204.gif" title="Mihawk-Wind">
 </div>
 
 <p class="center">很抱歉，您所访问的地址并不存在: </p>
 
 <p class="center"><a href="/">回主页</a> · <a href="/archives">所有文章</a> · <a href="/about">留言板</a></p>
 
-
-
-<div style="text-align: center">
-以下是博主喜欢的一些歌曲，可以听听，稍作休息~
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=330 src="http://music.163.com/outchain/player?type=0&id=112513213&auto=0&height=430"></iframe>
-</div>
