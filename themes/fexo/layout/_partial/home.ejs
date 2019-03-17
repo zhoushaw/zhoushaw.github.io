@@ -1,0 +1,38 @@
+<div class="content-home text-center">
+  <a class="avatar" href="/">
+    <img src="<%= theme.avatar %>" alt="" />
+  </a>
+  <h1 class="name" style="font-family: <%= theme.blog_name_font_familiy || 'calligraffittiregular' %>">
+    <%= theme.blog_name %>
+  </h1>
+  <div class="slogan">
+    <%= theme.slogan %>
+  </div>
+
+  <hr>
+
+  <ul class="text-center nav">
+    <% theme.home_nav.forEach(function(item, i){ %>
+      <li class="item">
+        <% if(item.target_blank === true) { %>
+          <a href="<%= item.url %>" rel="noopener noreferrer" target="_blank"><%= item.name %></a>
+        <% } else { %>
+          <a href="<%= item.url %>"><%= item.name %></a>
+        <% } %>
+        <span>|</span>
+      </li>
+    <% }) %>
+  </ul>
+</div>
+
+<canvas id="canvas" class="canvas" style="position: fixed;top: 0;height: 100%;width: 100%;z-index; 0;" ></canvas>
+<script src="https://cdn.jsdelivr.net/npm/trianglify@2.0.0/dist/trianglify.min.js"></script>
+<script>
+var isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);
+Trianglify({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    cell_size: isMobile ? 32 : 75
+}).canvas(document.getElementById('canvas'));
+</script>
+<script type="text/javascript" src="public/analyze.js?t=2017-03-07"></script>  

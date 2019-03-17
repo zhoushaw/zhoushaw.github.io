@@ -1,0 +1,8 @@
+<% if(theme.post.showToc && toc(page.content).length !== 0) { %>
+  <div id="toc" class="toc-article">
+    <strong class="toc-title"><%= __('posts_list') %><i class="iconfont toc-title" style="display:inline-block;color:#87998d;width:20px;height:20px;">&#xf004b;</i></strong>
+    <%- toc(page.content, {list_number: false}) %>
+  </div>
+  
+<% } %>
+
