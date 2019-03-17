@@ -56,10 +56,10 @@ page_nav_style: CIRCLE  # CIRCLE|ROUND_RECT
 breadcrumb:
   isShow: true # true|fase
 
-# 盒子
+# 导航
 toolbox:
   isShow: true # true|fase
-  text: 盒子
+  text: 导航
 
 search_slogan:
   isShow: true # true|fase
