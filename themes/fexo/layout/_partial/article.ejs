@@ -32,6 +32,17 @@
         </span>
       <% } %>
       
+       <% if (theme.post_wordcount.enable){ %>
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 <%= wordcount(post.content) %>字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 <%= min2read(post.content) %>分</span>
+          </span>
+      <% } %>
     </div>
   </header>
 

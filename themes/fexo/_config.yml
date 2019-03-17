@@ -300,3 +300,16 @@ project:
 # Online contact 
 daovoice: true
 daovoice_app_id: b89c9b48  #这里输入获取的app_id
+
+
+
+# 字数统计、阅读时长
+# Post wordcount display settings
+# Dependencies: https://github.com/willin/hexo-wordcount
+post_wordcount:
+  enable: true
+  item_text: true
+  wordcount: true         # 单篇 字数统计
+  min2read: true          # 单篇 阅读时长
+  totalcount: false       # 网站 字数统计
+  separated_meta: true
