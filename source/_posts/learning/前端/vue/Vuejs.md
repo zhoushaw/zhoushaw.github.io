@@ -15,7 +15,7 @@ vue是一个mvvm框架,
 使用vue都要有一个Vue的根实例(有且只有一个)
 Vue的实例对象，通过new Vue()都是Vue的实例对象(本身是其data属性值的代理)
 挂载mount
-vue框架核心：从复杂枯燥的dom操作中解放出来，我们只需挂心我要现实哪些数据，这些数据由谁来怎么显示!!!我们如果想操作dom我们只需操控数据
+vue框架核心:从复杂枯燥的dom操作中解放出来，我们只需挂心我要现实哪些数据，这些数据由谁来怎么显示!!!我们如果想操作dom我们只需操控数据
 
 
 ## Vue实例创建
@@ -56,7 +56,7 @@ var vm =new Vue({
 
 ## Vue模板语法
 
-Vue实例，以下都是通过这个实例实现的：
+Vue实例，以下都是通过这个实例实现的:
 
 ```javascript
 var vm = new Vue({
@@ -87,16 +87,16 @@ var vm = new Vue({
 v-if="flag":加一个boolean值，如果为真是显示,并且在文档中
 v-else="flag"的与v-if相反(v-if="!flag")，不在文档中
 v-show="flag":显示，
-v-show="!flag"不显示，dipslay：none
+v-show="!flag"不显示，dipslay:none
 
-v-show与v-if：
+v-show与v-if:
 a.v-show指令表示的元素，无论true或false都要加载到页面中，只是显示不显示的区别，这样初始加载成本就高，但是来回频繁切换就节约了成本，所以适合在频繁切换的标签上使用v-show，
 b.而v-if指令表示的元素，只有true才会被加载到文档中，不为  true则vue实例不做任何处理，这样就节约了初始加载成本，但若以后要切换则要重新编译回载，切换成本高
 
 
 
 3.template，在实际的dom中不会显示这个，可使用这个批量操作，隐藏等:,并且template只能配合v-if使用，不能配合v-show使用
-实例：
+实例:
 
 ```javascript
 <ul>
@@ -115,7 +115,7 @@ b.而v-if指令表示的元素，只有true才会被加载到文档中，不为 
 
 
 4.v-for="n in 10" v-text="n",会创建10个li，内容1-10，n从1开始
-实例：
+实例:
 
 
 ```
@@ -137,7 +137,7 @@ b.而v-if指令表示的元素，只有true才会被加载到文档中，不为 
 
 v-on:click绑定事件使用methods里面的方法(简写:'@')
 
-实例：
+实例:
 
 ```javascript
 <table>
@@ -151,7 +151,7 @@ v-on:click绑定事件使用methods里面的方法(简写:'@')
 </table>
 ```	
 
-实例二：
+实例二:
 
 ```javascript
 <table>
@@ -212,7 +212,7 @@ Vue可以用来控制class等visible，isShow=true,
 
 ## 计算属性
 
-!!询问老师，计算属性：methods和computed和watched之间的区别及定义，用法
+!!询问老师，计算属性:methods和computed和watched之间的区别及定义，用法
 mutations、getters
 
 
@@ -222,7 +222,7 @@ mutations、getters
 //如果isActive为真则div的class为active
 <div v-bind:class="{ active: isActive }"></div>
 
-//批量处理class：isActive为真添加active，hasEroor为真添加text-danger
+//批量处理class:isActive为真添加active，hasEroor为真添加text-danger
 <div class="static"
      v-bind:class="{ active: isActive, 'text-danger': hasError }">
 </div>

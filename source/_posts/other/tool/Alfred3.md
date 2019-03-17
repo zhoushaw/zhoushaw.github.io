@@ -21,11 +21,11 @@ categories: tool
 
 
 ```
-百度：https://www.baidu.com/s?ie=utf-8&f=8&wd={query}
-stackoverflow：http://www.stackoverflow.com/search?q={query}
-githubUser：https://github.com/{query}
-githubSearch：https://github.com/search?utf8=%E2%9C%93&q={query}
-MDN：https://developer.mozilla.org/zh-CN/search?q={query}
+百度:https://www.baidu.com/s?ie=utf-8&f=8&wd={query}
+stackoverflow:http://www.stackoverflow.com/search?q={query}
+githubUser:https://github.com/{query}
+githubSearch:https://github.com/search?utf8=%E2%9C%93&q={query}
+MDN:https://developer.mozilla.org/zh-CN/search?q={query}
 juejin: https://juejin.im/search?query={query}
 ```
 

@@ -8,32 +8,32 @@ categories: js
 
 <div><!-- more--></div>
 ## javascript认识
-注释：
-js：1.单行注释//
+注释:
+js:1.单行注释//
 	2.多行注释/**/
 
 	css 注释 /**/
 	html 注释 <!-- -->
 
 3.javascript:运行在浏览器上的一门语言
-4.javscript组成：
+4.javscript组成:
 ECMA Script5:
 BOM:浏览器对象模型
 DOM:文档对象模型
 javascript中大小写非常敏感
 
-Uncaught TypeError：不可捕获的类型错误；ReferenceError:引用错误
+Uncaught TypeError:不可捕获的类型错误；ReferenceError:引用错误
 
 ## javascript的运行机制
 
 0.javascript声明提前机制；
- alert(u);var u=100;alert(u);弹出结果：undefined、100；
- 浏览器解析为：var u;alert(u);u=100;alert(u);
+ alert(u);var u=100;alert(u);弹出结果:undefined、100；
+ 浏览器解析为:var u;alert(u);u=100;alert(u);
 1.使用var声明所有类型的变量
-2.javascript中有哪些数据类型：
-a.简单类型与对象类型：
-b.简单类型五种：数值类型、字符串类型、Booleans类型、Undefined类型/Null类型
-c.重要：哪些类型可以转换booleans类型？所有类型都可以转换成booleans类型,有哪些类型转化成bool类型为假,哪些为真;
+2.javascript中有哪些数据类型:
+a.简单类型与对象类型:
+b.简单类型五种:数值类型、字符串类型、Booleans类型、Undefined类型/Null类型
+c.重要:哪些类型可以转换booleans类型？所有类型都可以转换成booleans类型,有哪些类型转化成bool类型为假,哪些为真;
 
 ## 常用api
 
@@ -46,9 +46,9 @@ Math.random();
 ## 字符类型
 
 ①.var num=0; !!num变成bool类型 
-等于0或NaN：not a number;（NaN是number类型）是false;NaN不和任何类型数值相等，包括它自己。
+等于0或NaN:not a number;（NaN是number类型）是false;NaN不和任何类型数值相等，包括它自己。
 
-②.var u;类型：undefined；对应布尔值false;Undefined类型中只有一个值就是undefined;
+②.var u;类型:undefined；对应布尔值false;Undefined类型中只有一个值就是undefined;
 
 ### 字符串查找
 
@@ -56,7 +56,7 @@ str.char At();里面输入下标，找到对象字符串里面对应位置的值
 
 ### javascript数据类型
 
-在javscript中有七种数据类型：
+在javscript中有七种数据类型:
 
 > 原始类型
 
@@ -113,11 +113,11 @@ instanceof运算符用于测试构造函数的prototype属性是否出现在对�
 
 -------
 
-分类：number、boolean、string、objcet（null，[],{}）、undefind、函数
+分类:number、boolean、string、objcet（null，[],{}）、undefind、函数
 
 ![](https://s10.mogucdn.com/mlcdn/c45406/190129_7k9h71ch5flb581635kihdkgaific_1127x447.jpg)
 
-#### 字符串转数字：
+#### 字符串转数字:
 
 显示类型转换、强制类型转换
 Number();
@@ -132,7 +132,7 @@ Number是一个整体判断，如果字符串里面，有部分非数字，就�
 parseInt（）；
 1.从头开始解析，一个一个的解析，如果前面是数字，保留，遇到非数字结束
 2.提取前面是数字的部分
-3.可以解析：+、-、空格、0。不会一开始结束
+3.可以解析:+、-、空格、0。不会一开始结束
 4.会转换成整数
 
 parsefloat()
@@ -140,12 +140,12 @@ parsefloat()
 2.还可以在后面再加一个转换的进制
 
 #### 稀奇古怪的隐式类型转换
-隐式类型转换：
-1.+：
+隐式类型转换:
+1.+:
 '200'-3;减、乘、除、取余可以把字符串转换成数字类型
-注意：数字+字符串变成字符串；其他操作，数字跟字符串做运算，变成数字
+注意:数字+字符串变成字符串；其他操作，数字跟字符串做运算，变成数字
 
-2.-*、%：
+2.-*、%:
 200+'3';转换成字符串
 
 
@@ -156,7 +156,7 @@ a='10'; a++、++;变成数字了
 '10'>9:比较大小
 '10'>'9'字符串比较看第一位，1<9，比较的是一位一位的字符
 
-5.！：取法，
+5.！:取法，
 可以转换成布尔值
 
 6.'2'==2:表示他们最后最后进行了类型的转换,表示判断他们的值
@@ -165,10 +165,10 @@ a='10'; a++、++;变成数字了
 7.只要没有转换成功，就会返回NaN 
 
 #### NaN
-NaN：not a number
+NaN:not a number
 
-特性：
-1.NaN转换成boolean：false
+特性:
+1.NaN转换成boolean:false
 2.NaN！=NaN
 3.NaN是数字类型，不是数字
 4.isNaN:判断是不是数字，
@@ -193,18 +193,18 @@ d.数组中没有显示数值的元素，默认值为undefined
 e.访问一个对象不存在的属性，出现undefined
 
 ### 什么是undefind
-undefined是关键字吗？答：我们可以给undefind给它赋与新的涵义。就算被赋了新的值，但是内容还是没有改变成赋给它的值，在一些比较低版本浏览器会将undefind值改变了。
+undefined是关键字吗？答:我们可以给undefind给它赋与新的涵义。就算被赋了新的值，但是内容还是没有改变成赋给它的值，在一些比较低版本浏览器会将undefind值改变了。
 我们怎样得到最原始的undefined，而无论有没有对undefind赋与新得涵义？？
 
 
-③.var o=null;空类型，对应布尔值false;Null类型中只有一个值null；往往用于初始化对象类型。null和undefined：null表示已经被初始化了，而且一般用于初始化对象，undefined表示变量没有被初始化
+③.var o=null;空类型，对应布尔值false;Null类型中只有一个值null；往往用于初始化对象类型。null和undefined:null表示已经被初始化了，而且一般用于初始化对象，undefined表示变量没有被初始化
 ④.var str='';空的字符串是false，不是空的字符串是true
-d.||工作原理： var str=str10||'liwenqi'; 如果str10转换成bool是true，返回str10的值。否则返回后面的值
+d.||工作原理: var str=str10||'liwenqi'; 如果str10转换成bool是true，返回str10的值。否则返回后面的值
 
 ## 字符操作api
-3.typeof运算符：可以返回变量的类型
-typeof运算符返回结果是一个全部为小写字母的字符串：number、string、boolean、undefined、object、function
-特别注意：typeof null返回的是object
+3.typeof运算符:可以返回变量的类型
+typeof运算符返回结果是一个全部为小写字母的字符串:number、string、boolean、undefined、object、function
+特别注意:typeof null返回的是object
 typeof常用语判断一个的类型是否是函数
 
 var num=10; alert(typeof(num))==alert(tyepof num);
@@ -223,10 +223,10 @@ function fun(){ alert(123); }
 alert(typeof fun);
 fun=100;
 alert(typeof fun);
-弹出：function，number
+弹出:function，number
 ```
 2.函数
-①.标准声明：（不能加分号；）
+①.标准声明:（不能加分号；）
 funcion fun(){}
 ②.表达式方式声明（匿名函数，加分号）
 var fun = function(){};
@@ -234,7 +234,7 @@ var fun = function(){};
 ④.
 a.函数调用时实参，可以不合函数定义时形参不一致（不管是数量上，还是类型上）
 b.函数内部存在一个关键字arguments用来得到，传过来的实参，arguments.length表示传过来的实参长度
-c.函数的递归：
+c.函数的递归:
 ```javascript
 var add=function(num1,num2){
 	return num1+num2;
@@ -278,7 +278,7 @@ alert(typeof n);//obj
 
 以下方法都会修改原数组的值
 Array.prototype上的方法
-1.push	：尾部插入(返回数组新长度)
+1.push	:尾部插入(返回数组新长度)
 2.pop 	: 尾部删除(返回被删除的元素)
 3.shift	: 头部删除(返回被删除的元素)
 4.unshift: 头部插入(返回数组新长度)
@@ -318,7 +318,7 @@ window.onload = function(){
 //like array
 有呼吸的，动态维护，有length属性，可以通过下标访问每个元素
 ，
-缺点：动态维护需要时间和空间成本
+缺点:动态维护需要时间和空间成本
 var lis = document.getElementById('ul').getElementsBy
 TagName('li');
 把like array变成Array
@@ -363,24 +363,24 @@ alert(result);
 		return v.height>17;
 	});
 	
-	15.filter 过滤：按参数函数规则对原数组进行过滤，
+	15.filter 过滤:按参数函数规则对原数组进行过滤，
 符合条件的留下，作为返回数组中的元素，否则pass，
 函数参数应该返回一个boolean类型的结果
 	var result = arr.filter(function(v,i,arr){
 		return v>50;
 	});
-	16.reduce 收缩：默认从左往右，
+	16.reduce 收缩:默认从左往右，
 		arr.reduce(function(a,b){
 			
 		});
 	17.Array.isArray
- 最好使用：Objet.prototype.toString.call(obj) == '[object 
+ 最好使用:Objet.prototype.toString.call(obj) == '[object 
 Array]';	
 
 
 
 ## 对象字面量
-1.对象（字面量）的本质就是：无序键值对/无序数组
+1.对象（字面量）的本质就是:无序键值对/无序数组
 2.对象可以随时随地动态开辟属性（方法）
 3.所有函数内部不管你用不用都有关键字this，谁调用的函数，this就指向谁，如果没人调用函数，则函数内部的this指向全局对象window
 	a.浏览器端的javascript中存在一个全局对象window
@@ -419,10 +419,10 @@ alert(obj.name);
 
 ## dom操作
 
-dom简介：
+dom简介:
 dom = docuemnt of module :文档对象模型
 dom通过javascirpt 代码对页面中的内容进行增删改查(CURD)操作
-CURD：CREATE UPDATE RETRIVE DELETE
+CURD:CREATE UPDATE RETRIVE DELETE
 
 1.文档节点（一个页面只有一个）document
 2.元素节点（标签）
@@ -433,13 +433,13 @@ CURD：CREATE UPDATE RETRIVE DELETE
 nodeType:
 1:代表元素节点
 
-一、document.getElementById的注意事项：
+一、document.getElementById的注意事项:
 1.此方法只能通过docuemnt来调用
 2.找到了返回一个节点对象
 3.没找到返回一个null
 
 二、tagName:标签名属性
-getElementsByTagName的注意事项：
+getElementsByTagName的注意事项:
 1.此方法不但可以通过document，还可以通过元素节点对象调用，水调用就从谁的后代中去找指定的元素
 2.找到了返回一个'类数组'
 3.找不到也返回一个'类数组',且length属性为0
@@ -456,12 +456,12 @@ id('div1').appendChild(div3);
 console.log(aDiv.length);
 
 
-三、document.createElement方法注意事项：
+三、document.createElement方法注意事项:
 1.此方法只能通过document来调用
 2.创建玩页面并不嗯呢该看到，要配合appendChild来附加到页面的指定地方
 
 
-四、appendChild方法注意事项：
+四、appendChild方法注意事项:
 1.谁调用就在谁的最后一个子元素位置添加新的小儿子节点
 
 var oP = document.createElement('p');
@@ -473,7 +473,7 @@ id('div1').appendChild(oP);
 id('div1').appendChild(div3);
 console.log(aDiv.length);
 
-五、removeChild方法的注意事项：
+五、removeChild方法的注意事项:
 1.任何元素节点都可以调用此方法，谁调用就从谁的子节点去删除
 2.删除目标同时，目标的所有后代都会一起删除
 document.body.removeChild(id('div'));
@@ -484,13 +484,13 @@ id('div').innerText = '';//如果有标签当文本处理
 
 七、改特性attribute 属性property
 1.	attribute:设置的是标签的特性
-	property：设置的是对象的属性
+	property:设置的是对象的属性
 
 增加、修改attribute的值:
 id('div').setAttribute('title','liwenqi');
 获取attribute的值
 id('div').getAttribute('class');
-id、className、value(常用特性)：这三个特性可以直接获取：通过节点对象的特性直接获取
+id、className、value(常用特性):这三个特性可以直接获取:通过节点对象的特性直接获取
 2.	行内样式
 id('div').style.color ='white';
 id('div').style.backgroundColor = 'red';
@@ -504,39 +504,39 @@ document.keypress:按下
 ## 正则表达式
 
 字符串操作 
-search			查找：失败返回-1，查找成功返回位置，从0开始
-substring		获取子字符串，有两个参数：表示在什么区间之内，从0开始，不包括最后一位str.substring(3,5)表示获取字符串第4个到第5个的字符串
+search			查找:失败返回-1，查找成功返回位置，从0开始
+substring		获取子字符串，有两个参数:表示在什么区间之内，从0开始，不包括最后一位str.substring(3,5)表示获取字符串第4个到第5个的字符串
 charAt			获取某个字符，输入字符串位置查找到这个位置的字符
 split			分割字符串，获得数组
 replace('a','b');将指定字符串的a替换成b
 
-两种正则写法：
+两种正则写法:
 var re=new RegExp('/d');
 var re = //d/;
 
 任意字符
 [abc]
-例子：o[usb]t——obt、ost、out
+例子:o[usb]t——obt、ost、out
 范围
 [a-z]、[0-9]
-例子：id[0-9]——id0、id5
+例子:id[0-9]——id0、id5
 排除
 [^a]
-例子：o[^0-9]t——oat、o?t、o t
+例子:o[^0-9]t——oat、o?t、o t
 
-search：字符串搜索、返回出现的位置、忽略大小写：i——ignore、判断浏览器类型
+search:字符串搜索、返回出现的位置、忽略大小写:i——ignore、判断浏览器类型
 
-match：获取匹配的项目、将匹配的相放到数组中去
+match:获取匹配的项目、将匹配的相放到数组中去
 
-量词：+、量词变化：\d、\d\d和\d+，全局匹配：g——global
+量词:+、量词变化:\d、\d\d和\d+，全局匹配:g——global
 
 replace,替换所有匹配、返回替换后的字符串
-例子：敏感词过滤
+例子:敏感词过滤
 
 
 组合
 [a-z0-9A-Z]
-实例：偷小说
+实例:偷小说
 过滤HTML标签
 自定义innerText方法
 转义字符
@@ -548,14 +548,14 @@ replace,替换所有匹配、返回替换后的字符串
 ## javascript 原型和原型链
 
 函数调用方式与内部this指针关系
-1.直接调用：函数内部this指向全局对象window
-2.通过对象使用点来调用：函数内部this指向调用对象
-3.触发事件调用函数：函数内部的this指向触发事件的对象
-4.以new的方式来调用：函数内部this指向本次函数执行时对应的一个匿名对象（以new的方式创建的函数，函数名的首字母一般以大写字母开始）
+1.直接调用:函数内部this指向全局对象window
+2.通过对象使用点来调用:函数内部this指向调用对象
+3.触发事件调用函数:函数内部的this指向触发事件的对象
+4.以new的方式来调用:函数内部this指向本次函数执行时对应的一个匿名对象（以new的方式创建的函数，函数名的首字母一般以大写字母开始）
 构造函数 ，是一种特殊的方法。主要用来在创建对象时初始化对象， 即为对象成员变量赋初始值，总与new运算符一起使用在创建对象的语句中。
 
-5.通过call的方法来间接调用方法：函数内部this指向call方法的第一参数对象
-有点：我们可以创建结构相同，但内容不同的对象
+5.通过call的方法来间接调用方法:函数内部this指向call方法的第一参数对象
+有点:我们可以创建结构相同，但内容不同的对象
 
 
 - new一个函数时，首先在内存中创造一个空对象,
@@ -604,12 +604,12 @@ obj.constructor = Fun.constructor;
 
 可以在页面的位置嵌入一个iframe，向这个iframe传递数据
 
-假设iframe的id为：iframe
-则传递数据过程为：
+假设iframe的id为:iframe
+则传递数据过程为:
 iframe.contentWindow(内容,'*');后面一个参数指定传过去的地址（*）表示不限制地址
-一般先将数据转化成JSON格式传送：JSON.stringify(msg)
+一般先将数据转化成JSON格式传送:JSON.stringify(msg)
 
-接收：
+接收:
 
 ```javascript
 window.onmessage = function（e）{
@@ -624,27 +624,27 @@ window.onmessage = function（e）{
 
 ### 事件简介
 
-任何一个事件要经历三个阶段：
+任何一个事件要经历三个阶段:
 事件捕获阶段
 目标对象处理阶段
 事件冒泡阶段
 
 ie6,7,8不支持事件捕获，支持冒泡
 
-注：尽量在事件的冒泡阶段去绑定回调函数处理事件，因为捕获阶段存在兼容性问题，除非有非常特殊的需求
+注:尽量在事件的冒泡阶段去绑定回调函数处理事件，因为捕获阶段存在兼容性问题，除非有非常特殊的需求
 
 dom0级事件绑定	btn.onclick = function(){};
-优点：兼容性好，都能绑上
-缺点：只能绑冒泡阶段，不能绑多个函数，事件获取存在兼容问题
+优点:兼容性好，都能绑上
+缺点:只能绑冒泡阶段，不能绑多个函数，事件获取存在兼容问题
 
 
 dom2级事件绑定	
-优点：既可以绑捕获也可以帮冒泡阶段，可以绑多个函数
-缺点：IE和非ie绑定时要使用不同的dom2事件方法；且this的涵义不一样，事件对象的获取存在兼容性
+优点:既可以绑捕获也可以帮冒泡阶段，可以绑多个函数
+缺点:IE和非ie绑定时要使用不同的dom2事件方法；且this的涵义不一样，事件对象的获取存在兼容性
 
 非IE6,7,8
-addEventListener(默认冒泡，this指向的是调用它的对象)有三个参数：
-第一个：事件、第二个：绑定的事件、第三个：是否是捕获，true捕获，false不捕获
+addEventListener(默认冒泡，this指向的是调用它的对象)有三个参数:
+第一个:事件、第二个:绑定的事件、第三个:是否是捕获，true捕获，false不捕获
 
 IE6,7,8:后绑定先执行
 attachEvent函数，this指向window
@@ -690,7 +690,7 @@ if(e.target){
 }
 e.target = e.target?e.target||e.srcElement;
 
-附加：了解currentTarget和immediatepropagation
+附加:了解currentTarget和immediatepropagation
 
 5.事件的优化
 删除的dom节点如果有绑定函数，对应的函数不会被删除，这样被删除的节点，所对应的函数没有清除，如果要删除这个对象，就要把对应的函数清除
@@ -701,7 +701,7 @@ e.target = e.target?e.target||e.srcElement;
 事件优化
 1.清空事件
 dom2级事件清除
-非ie：
+非ie:
 	document.body.addEventListener('click',fun);
 	document.removeEventListener('click',fun);
 ie:
@@ -709,8 +709,8 @@ ie:
 	document.body.detachEvent('onclick',fun);
 
 2.事件委托（利用了事件冒泡机制）
-事件委托：当你给同一个父级下面的子集添加了很多事件，可以通过父级event事件来检测到是哪个点击的，在父级里面对子集做操作，
-列如：
+事件委托:当你给同一个父级下面的子集添加了很多事件，可以通过父级event事件来检测到是哪个点击的，在父级里面对子集做操作，
+列如:
 ```javascript
 aA = document.getElementsByTagName('a');
 for(var i=0;i<aA.length;i++){
@@ -718,7 +718,7 @@ for(var i=0;i<aA.length;i++){
 		../	
 	};
 }
-委托：
+委托:
 
 table.onclick = function(e){
 	var e = e || window.event;
@@ -729,9 +729,9 @@ table.onclick = function(e){
 
 ## 什么是闭包
 
-简单来说可以简介为：闭包就是一个函数能够记住并访问它的词法作用域，即使这个函数在它的作用域外执行。
+简单来说可以简介为:闭包就是一个函数能够记住并访问它的词法作用域，即使这个函数在它的作用域外执行。
 
-实例：
+实例:
 
 ```
 function a () {

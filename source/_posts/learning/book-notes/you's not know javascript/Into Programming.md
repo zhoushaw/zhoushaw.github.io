@@ -1,5 +1,5 @@
 ---
-title: 译文：you don't know js 之 Into Programming
+title: 译文:you don't know js 之 Into Programming
 date: 2019-02-28 8:20:15
 tags: book
 categories: js
@@ -53,7 +53,7 @@ The rules for valid format and combinations of instructions is called a computer
 
 In a computer language, a group of words, numbers, and operators that performs a specific task is a statement. In JavaScript, a statement might look as follows:
 
-在计算机中，一组单词、数字和运算符执行一个特殊的任务是一个句子。在javascript中一个句子可能看来像下面这样：
+在计算机中，一组单词、数字和运算符执行一个特殊的任务是一个句子。在javascript中一个句子可能看来像下面这样:
 
 ```
 a = b * 2;
@@ -98,7 +98,7 @@ a = b * 2;
 ```
 This statement has four expressions in it:
 
-这个声明有四个表达式：
+这个声明有四个表达式:
 
 2 is a literal value expression
 
@@ -158,7 +158,7 @@ It's typically asserted that JavaScript is interpreted, because your JavaScript 
 
 Note: For more information on JavaScript compiling, see the first two chapters of the Scope & Closures title of this series.
 
-笔记：更多关于JavaScript的编译信息，看这一系列的作用域 & 闭包的标题的前两章。
+笔记:更多关于JavaScript的编译信息，看这一系列的作用域 & 闭包的标题的前两章。
 
 ##Try It Yourself
 
@@ -168,11 +168,11 @@ This chapter is going to introduce each programming concept with simple snippets
 
 It cannot be emphasized enough: while you go through this chapter -- and you may need to spend the time to go over it several times -- you should practice each of these concepts by typing the code yourself. The easiest way to do that is to open up the developer tools console in your nearest browser (Firefox, Chrome, IE, etc.).
 
-这一点无论如何强调都不过分： 当你开始阅读这一章 -- 并且你可能需要花一些时间去反复阅读它。你应该通过编写代码来锻炼这些概念。最简单的方式是打开最近的浏览器的开发者工具(火狐、谷歌、Ie，其他)
+这一点无论如何强调都不过分: 当你开始阅读这一章 -- 并且你可能需要花一些时间去反复阅读它。你应该通过编写代码来锻炼这些概念。最简单的方式是打开最近的浏览器的开发者工具(火狐、谷歌、Ie，其他)
 
 Tip: Typically, you can launch the developer console with a keyboard shortcut or from a menu item. For more detailed information about launching and using the console in your favorite browser, see "Mastering The Developer Tools Console" (http://blog.teamtreehouse.com/mastering-developer-tools-console). To type multiple lines into the console at once, use <shift> + <enter> to move to the next new line. Once you hit <enter> by itself, the console will run everything you've just typed.
 
-提示：通常，你可以通过键盘的快捷键或者菜单选项打开开发者输入台，更多关于在你最喜欢的浏览器中打开和使用控制台，请看“掌握开发者控制台” (http://blog.teamtreehouse.com/mastering-developer-tools-console)，一次在控制台中输入多行，使用<shift> + <enter> 移动光标到下一行，一旦你按下回车，控制台将会运行你输入的一切。
+提示:通常，你可以通过键盘的快捷键或者菜单选项打开开发者输入台，更多关于在你最喜欢的浏览器中打开和使用控制台，请看“掌握开发者控制台” (http://blog.teamtreehouse.com/mastering-developer-tools-console)，一次在控制台中输入多行，使用<shift> + <enter> 移动光标到下一行，一旦你按下回车，控制台将会运行你输入的一切。
 
 Let's get familiar with the process of running code in the console. First, I suggest opening up an empty tab in your browser. I prefer to do this by typing about:blank into the address bar. Then, make sure your developer console is open, as we just mentioned.
 
@@ -180,7 +180,7 @@ Let's get familiar with the process of running code in the console. First, I sug
 
 Now, type this code and see how it runs:
 
-现在，输入这段代码然后看它执行：
+现在，输入这段代码然后看它执行:
 
 a = 21;
 
@@ -189,7 +189,7 @@ b = a * 2;
 console.log( b );
 Typing the preceding code into the console in Chrome should produce something like the following:
 
-输入过程之前的代码到谷歌控制台应该产生一些向下面的事情：
+输入过程之前的代码到谷歌控制台应该产生一些向下面的事情:
 
 
 Go on, try it. The best way to learn programming is to start coding!
@@ -217,7 +217,7 @@ Second, the console. part is an object reference where the log(..) function is l
 
 Another way of creating output that you can see is to run an alert(..) statement. For example:
 
-你能看到其他方式创建输出语句是使用`alert()`语句。例如：
+你能看到其他方式创建输出语句是使用`alert()`语句。例如:
 
 alert( b );
 If you run that, you'll notice that instead of printing the output to the console, it shows a popup "OK" box with the contents of the b variable. However, using console.log(..) is generally going to make learning about coding and running your programs in the console easier than using alert(..), because you can output many values at once without interrupting the browser interface.
@@ -241,18 +241,18 @@ The most common way that happens is for the HTML page to show form elements (lik
 
 But there's an easier way to get input for simple learning and demonstration purposes such as what you'll be doing throughout this book. Use the prompt(..) function:
 
-但是最简单方式的获取用户输入对于简单的学习和演示目的，比如你将要通过本书来做的。使用`prompt(..)`函数：
+但是最简单方式的获取用户输入对于简单的学习和演示目的，比如你将要通过本书来做的。使用`prompt(..)`函数:
 
 age = prompt( "Please tell me your age:" );
 
 console.log( age );
 As you may have guessed, the message you pass to prompt(..) -- in this case, "Please tell me your age:" -- is printed into the popup.
 
-你可能已经猜到了，你输入到`prompt(..)`的信息 --在这个案例里。“请告诉我你的名字：” -- 打印在这个弹窗上。
+你可能已经猜到了，你输入到`prompt(..)`的信息 --在这个案例里。“请告诉我你的名字:” -- 打印在这个弹窗上。
 
 This should look similar to the following:
 
-看起来跟下列的很相似：
+看起来跟下列的很相似:
 
 Once you submit the input text by clicking "OK," you'll observe that the value you typed is stored in the age variable, which we then output with console.log(..):
 

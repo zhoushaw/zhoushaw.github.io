@@ -1,6 +1,6 @@
 ---
 title: sequelize基础
-date: 2018-10-15 16：14
+date: 2018-10-15 16:14
 tags: sequelize
 categories: node
 ---

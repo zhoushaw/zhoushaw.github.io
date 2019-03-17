@@ -10,7 +10,7 @@ categories: css
 
 ## sticky布局
 
-> 在网页设计中，**Sticky footers**设计是最古老和最常见的效果之一，大多数人都曾经经历过。它可以概括如下：如果页面内容不够长的时候，页脚块粘贴在视窗底部；如果内容足够长时，页脚块会被内容向下推送，我们看到的效果就如下面两张图这样。这种效果基本是无处不在的，很受欢迎。
+> 在网页设计中，**Sticky footers**设计是最古老和最常见的效果之一，大多数人都曾经经历过。它可以概括如下:如果页面内容不够长的时候，页脚块粘贴在视窗底部；如果内容足够长时，页脚块会被内容向下推送，我们看到的效果就如下面两张图这样。这种效果基本是无处不在的，很受欢迎。
 
 <div style="display:flex;justify-content:space-between;align-items:center;">
     <img src="https://www.w3cplus.com/sites/default/files/blogs/2015/1507/css-secrets-7-21.png" style="display:inline-block;width:200px;border:none;">

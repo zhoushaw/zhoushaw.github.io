@@ -1,6 +1,6 @@
 ---
 title: mysql入门
-date: 2018-12-27 16：14
+date: 2018-12-27 16:14
 tags: node
 categories: node
 ---
@@ -101,7 +101,7 @@ mysql> CREATE TABLE 数据表名
     -> );
 ```
 
-例如：
+例如:
 
 
 ```
@@ -122,7 +122,7 @@ CREATE TABLE users (
 ```
 # 修改列定义
 ALTER TABLE table_name MODIFY [COLUMN] col_name column_definition [FIRST | AFTER col_name];
-/* 例： */ ALTER TABLE users MODIFY user_id VARCHAR(255)  NOT NULL;;
+/* 例: */ ALTER TABLE users MODIFY user_id VARCHAR(255)  NOT NULL;;
 ```
 
 ## id自增修改起始值

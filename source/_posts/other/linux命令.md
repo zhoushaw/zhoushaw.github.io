@@ -1,3 +1,13 @@
+---
+title: linux命令行
+date: 2017-06-12 8:07:12
+tags: linhux
+categories: command
+---
+
+
+<div><!-- more--></div>
+
 ## 文件常见操作
 
 
@@ -9,15 +19,15 @@
 罗列                                list                                                  ls
 链接                                link                                                 ln *
 
-## 显示系统的隐藏文件方法：
+## 显示系统的隐藏文件方法:
 
-> 在终端上输入：
+> 在终端上输入:
 
 defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder
 
 >即为显示隐藏文件:
 
-如果不要显示系统的这些隐藏文件，修改后面的true为false就好：
+如果不要显示系统的这些隐藏文件，修改后面的true为false就好:
 defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder
 
 
@@ -29,6 +39,6 @@ ifconfig ip地址查询
   1.aides dev --port 8800，把-p后面的8800改成您要自定义的端口号
 
 二、关闭被占用的端口:
-  1.查看使用8800端口的进程方法：lsof -i :8800
-  2.关闭使用某端口的进程方法：kill -9 PID，注：PID是进程ID
+  1.查看使用8800端口的进程方法:lsof -i :8800
+  2.关闭使用某端口的进程方法:kill -9 PID，注:PID是进程ID
 

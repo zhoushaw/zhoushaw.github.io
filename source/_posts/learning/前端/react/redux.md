@@ -38,14 +38,14 @@ sass 扩展性的css
 
 用于存放一个函数，这个函数会返回一个state对象，这个对象就是数据仓库存放的内容
 
-解构：
+解构:
 const type = action.type
 const payload = action.payload
 const {type,payload} = action;
 
 
 defaultState
-命名可随意：
+命名可随意:
 主要用于存放初始化state数据的地方
 
 var defaultState ={

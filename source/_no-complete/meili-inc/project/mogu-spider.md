@@ -1,6 +1,6 @@
 ## 接口文档
 
-queryChannel：
+queryChannel:
 
 
 params: 

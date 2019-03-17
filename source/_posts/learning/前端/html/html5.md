@@ -10,7 +10,7 @@ categories: html
 
 ## 常用语义标签
 
-### 无功能标签：
+### 无功能标签:
 <header></header> 页眉，主要用于页面的头部的信息介绍，也可用于板块头部
 
 <hgroup></hgroup> 页面上的一个标题组合，一个标题和一个子标题，或者标语的组合
@@ -63,7 +63,7 @@ aside 的内容应该与 article 的内容相关。
 
 
 
-### 有功能的标签：
+### 有功能的标签:
 
 <datalist></datalist>选项列表。与 input 元素配合使用，来定义 input 可能的值。
 <input type="text" list="valList" />
@@ -131,14 +131,14 @@ typeMismatch :  控件值与预期类型不匹配
 patternMismatch  :  输入值不满足pattern正则
 tooLong  :  超过maxLength最大限制
 rangeUnderflow : 验证的range最小值
-rangeOverflow：验证的range最大值
+rangeOverflow:验证的range最大值
 stepMismatch: 验证range 的当前值 是否符合min、max及step的规则
 customError 不符合自定义验证
 setCustomValidity(); 自定义验证
 
 表单验证
 Invalid事件  :  验证反馈 input.addEventListener('invalid',fn,false)
-阻止默认验证：ev.preventDefault()
+阻止默认验证:ev.preventDefault()
 formnovalidate属性  :  关闭验证
 
 
@@ -158,21 +158,21 @@ add()  :  添加class方法
 remove()  :  删除class方法
 toggle() :  切换class方法 。如果写的class在元素里面出现了，就删除。没有这个class就添加
 
-eval：可以解析任何字符串变成js
-JSON.parse：只能解析JSON形式的字符串变成JS（安全性高，并且必须是个严格JSON形式）
+eval:可以解析任何字符串变成js
+JSON.parse:只能解析JSON形式的字符串变成JS（安全性高，并且必须是个严格JSON形式）
 JSON.stringify()将一个JSON解析成一个字符串，变成严格形式的json
-新方法应用：深度克隆（不支持IE6，7）
+新方法应用:深度克隆（不支持IE6，7）
 
 
-课后扩展：对象的应用（浅拷贝、深拷贝）；
+课后扩展:对象的应用（浅拷贝、深拷贝）；
 
 
 ## 本地存储
 
 
-先补充下localStorage 知识点：
+先补充下localStorage 知识点:
 JS对象
-读取形式：
+读取形式:
 localStorage.name
 添加/修改
 localStorage.name = "xuanyuan"
@@ -201,9 +201,9 @@ sessionStorage作用域是窗口、协议、主机名、端口。
 localStorage是window上的。所以不需要写this.localStorage，你这里的this，是指vue实例。
 方案一、
 // 这里写的答案是指data.body.data是JSON。不是JSON则不需要JSON.parse和JSON.stringify
-存储：localStorage.data = JSON.stringify(data.body.data);
-获取：JSON.parse(localStorage.data);
+存储:localStorage.data = JSON.stringify(data.body.data);
+获取:JSON.parse(localStorage.data);
 方案二、
-存储：localStorage.setItem('data',JSON.stringify(data.body.data));
-获取：JSON.parse(localStorage.getItem('data'));
+存储:localStorage.setItem('data',JSON.stringify(data.body.data));
+获取:JSON.parse(localStorage.getItem('data'));
 

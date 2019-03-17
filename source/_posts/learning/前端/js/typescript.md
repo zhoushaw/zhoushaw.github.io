@@ -31,8 +31,8 @@ tags:   js
 ```
  2.使用快捷键 command ＋ shift + b
 
-* 选择tsc构建： 创建typescript构建环境
-* 选择tsc监视： 监视typescript
+* 选择tsc构建: 创建typescript构建环境
+* 选择tsc监视: 监视typescript
 
 ## 数据类型
 
@@ -235,7 +235,7 @@ function reverse(x: number | string): number | string {
 
 ##类型断言
 **类型断言（Type Assertion）可以用来手动指定一个值的类型。**
-语法：
+语法:
 <类型>值       或       值 as 类型
 
 > 为何需要类型断言

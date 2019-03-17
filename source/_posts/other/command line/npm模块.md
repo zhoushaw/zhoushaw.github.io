@@ -38,7 +38,7 @@ npm init
 ├── package.json
 ├── README.md
 
-把封装好的代码都扔在lib里面，所以，index.js里面也就一句话：
+把封装好的代码都扔在lib里面，所以，index.js里面也就一句话:
 module.exports=require('./lib')
 
 
@@ -49,7 +49,7 @@ npm login
 // 登录成功后，如果Logged in as shawzhou on http://npm.f2e.mogujie.org/.
 // 后面的地址不是https://registry.npmjs.org/
 
-使用：`npm config set registry https://registry.npmjs.org/`进行修改
+使用:`npm config set registry https://registry.npmjs.org/`进行修改
 
 package.json中的mian配置入口主文件
 

@@ -15,7 +15,7 @@ tags: ajax
     
 把我们做的文件放到指定目录下
 
-我安装在了c:/wamp 开启服务器工具后 浏览器中输入localhost，将访问c：/wamp/www这个环境中的文件。
+我安装在了c:/wamp 开启服务器工具后 浏览器中输入localhost，将访问c:/wamp/www这个环境中的文件。
 
 ### 什么是ajax
 
@@ -106,7 +106,7 @@ $(function(){})	//阻塞 -> 同步
 
 ### onreadystatechange事件
 
-当 readyState 等于 4 且状态为 200 时，表示响应已就绪：
+当 readyState 等于 4 且状态为 200 时，表示响应已就绪:
 ```javascript
 	xmlhttp.onreadystatechange=function()
 	  {
@@ -129,7 +129,7 @@ $(function(){})	//阻塞 -> 同步
 		//无需编码
 ```
 
-### 表单：数据的提交
+### 表单:数据的提交
 
 	action : 数据提交的地址，默认是当前页面
      method : 数据提交的方式，默认是get方式

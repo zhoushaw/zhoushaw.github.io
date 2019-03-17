@@ -10,7 +10,7 @@ categories: js
 
 ## 体积优化
 
-插件：
+插件:
 `yarn install webpack-bundle-analyzer --save-dev`
 
 
@@ -32,7 +32,7 @@ module.exports = {
 
 ```
 
-启动：
+启动:
 在package.json中的script上添加
 `“analyz”: “NODE_ENV=production npm_config_report=true npm run build”`
 

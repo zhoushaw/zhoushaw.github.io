@@ -10,7 +10,7 @@ categories: css
 
 ## 知识杂点
 
-a标签添加属性顺序：LVHA
+a标签添加属性顺序:LVHA
 link、visited、hover、active
 
 
@@ -28,7 +28,7 @@ link、visited、hover、active
     bst: border-style;
     bcl: border-color;
 }
-// 然后添加以下代码来测试使用的新别名：
+// 然后添加以下代码来测试使用的新别名:
 .set_border {
     bsz: 1px;
     bst: solid;
@@ -125,7 +125,7 @@ background-color: <color>;
     padding: 0;
     margin: 0;
 }
-// 编译出来的结果是：
+// 编译出来的结果是:
 .SearchForm {
   padding: 0;
   margin: 0;
@@ -134,7 +134,7 @@ background-color: <color>;
 
 生成一个Descendent
 通过@descendent descName{...}语法在组件中嵌套，可以创建一个Descendent。
-在SearcForm组件中嵌套一个textField，添加一个Descendent，如下所示：
+在SearcForm组件中嵌套一个textField，添加一个Descendent，如下所示:
     
 ```
 
@@ -148,7 +148,7 @@ background-color: <color>;
     }
 
 }
-// 编译出来是这样的：
+// 编译出来是这样的:
 
 .SearchForm {
     padding: 0;

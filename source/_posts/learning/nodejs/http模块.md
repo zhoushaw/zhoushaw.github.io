@@ -1,6 +1,6 @@
 ---
 title: node-http模块
-date: 2018-3-27 16：14
+date: 2018-3-27 16:14
 tags: node
 categories: node
 ---
@@ -27,7 +27,7 @@ var http = require('http');
 // http server 例子
 var server = http.createServer(function(serverReq, serverRes){
     var url = serverReq.url;
-    serverRes.end( '您访问的地址是：' + url );
+    serverRes.end( '您访问的地址是:' + url );
 });
 
 server.listen(3000);
@@ -43,8 +43,8 @@ var client = http.get('http://127.0.0.1:3000', function(clientRes){
 
 > 重点会放在req这个对象上。前面已经提到，它其实是http.IncomingMessage实例，在服务端、客户端作用略微有差异
 
-* 服务端处：获取请求方的相关信息，如request header等
-* 客户端处：获取响应方返回的相关信息，如statusCode等
+* 服务端处:获取请求方的相关信息，如request header等
+* 客户端处:获取响应方返回的相关信息，如statusCode等
 
 
 > server
@@ -73,7 +73,7 @@ http.get('http://127.0.0.1:3000', function(res){
 
 <h3 id="3">服务端案例</h3>
 
-> 例子一：获取httpVersion/method/url
+> 例子一:获取httpVersion/method/url
 
 
 ```
@@ -81,9 +81,9 @@ http.get('http://127.0.0.1:3000', function(res){
 var http = require('http');
 
 var server = http.createServer(function(req, res){
-    console.log( '1、客户端请求url：' + req.url );
-    console.log( '2、http版本：' + req.httpVersion );
-    console.log( '3、http请求方法：' + req.method );
+    console.log( '1、客户端请求url:' + req.url );
+    console.log( '2、http版本:' + req.httpVersion );
+    console.log( '3、http请求方法:' + req.method );
     console.log( '4、http请求头部' + JSON.stringify(req.headers) );
 
     res.end('ok');
@@ -93,7 +93,7 @@ server.listen(3000);
 
 ```
 
-> 例子二：获取get请求参数
+> 例子二:获取get请求参数
 
 
 ```
@@ -148,7 +148,7 @@ server.listen(3000);
 `
 http模块四剑客之一的res，应该都不陌生了。一个web服务程序，接受到来自客户端的http请求后，向客户端返回正确的响应内容，这就是res的职责。`
 
-返回的内容包括：状态代码/状态描述信息、响应头部、响应主体。下文会举几个简单的例子。
+返回的内容包括:状态代码/状态描述信息、响应头部、响应主体。下文会举几个简单的例子。
 
 
 > 例子
@@ -242,7 +242,7 @@ var createClientPostRequest = function(){
 
     // 创建客户端请求
     var client = http.request(options, function(res){
-        // 最终输出：Server got client data: nick=chyingp
+        // 最终输出:Server got client data: nick=chyingp
         res.pipe(process.stdout);  
     });
 

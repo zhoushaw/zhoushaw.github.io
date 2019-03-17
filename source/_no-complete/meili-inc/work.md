@@ -19,15 +19,15 @@ dev host列表
 pre host列表
 `http://gitlab.mogujie.org/payf2e/host/raw/master/pre.host`
     
-发布平台：
+发布平台:
 * http://mfp.meili-inc.com/
 
 * http://mops.mogujie.org/stark#/?_k=hdjmrf
 
-mock：
+mock:
 https://lotus.meili-inc.com/project
 
-麦田：http://mait.mogujie.org/index
+麦田:http://mait.mogujie.org/index
 
 
 签到有礼
@@ -46,11 +46,11 @@ offline1200
 
 ## git提交
 
-[task]：p2p提现添加短信通知
+[task]:p2p提现添加短信通知
 
-[bugfix]：支付绑卡过程中身份证号X大小写问题修复
+[bugfix]:支付绑卡过程中身份证号X大小写问题修复
 
-[misc]：修改活动时间
+[misc]:修改活动时间
 
 bug:
 fix:

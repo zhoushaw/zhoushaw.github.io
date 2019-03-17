@@ -17,7 +17,7 @@ categories: other
 <a href="https://github.com/raycon/vscode-markdown-css">vscode配置文件github地址</a>
 
 打开配置文件:文件=>首选项=>设置
-增加以下内容：
+增加以下内容:
 
 > 在线地址
 
@@ -42,7 +42,7 @@ categories: other
 
 > 配置
 
-文件 > 首选项 > 设置，在右侧用户设置中修改 ESLint 的相关配置并保存：
+文件 > 首选项 > 设置，在右侧用户设置中修改 ESLint 的相关配置并保存:
 
 ```
 "eslint.options": {

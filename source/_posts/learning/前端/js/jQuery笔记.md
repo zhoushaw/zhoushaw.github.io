@@ -13,7 +13,7 @@ categories: js
 $()方法产生的jQuery对象，不管也不论找没找到，找到了几个，得到的都是一个类数组对象，只是length值不同而已
 
 1.js: 函数绑定时赋值
-jQ：函数绑定都是传参的
+jQ:函数绑定都是传参的
 ```javascript
 $(function(){
 	alert(1);
@@ -29,8 +29,8 @@ $(document).ready(function(){
 
 jQuery对象可以和javascript对象进行相互转化
 
-javascript转jQuery：使用$(javascript对象)
-jQuery对象转javascript对象：[]下标法，或get(index)
+javascript转jQuery:使用$(javascript对象)
+jQuery对象转javascript对象:[]下标法，或get(index)
 
 3.jQuery对象进行操作内含迭代操作？？
 each函数迭代是，迭代出来的全是javascript对象，事件回调函数中的this是javascript对象,$(this):jQ的this
@@ -52,7 +52,7 @@ $(':button'):找到所有type为button的input
 $('ul li:first'):找到第一个ul下的第一个li
 $('ul li:first-child'):找到所有ul下的第一个li
 $('tr:even'):选取偶数位置的tr
-$('tr:odd')：选取奇数位置的tr
+$('tr:odd'):选取奇数位置的tr
 
 
 1.一般
@@ -86,7 +86,7 @@ $('#two').siblings()
 $('div:first');找到所有div的第一个元素==
 $('div').filter(':first')
 
-注意：子元素的过滤选择器的编号从1开始，
+注意:子元素的过滤选择器的编号从1开始，
 子元素过滤选择器前面要加空格，否则结果不可预知
 
 $('div :first-child'):没有兄弟的选择器，只有一个元素
@@ -99,7 +99,7 @@ $('div :nth-child(odd)');找到所有div里面为奇数的元素
 $('div :nth-child(even)');找到所有div里面为偶数的元素
 $('div :nth-child(2,3)')找到div里面的第2，第3个子元素
 
-特别注意：n从0开始进行依次计算，但子元素任从1开始编号
+特别注意:n从0开始进行依次计算，但子元素任从1开始编号
 $('div :nth-child(3n)');3的倍数
 $('div :nth-child(n+2)');div里面从第3个及第三个后面的	
 	
@@ -181,7 +181,7 @@ $(':radio:checked'):找到表单中单选按钮被选中的元素
 $(':checkbox:checked'):找到表单中多选按钮被选中的元素
 
 
-selected：为select表单元素服务
+selected:为select表单元素服务
 $('select:option:selected'):找到表单中option被选中的元素
 
 
@@ -215,14 +215,14 @@ clone函数的参数为true时，把对象的事件也克隆过去，默认为fa
 
 ### 修改、获取值
 
-html()函数、text()函数：给值修改，不给值获取
-获取value值：val()函数：给值修改，不给值获取
+html()函数、text()函数:给值修改，不给值获取
+获取value值:val()函数:给值修改，不给值获取
 addCalss();removeClass();增加修改class
 $('p').attr('data','001');设置属性值
 $('p').attr('data');一个值读取属性
 css()函数
-单个样式设置：$('p').css('color','red');
-批量设置：
+单个样式设置:$('p').css('color','red');
+批量设置:
 $('p').css({
 	"color":'red',
 	"background-color":'black'
@@ -230,7 +230,7 @@ $('p').css({
 
 ### 包裹操作
 
-6.wrap()被包裹	wrapAll():全部包裹	wrapInner()：包裹里面的内容
+6.wrap()被包裹	wrapAll():全部包裹	wrapInner():包裹里面的内容
 $('p').wrap('<strong></strong>');
 
 
@@ -242,7 +242,7 @@ $('input').on('click',{key:'zhouxiao'},function(e){
 }).off('click');
 
 on:可以实现兼容的绑定事件，
-off：解绑事件
+off:解绑事件
 
 e.data;可以获取绑定时候传过来的值
 e.stopImmediatePropagation();阻止马上要发生的时间
@@ -328,7 +328,7 @@ $('input').hover(function(){
 
 ## 动画
 
-jQuery动画相关的关键字：slow、normal、fast	
+jQuery动画相关的关键字:slow、normal、fast	
 .hide、.show,高度和透明度变化
 fadeIn、fadeOut:淡入、淡出
 slideUp与slideDown:slideToggle()
@@ -336,7 +336,7 @@ slideUp与slideDown:slideToggle()
 animate:三个参数:对象字面量的动画参数、时间、
 使用stop停止动画
 
-stop函数如果不给参数默认只能停止元素当前正在执行的动画，和元素相关的后面的动画还是会执行：
+stop函数如果不给参数默认只能停止元素当前正在执行的动画，和元素相关的后面的动画还是会执行:
 两个参数，
 第一个参数用来控制结束动画的数量（默认false，只清除当前动画，true清空元素动画的队列),
 第二参数（是否让元素直接达到动画状态结束，默认false），正在执行动画达到最终状态

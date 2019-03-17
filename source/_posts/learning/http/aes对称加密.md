@@ -152,7 +152,7 @@ const Encrypt = (word)=>{
     return ub;
 }
 
-//解密：
+//解密:
 
 const   Decrypt = (word)=>{
     var mode = new Crypto.mode.CBC(Crypto.pad.pkcs7);

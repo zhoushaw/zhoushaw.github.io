@@ -1,6 +1,6 @@
 ---
 title: python基础
-date: 2018-1-24 13：14
+date: 2018-1-24 13:14
 tags: ptyhon
 categories: python
 ---

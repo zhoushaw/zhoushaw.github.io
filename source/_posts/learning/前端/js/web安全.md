@@ -21,8 +21,8 @@ CSP是网页安全政策(Content Security Policy)的缩写。是一种由开发�
 
 > 开启方式
 
-　　一种是：通过 HTTP 头信息的Content-Security-Policy的字段。
-　　一种是：在网页中设置<meta>标签，如：
+　　一种是:通过 HTTP 头信息的Content-Security-Policy的字段。
+　　一种是:在网页中设置<meta>标签，如:
 
 
 ```
@@ -41,23 +41,23 @@ CSP是网页安全政策(Content Security Policy)的缩写。是一种由开发�
 
 
 ```
-'unsafe-inline'：允许执行页面内嵌的<script>标签和事件监听函数
-'unsafe-eval'：允许将字符串当作代码执行，比如使用eval、setTimeout、setInterval等函数。
-'nonce'值：每次HTTP回应给出一个授权token，页面内嵌脚本必须有这个token，才会执行
-'hash'值：列出允许执行的脚本代码的Hash值，页面内嵌脚本的哈希值只有吻合的情况下，才能执行
+'unsafe-inline':允许执行页面内嵌的<script>标签和事件监听函数
+'unsafe-eval':允许将字符串当作代码执行，比如使用eval、setTimeout、setInterval等函数。
+'nonce'值:每次HTTP回应给出一个授权token，页面内嵌脚本必须有这个token，才会执行
+'hash'值:列出允许执行的脚本代码的Hash值，页面内嵌脚本的哈希值只有吻合的情况下，才能执行
 ```
 
 ## 避免其他网站嵌入iframe
 
 **配置http响应头**
 
-> X-Frame-Options 响应头有三个可选的值：
+> X-Frame-Options 响应头有三个可选的值:
 
-* DENY：页面不能被嵌入到任何iframe或frame中；
-* SAMEORIGIN：页面只能被本站页面嵌入到iframe或者frame中；
-* ALLOW-FROM：页面允许frame或frame加载。
+* DENY:页面不能被嵌入到任何iframe或frame中；
+* SAMEORIGIN:页面只能被本站页面嵌入到iframe或者frame中；
+* ALLOW-FROM:页面允许frame或frame加载。
 
-> 在服务端设置的方式如下：
+> 在服务端设置的方式如下:
 
 ```
 //Java代码:

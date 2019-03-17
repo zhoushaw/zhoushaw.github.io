@@ -91,7 +91,7 @@ console.log('script end');
 
 JS调用栈采用栈结构，是先进后出规则，当函数执行的时候会放到栈的顶部，当函数执行完成会将函数从栈顶移除，遇到新函数会新函数将推入栈内，执行完成从栈顶移除，直到栈被清空
 
-列如：
+列如:
 
 ```
 function task1 () {
@@ -105,7 +105,7 @@ task2();
 ```
 
 
-执行到task1()时，栈内容为：task2 task1，依次执行并移除task1、task2
+执行到task1()时，栈内容为:task2 task1，依次执行并移除task1、task2
 
 
 > 同步任务和异步任务
@@ -113,7 +113,7 @@ task2();
 在JavaScript将任务分为同步任务和异步任务，同步任务将依次放入调用栈中按照先进后出的规则，放入主线程执行。异步任务则是等待执行结果返回后放入任务队列中等待主线程空闲时(调用栈为空时，同步任务被执行完成时)，被读取到调用栈内等待主线程执行。
 
 
-简单来说可以将其区域分为三个区域：
+简单来说可以将其区域分为三个区域:
 
 * 任务队列区
 * 主线程执行区
@@ -145,10 +145,10 @@ Promise.resolve().then(function() {
 console.log('script end');
 ```
 
-JavaScript在运行这段代码逐行执行，按照调用栈、宏任务、微任务执行过程如下：
+JavaScript在运行这段代码逐行执行，按照调用栈、宏任务、微任务执行过程如下:
 
 ```
-#过程一：
+#过程一:
 
 MicroTask: 
 MacroTask: setTimeout
@@ -158,7 +158,7 @@ call-Task:
 Log: script start
 
 
-#过程二：
+#过程二:
 
 MicroTask: Promise.then
 MacroTask: setTimeout
@@ -167,7 +167,7 @@ call-Task:
 
 Log: script start
 
-#过程三：
+#过程三:
 
 MicroTask: 
 MacroTask: setTimeout
@@ -176,7 +176,7 @@ call-Task: Promise.then
 
 Log:  script start、 script end
 
-#过程四：
+#过程四:
 
 MicroTask: Promise.then promise2
 MacroTask: setTimeout
@@ -185,7 +185,7 @@ call-Task:
 
 Log:  script start、 script end、promise1
 
-#过程五：
+#过程五:
 
 MicroTask: 
 MacroTask: setTimeout
@@ -194,7 +194,7 @@ call-Task: Promise.then promise2
 
 Log:  script start、 script end、promise1
 
-#过程五：
+#过程五:
 
 MicroTask: 
 MacroTask: setTimeout
@@ -203,7 +203,7 @@ call-Task:
 
 Log:  script start、 script end、promise1、promise2
 
-#过程六：
+#过程六:
 
 MicroTask: 
 MacroTask:
@@ -212,7 +212,7 @@ call-Task: setTimeout
 
 Log:  script start、 script end、promise1、promise2
 
-#过程七：
+#过程七:
 
 MicroTask: 
 MacroTask:

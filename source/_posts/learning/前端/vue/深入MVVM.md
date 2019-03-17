@@ -39,7 +39,7 @@ obj.a = 'hello';
 
 该函数在属性被访问时触发，返回值是获取到的值
 
-例：
+例:
 ```javascript
 var obj = {
     a: 'hello world'
@@ -56,7 +56,7 @@ console.log(obj.a);// 输出你想要获取obj的a属性值是吗
 > setter函数
 
 该函数在属性被写入时触发
-例：
+例:
 ```javascript
 var obj = {
     a: 'hello world'
@@ -86,7 +86,7 @@ value: 'hello world'// 获取该值时，返回value内容，value不可以与se
 实现一个Watcher，作为连接Observer和Compile的桥梁，能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图
 mvvm入口函数，整合以上三者
 
-上述流程如图所示：
+上述流程如图所示:
 
 ![2](media/2.png)
 
@@ -162,7 +162,7 @@ Dep.prototype = {
 ```
 
 - 那么问题来了，谁是订阅者，怎么往订阅器添加订阅者？
-- 没错，上面的思路整理中我们已经明确订阅者应该是Watcher, 而且var dep = new Dep();是在 defineReactive方法内部定义的，所以想通过dep添加订阅者，就必须要在闭包内操作，所以我们可以在getter里面动手脚：
+- 没错，上面的思路整理中我们已经明确订阅者应该是Watcher, 而且var dep = new Dep();是在 defineReactive方法内部定义的，所以想通过dep添加订阅者，就必须要在闭包内操作，所以我们可以在getter里面动手脚:
 
 
 ```
@@ -249,7 +249,7 @@ Compile.prototype = {
     compile: function(node) {
         var nodeAttrs = node.attributes, me = this;
         [].slice.call(nodeAttrs).forEach(function(attr) {
-            // 规定：指令以 v-xxx 命名
+            // 规定:指令以 v-xxx 命名
             // 如 <span v-text="content"></span> 中指令为 v-text
             var attrName = attr.name;	// v-text
             if (me.isDirective(attrName)) {
@@ -361,7 +361,7 @@ Dep.prototype = {
 
 `MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -> 视图更新；视图交互变化(input) -> 数据model变更的双向绑定效果。`
 
-> 一个简单的MVVM构造器是这样子：
+> 一个简单的MVVM构造器是这样子:
 
 
 ```
@@ -374,7 +374,7 @@ function MVVM(options) {
 ```
 
 * 但是这里有个问题，从代码中可看出监听的数据对象是options.data，每次需要更新视图，则必须通过var vm = new MVVM({data:{name: 'kindeng'}}); vm._data.name = 'dmq';这样的方式来改变数据。
-* 显然不符合我们一开始的期望，我们所期望的调用方式应该是这样的：
+* 显然不符合我们一开始的期望，我们所期望的调用方式应该是这样的:
 * var vm = new MVVM({data: {name: 'kindeng'}}); vm.name = 'dmq';
 * 所以这里需要给MVVM实例添加一个属性代理的方法，使访问vm的属性代理为访问vm._data的属性，改造后的代码如下
 

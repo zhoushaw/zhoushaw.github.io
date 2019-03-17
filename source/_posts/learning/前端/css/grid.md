@@ -17,7 +17,7 @@ grid目前支持并不是很全面，低版本chrome也不支持这一特性。�
 
 ## 起步
 
-1.设置网格布局也十分简单：
+1.设置网格布局也十分简单:
 
 `display: grid`一旦给容器使用grid属性，容器的所有子元素都将进入grid布局文档流
 
@@ -27,15 +27,15 @@ display: `grid` | `inline-grid` | `subgrid`
 
 ## 网格属性
 
-**词法：**
+**词法:**
 
 ```
-grid-template-columns：<track-size>.... | <line-name> <track-size> ...;
+grid-template-columns:<track-size>.... | <line-name> <track-size> ...;
 
-grid-template-rows：<track-size>.... | <line-name> <track-size> ...;
+grid-template-rows:<track-size>.... | <line-name> <track-size> ...;
 ```
 
-**网格线定义名称：**
+**网格线定义名称:**
 
 
 ```

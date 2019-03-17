@@ -1,5 +1,5 @@
 ---
-title: 译文：you don't know js 之 Into YDKJS
+title: 译文:you don't know js 之 Into YDKJS
 date: 2019-02-26 10:42:35
 tags: book
 categories: js
@@ -63,7 +63,7 @@ The this keyword is dynamically bound based on how the function in question is e
 
 Closely related to the this keyword is the object prototype mechanism, which is a look-up chain for properties, similar to how lexical scope variables are found. But wrapped up in the prototypes is the other huge miscue about JS: the idea of emulating (fake) classes and (so-called "prototypal") inheritance.
 
-与this关键词密密相关的是object原型的原理，这是一个查找属性的链。与查询的方式相似。但是包含在原型中另一个JS的巨大谬论：模拟类和继承的想法
+与this关键词密密相关的是object原型的原理，这是一个查找属性的链。与查询的方式相似。但是包含在原型中另一个JS的巨大谬论:模拟类和继承的想法
 
 Unfortunately, the desire to bring class and inheritance design pattern thinking to JavaScript is just about the worst thing you could try to do, because while the syntax may trick you into thinking there's something like classes present, in fact the prototype mechanism is fundamentally opposite in its behavior.
 
@@ -91,7 +91,7 @@ But the case I make regarding prototypes and delegation is a much more involved 
 
 The third title in this series primarily focuses on tackling yet another highly controversial topic: type coercion. Perhaps no topic causes more frustration with JS developers than when you talk about the confusions surrounding implicit coercion.
 
-在这一系列中的第三标题主要讨论另一个比较有争议的话题：强制类型转换。可能没有什么话题能比你讨论混乱的类型转换能让JS开发者更沮丧的话题了。
+在这一系列中的第三标题主要讨论另一个比较有争议的话题:强制类型转换。可能没有什么话题能比你讨论混乱的类型转换能让JS开发者更沮丧的话题了。
 
 By far, the conventional wisdom is that implicit coercion is a "bad part" of the language and should be avoided at all costs. In fact, some have gone so far as to call it a "flaw" in the design of the language. Indeed, there are tools whose entire job is to do nothing but scan your code and complain if you're doing anything even remotely like coercion.
 
@@ -122,7 +122,7 @@ The first three titles of this series focus on the core mechanics of the languag
 
 The book starts first by clearing up a lot of terminology and concept confusion around things like "async," "parallel," and "concurrent," and explains in depth how such things do and do not apply to JS.
 
-这本书首次开始理清大量的属于和混乱的概念类似于：异步、同步、并行，深入的解释这些东西如何用或者不用再JS上。
+这本书首次开始理清大量的属于和混乱的概念类似于:异步、同步、并行，深入的解释这些东西如何用或者不用再JS上。
 
 Then we move into examining callbacks as the primary method of enabling asynchrony. But it's here that we quickly see that the callback alone is hopelessly insufficient for the modern demands of asynchronous programming. We identify two major deficiencies of callbacks-only coding: Inversion of Control (IoC) trust loss and lack of linear reason-ability.
 
@@ -130,7 +130,7 @@ Then we move into examining callbacks as the primary method of enabling asynchro
 
 To address these two major deficiencies, ES6 introduces two new mechanisms (and indeed, patterns): promises and generators.
 
-为了解决这两大不足，est介绍了两种技术：promise和generators
+为了解决这两大不足，est介绍了两种技术:promise和generators
 
 Promises are a time-independent wrapper around a "future value," which lets you reason about and compose them regardless of if the value is ready or not yet. Moreover, they effectively solve the IoC trust issues by routing callbacks through a trustable and composable promise mechanism.
 
@@ -181,7 +181,7 @@ Since ES6 is nearly complete at the time of this writing, ES6 & Beyond starts by
 
 Some exciting ES6 things to look forward to reading about: destructuring, default parameter values, symbols, concise methods, computed properties, arrow functions, block scoping, promises, generators, iterators, modules, proxies, weakmaps, and much, much more! Phew, ES6 packs quite a punch!
 
-一些令人兴奋盼望去阅读的es6事物：解构、参数默认值、符号、简单方法、计算属性、箭头函数、块作用域、承诺、生成器、遍历、模块化、代理。es6很有冲击力
+一些令人兴奋盼望去阅读的es6事物:解构、参数默认值、符号、简单方法、计算属性、箭头函数、块作用域、承诺、生成器、遍历、模块化、代理。es6很有冲击力
 
 
 The first part of the book is a roadmap for all the stuff you need to learn to get ready for the new and improved JavaScript you'll be writing and exploring over the next couple of years.

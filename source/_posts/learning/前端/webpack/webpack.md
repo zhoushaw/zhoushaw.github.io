@@ -26,7 +26,7 @@ npm install babel-plugin-transform-runtime --save-dev
 如果不使用他，自己定义的函数，被多次使用，就会每次在使用这个函数的时候，就会被打包一次，使用了transform-runtime可以解决多余的代码
 解决全局函数的污染，因为全局函数需要单独生成函数本省实现
 
-缺点是：
+缺点是:
 1.无法解决实例的方法，实例的方法需要借助polyfile
 
 
@@ -69,8 +69,8 @@ module.exports={
 
 ### entry
 
-注意事项：
-- 1. entry参数：配置入口文件参数，可以放多入口文件
+注意事项:
+- 1. entry参数:配置入口文件参数，可以放多入口文件
 - 1. 一般将源文件放在src文件夹中
 
 entry:"./a.js"						:把当前目录下的a.js打包成bundle.js,打包入口文件，一定要写好相对路径，不能直接写文件名
@@ -85,12 +85,12 @@ output:{							:这里指产生两个出口文件，并且对应了(多文件入
 	filename:'[name].js',
 	path:__dirname+'/dist'
 }
-filename		：表示对应的出口文件名，不输入文件名默认为哈希值,'[name].js]'表示以源文件名进行输出(如果是多文件入口是，并且给文件对应加了名字，最终就是在入口文件设置的名字)
-path			：表示输出的文件存放的位置,这个路径的位置
+filename		:表示对应的出口文件名，不输入文件名默认为哈希值,'[name].js]'表示以源文件名进行输出(如果是多文件入口是，并且给文件对应加了名字，最终就是在入口文件设置的名字)
+path			:表示输出的文件存放的位置,这个路径的位置
 
 
 #### path
-path文件夹的位置确定的方式：
+path文件夹的位置确定的方式:
 源文件中的路径是:'../images/big.jpg'
 
 - 最后生成的路径是:'images/big.jpg'
@@ -108,7 +108,7 @@ path文件夹的位置确定的方式：
 
 
 ### module
-在module参数里面配置，webpack打包时候所需要的插件,每个加载的对象：第一个参数：配置要对什么类型的文件，第二个参数：用什么样的模块去加载
+在module参数里面配置，webpack打包时候所需要的插件,每个加载的对象:第一个参数:配置要对什么类型的文件，第二个参数:用什么样的模块去加载
 webpack1.x写法
 loaders:[
 	//当遇到文件名为.css结尾的文件去加载css-loader模块
@@ -165,17 +165,17 @@ plugins:[
 	new webpack.HotModuleReplacementPlugin()
 ]
 
-new webpack.optimize.UglifyJsPlugin：使用webpack里面自带的UglifyJs压缩插件，对文件进行压缩
+new webpack.optimize.UglifyJsPlugin:使用webpack里面自带的UglifyJs压缩插件，对文件进行压缩
 这种使用情况需要导入webpack，才能使用
 
-new UglifyJsPlugin({compress:{warning:false}})：单独下载了UglifyJsPlugin插件
+new UglifyJsPlugin({compress:{warning:false}}):单独下载了UglifyJsPlugin插件
 
 
 
 
 
 HtmlwebpackPlugin:会将当前导出的所有文件路径引入到自动生成的一个html中，进行测试使用
-引入:webpack-dev-server插件才能使用：
+引入:webpack-dev-server插件才能使用:
 默认情况下不开启热替换(热替换的优势，在于对修改的内容进行替换，提高性能，不开启热替换，会全局替换，耗性能)
 HotModuleReplacementPlugin:在修改文件之后，进行了保存操作，会触发保存在内存中，使用的数据，
 

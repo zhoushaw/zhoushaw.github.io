@@ -1,6 +1,6 @@
 ---
 title: egg.js
-date: 2018-10-27 16：14
+date: 2018-10-27 16:14
 tags: node
 categories: node
 ---

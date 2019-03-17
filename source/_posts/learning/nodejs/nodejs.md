@@ -12,7 +12,7 @@ tags: nodejs
 在js中的顶层window
 在node中的顶层对象global
 
-注意：
+注意:
 在node中没有什么window
 一个文件就是一个模块
 每个模块都有自己的作用域
@@ -22,7 +22,7 @@ tags: nodejs
 ## 模块加载系统
 requires(加载模块)
 模块加载机制:
-	路径：
+	路径:
 		1.绝对路径(电脑中文件的路径)
 		2.相对路径，require('./server');必须是以./开头
      	 require('2.js');//加载node中的核心模块，或者node__mdoules
@@ -39,15 +39,15 @@ requires(加载模块)
 如果我们想一个模块能访问另外一个模块中定义的变量，可以
 1.把变量作为global对象的属性，但是这样的做法是不推荐的
 2.使用模块对象、module
-module：保存提供和当前模块有关的一些信息
-在这个module对象，有一个子对象：exports对象，我们可以通过这个对象把一个模块中的局部变量
+module:保存提供和当前模块有关的一些信息
+在这个module对象，有一个子对象:exports对象，我们可以通过这个对象把一个模块中的局部变量
 对外进行访问
 如果在一个模块中通过require();引入了一个文件，可以访问这个module对象的属性
 require();这个方法的返回值，其实就是被加载模块中的module.exports
 
 api:
 1.__filename:返回当前模块文件的解析后的绝对路径。其属性并非全局，而是模块作用域下的
-2.__dirname：返回当前模块文件所在目录解析后的绝对路径，该属性也不是全局的，而是木块作用域下的
+2.__dirname:返回当前模块文件所在目录解析后的绝对路径，该属性也不是全局的，而是木块作用域下的
 
 
 ## module模块
@@ -57,7 +57,7 @@ api:
 我们使用var来申明的一个变量，他并不是全局的，而是属于当前模块下
 
 在一个模块中通过var定义的变量，其作用域范围是当前模块，外部不能够直接的访问
-如果我们想一个模块能够访问另外一个模块中定义的变量，可以：
+如果我们想一个模块能够访问另外一个模块中定义的变量，可以:
 1.把变量作为global对象的一个属性，但是这样的做法是不推荐
 2.使用模块对象 module.exports可以将这个局部变量的属性共享出去
 
@@ -79,7 +79,7 @@ Vue.http.headers。post['Content-Type']='x-www-application-urlencoded';
 
 对于非简单请求，Vue-resource会先发送一次method为options的请求，如果服务器能正常响应(表示服务器支持非简单类型请求)，客户端才真正的发送本次非简单请求
 
-什么是非简单请求：请求类型为PUT、DELETE或者POST类型请求时Content-Type不为x-www-applications-urlencoded form/urlecoed??时为非简单请求
+什么是非简单请求:请求类型为PUT、DELETE或者POST类型请求时Content-Type不为x-www-applications-urlencoded form/urlecoed??时为非简单请求
 
 
 res.writeHeader({
@@ -112,21 +112,21 @@ npm install 会读取package.json文件里面的dependencies,和Devdependencies�
 根据package.json文件的配置自动安装第三方库，通过读取dependencies和Devdepencies里面的配置安装所需的插件
 
 npm install body-parser --save
-使用nmp 安装一个包，会在当前目录下找package。json文件，并且在dependencies：里面增加包的名字，还有版本号
+使用nmp 安装一个包，会在当前目录下找package。json文件，并且在dependencies:里面增加包的名字，还有版本号
 dependencies:
 	产品阶段(投入使用阶段)用到的第三方库,里面的插件依赖于别的插件，但是只显示最终要显示的插件，
 
 npm install body-parser --save-dev == npm install --save-dev  body-parser
-使用nmp 安装一个包，会在当前目录下找package。json文件，并且在Devdependencies：里面增加包的名字，还有版本号
+使用nmp 安装一个包，会在当前目录下找package。json文件，并且在Devdependencies:里面增加包的名字，还有版本号
 Devdependencies:
 	开发阶段使用的第三方库，里面的用于放一些最终使用插件所依赖的插件
 
-script：
+script:
 	里面放的是
 
 ## express
 
-概述：express是基于Node.js下的http模块扩展的框架
+概述:express是基于Node.js下的http模块扩展的框架
 
 ### express创建服务器
 
@@ -221,7 +221,7 @@ app.use('/about',function(req,res,next){
 ### 设置当前网站的根目录
 
 app.use(express.static(__dirname+'/public'));
-不同形式：
+不同形式:
 var path = require('path');
 //path函数可以将里面的字符串拼接在一起
 app.use(express.static(path.jion(__dirname,'/public')));

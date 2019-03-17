@@ -1,6 +1,6 @@
 ---
 title: node查询ip
-date: 2018-10-28 16：14
+date: 2018-10-28 16:14
 tags: dns
 categories: node
 ---
@@ -51,7 +51,7 @@ dns.resolve4('id.qq.com', function(err, address){
 从上面的例子来看，两个方法都可以查询域名的ip列表。那么，它们的区别在什么地方呢？
 可能最大的差异就在于，当配置了本地Host时，是否会对查询结果产生影响。
 
-* dns.lookup()：有影响。
-* dns.resolve4()：没有影响。
+* dns.lookup():有影响。
+* dns.resolve4():没有影响。
 
 

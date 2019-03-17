@@ -29,9 +29,9 @@ categories: sass
     <dd> 类似于javascript中的function 声明函数，</dd>
     <dt>bg-image:</dt>
     <dd>名为bg-image的函数</dd>
-    <dt>$url：</dt>
+    <dt>$url:</dt>
     <dd>
-        在sass中，变量的定义方式使用$符号表示<br/>例：$url www.baidu.com
+        在sass中，变量的定义方式使用$符号表示<br/>例:$url www.baidu.com
     </dd>
 </dl>
 
@@ -52,7 +52,7 @@ categories: sass
 
 > 使用each遍历器将会在实际工作中减少大量的类名定义工作
 
-``例如``：
+``例如``:
 
 ```html
 
@@ -75,7 +75,7 @@ $goodsType: decrease discount special invoice guarantee;
 
 
 <dl>
-    <dt>$goodsType：</dt>
+    <dt>$goodsType:</dt>
     <dd>定义数组变量名为goodsType，参数decrease,discoutn...</dd>
     <dt>@each:</dt>
     <dd>其中$types in $goodsType相当于javascript中的for i in item</dd>

@@ -17,7 +17,7 @@ mongod --dbpath E:\mongodb\db -directoryperdb
 
 ## 基本操作
 
-进入使用：
+进入使用:
 - mongo 进入数据库操作
 - show dbs :展示所有的数据库
 - use ‘local’:使用哪一个数据库
@@ -36,10 +36,10 @@ db.people.insert({name:'leo',age:'23'});	:插入数据
 var model ={name:'leo',age:'23'}
 db.people.insert(model);
 
-### 查找：(支持正则表达式)
+### 查找:(支持正则表达式)
 
 - db.people.find({$where:function(){return this.name!='zs'}});	:查找名字不为zs的数据
-- db.people.findOne();	：找到第一条数据
+- db.people.findOne();	:找到第一条数据
 - 
 - db.people.find({"name":/^[^z]/,"address.provice":"guangzhou"});	:找到数据name开头不为z，并且地址省份为guangzhou的数据
 - db.people.find({$or:[{"name":"zs"},{"address.provice":"guangzhou"}]});	:找到name为zs或者address。provice为guangzhoju的数据
@@ -50,10 +50,10 @@ db.people.insert(model);
 
 
 db.student.find({age:{$gt:20}});	:大于20
-db.student.find({age:{$gte:20}});	：大于等于20
-db.student.find({age:{$lt:20}});	：小于20
-db.student.find({age:{$lte:20}});	：小于等于20
-db.student.find({age:{$ne:20}});	：不等于20
+db.student.find({age:{$gte:20}});	:大于等于20
+db.student.find({age:{$lt:20}});	:小于20
+db.student.find({age:{$lte:20}});	:小于等于20
+db.student.find({age:{$ne:20}});	:不等于20
 
 $gt : >
 $lt : <
@@ -80,7 +80,7 @@ db.people.update({naem:'ls',{$set{"address.provice":"jiangxi"}}});
 
 
 
-### 删除：
+### 删除:
 
 db.people.remove({});		:删除people的所有数据
 
@@ -92,12 +92,12 @@ db.student.update({},{},false,false);
 第一个参数修改的参数，
 第二个参数修改成什么样子
 第三个默认false，true没有找到修改的数据，插入
-第四个数据：默认false，找到后只修改一条，true修改所有的
+第四个数据:默认false，找到后只修改一条，true修改所有的
 
 
 db.student.update({name:'ls'},{$set:{age:'22'}});	:只修改我们想修改的
 
-db.student.update({name:'ls'},{age:'22'});	：使用后只留下了要改的数据
+db.student.update({name:'ls'},{age:'22'});	:使用后只留下了要改的数据
 
 db.student.update({},{$set:{age:'22'}});	:所有数据年龄变成22
 
@@ -130,15 +130,15 @@ db.dormitory.ensureIndex({name:1});		:表示升序的索引，-1表示降序的�
 db.dormitory.ensureIndex({name:1},(unique:true));
 
 
-删除索引：
+删除索引:
 db.dormitory.dropIndex('name_1');
 
-排序：
+排序:
 db.dormitory.find().sort({name:1},{sex:1});按照name来升序，第二条件是性别
 db.dormitory.find().sort({name:-1});按照name来降序
 
 
-分组：
+分组:
 db.dormitory.group({
 	key:{type:true},//可以联合分组，增加多个条件	
 	initial:{count:0,names:[]},//每次进来初始化这两个参数，
@@ -150,7 +150,7 @@ db.dormitory.group({
 	condition:{type:'male'}
 });
 key:分组的关键词
-initial：进行操作的数据初始化
+initial:进行操作的数据初始化
 reduce进行的操作
 db.dormitory.group({
 	key:{type:true},

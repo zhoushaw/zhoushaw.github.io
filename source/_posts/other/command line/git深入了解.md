@@ -132,7 +132,7 @@ git rm --cached <file.name>	会删除暂存区的文件
 
 ## 将文件同步到远程仓库
 
-第一次推送代码到远程仓库时，使用：
+第一次推送代码到远程仓库时，使用:
 git push -u origin master(分之名) 后续只需要使用git push命令即可
 
 git push origin master (分支名)    可以将当前版本信息提交到远程仓库中
@@ -194,39 +194,39 @@ git push origin	:<branchName>	//删除对应的远程分支
 
 ### 分支操作
 
-切换分支：git checkout name
-撤销修改：git checkout -- file
-删除文件：git rm file
-查看状态：git status
-添加记录：git add file 或 git add .
-添加描述：git commit -m "miao shu nei rong"
-同步数据：git pull
-提交数据：git push origin name
+切换分支:git checkout name
+撤销修改:git checkout -- file
+删除文件:git rm file
+查看状态:git status
+添加记录:git add file 或 git add .
+添加描述:git commit -m "miao shu nei rong"
+同步数据:git pull
+提交数据:git push origin name
 分支操作
-查看分支：git branch
-创建分支：git branch name
-切换分支：git checkout name
-创建+切换分支：git checkout -b name
-合并某分支到当前分支：git merge name
-删除分支：git branch -d name
-删除远程分支：git push origin :name
+查看分支:git branch
+创建分支:git branch name
+切换分支:git checkout name
+创建+切换分支:git checkout -b name
+合并某分支到当前分支:git merge name
+删除分支:git branch -d name
+删除远程分支:git push origin :name
 合并分支并生成合并记录:git merge --no-ff  name
 
 ## 暂存文件不提交commit
 
 
-Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作：
+Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作:
 
 git stash
 命令将当前暂存区的文件存储在空间内，
 
-工作区是干净的，刚才的工作现场存到哪去了？用git stash list命令看看：
+工作区是干净的，刚才的工作现场存到哪去了？用git stash list命令看看:
 git stash list
 命令将当前暂时存区域的文件列表出来，
 
 一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
 
-另一种方式是用git stash pop，恢复的同时把stash内容也删了：
+另一种方式是用git stash pop，恢复的同时把stash内容也删了:
 
 
 
@@ -255,9 +255,9 @@ fast-forward方式就是当条件允许的时候，git直接把HEAD指针指向�
 
 git merge --squash 是用来把一些不必要commit进行压缩，比如说，你的feature在开发的时候写的commit很乱，那么我们合并的时候不希望把这些历史commit带过来，于是使用--squash进行合并，此时文件已经同合并后一样了，但不移动HEAD，不提交。需要进行一次额外的commit来“总结”一下，然后完成最终的合并。
 
-总结：
---no-ff：不使用fast-forward方式合并，保留分支的commit历史
---squash：使用squash方式合并，把多次分支commit历史压缩为一次
+总结:
+--no-ff:不使用fast-forward方式合并，保留分支的commit历史
+--squash:使用squash方式合并，把多次分支commit历史压缩为一次
 
 
 

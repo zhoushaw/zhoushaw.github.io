@@ -55,7 +55,7 @@ npm install hexo-browsersync --save
 
 ## hexo主题默认a标签带下划线 ##
 
-因为hexo默认的是a标签带border-bottom：black样式，所以在文章中要使用border-bottom： none；样式来清除自带的属性
+因为hexo默认的是a标签带border-bottom:black样式，所以在文章中要使用border-bottom: none；样式来清除自带的属性
 
 blog\themes\next\source\css\_common\components\sidebar\sidebar.sty
 中可以设置友链接的下划线
@@ -102,7 +102,7 @@ blog\themes\next\source\css\_common\components\sidebar\sidebar.sty
 npm install hexo-generator-feed --save
 开启RSS功能
 
-编辑hexo/_config.yml，添加如下代码：
+编辑hexo/_config.yml，添加如下代码:
 
 rss: /atom.xml #rss地址  默认即可
 

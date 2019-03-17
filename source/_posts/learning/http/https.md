@@ -18,7 +18,7 @@ categories: http
 <div><!-- more--></div>
 
 ## 客户端例子
-`跟http模块的用法非常像，只不过请求的地址是https协议的而已，代码如下：`
+`跟http模块的用法非常像，只不过请求的地址是https协议的而已，代码如下:`
 
 ```
 var https = require('https');
