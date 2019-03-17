@@ -16,14 +16,14 @@ home_nav:
   - name: Blog
     url: /archives
     target_blank: false #不在新页面打开
+  - name: Github
+    url: https://github.com/zhoushaw
+    target_blank: true
   - name: Project
     url: /project/
     target_blank: true #在新页面打开
-  - name: Github
-    url: https://github.com/forsigner
-    target_blank: true
-  - name: Twitter
-    url: https://twitter.com/forsigner
+  - name: Juejin
+    url: https://juejin.im/user/5a91537df265da4e8700e73b
     target_blank: true
 
 # config page nav
@@ -32,14 +32,14 @@ page_nav:
     url: /archives/
     target_blank: false # 不在新页面打开
   - name: 分类
-    url: /category/
+    url: /categories/
     target_blank: false
   - name: 标签
-    url: /tag/
+    url: /tags/
     target_blank: false
-  - name: 友链
-    url: /link/
-    target_blank: false
+  # - name: 友链
+  #   url: /link/
+  #   target_blank: false
   - name: 关于
     url: /about/
     target_blank: false
@@ -67,7 +67,7 @@ search_slogan:
 
 link_slogan:
   isShow: true # true|fase
-  text: 交换友链可以邮件 forsigner@gmail.com
+  text: 交换友链可以邮件 codingzx@gmail.com
 
 
 # set backtop show or hide
@@ -194,52 +194,47 @@ about:
   - type: me
     icon: icon-user
     text_value:
-    - "Scut，1991，Spring."
+    - "zhoushaw, 1995."
     - "喜欢设计，擅长编程，喜欢睡懒觉."
-    - "前端开发工程师，常用 HTML / CSS / JavaScript."
+    - "前端开发工程师，常用 JavaScript / Node / Electron."
   - type: Github
     icon: icon-github
     text_key: Github
-    text_value: "@forsigner"
-    text_value_url: https://github.com/forsigner
-  - type: weibo
-    icon: icon-weibo
-    text_key: 微博
-    text_value: "@forsigner"
-    text_value_url: http://weibo.com/u/1847075964
+    text_value: "@zhoushaw"
+    text_value_url: https://github.com/zhoushaw
   - type: mail
     icon: icon-mail
     text_key: Gmail
-    text_value: "forsigner@gmail.com"
+    text_value: "codingzx@gmail.com"
   - type: location
     icon: icon-location
-    text_value: 珠海
+    text_value: 杭州
 
-link:
-  - name: 织网
-    info: 身体和灵魂，总有一个在路上
-    url: http://zheng-ji.info/
-    avatar: https://avatars3.githubusercontent.com/u/1414745?v=3&s=100
-  - name: Dongyado
-    info: 生命不止，折腾不息
-    url: http://dongyado.com/
-    avatar: https://avatars0.githubusercontent.com/u/6274940?v=3&s=100
-  - name: OrangeCoder
-    info: android ffmpeg nodejs gradle
-    url: http://orangecoder.com/
-    avatar: https://avatars0.githubusercontent.com/u/2263785?v=3&s=100
-  - name: EverET
-    info: 好记性不如烂笔头
-    url: http://everet.org/about-me/
-    avatar: https://avatars1.githubusercontent.com/u/1559563?v=3&s=100
-  - name: 题叶
-    info: FP, GUI, Writing
-    url: http://tiye.me/
-    avatar: https://avatars2.githubusercontent.com/u/449224?v=3&s=100
-  - name: McChen
-    info: Stay Hungry, Stay Foolish
-    url: http://mcchen.club/
-    avatar: https://avatars0.githubusercontent.com/u/8033333?v=3&s=100
+# link:
+#   - name: 织网
+#     info: 身体和灵魂，总有一个在路上
+#     url: http://zheng-ji.info/
+#     avatar: https://avatars3.githubusercontent.com/u/1414745?v=3&s=100
+#   - name: Dongyado
+#     info: 生命不止，折腾不息
+#     url: http://dongyado.com/
+#     avatar: https://avatars0.githubusercontent.com/u/6274940?v=3&s=100
+#   - name: OrangeCoder
+#     info: android ffmpeg nodejs gradle
+#     url: http://orangecoder.com/
+#     avatar: https://avatars0.githubusercontent.com/u/2263785?v=3&s=100
+#   - name: EverET
+#     info: 好记性不如烂笔头
+#     url: http://everet.org/about-me/
+#     avatar: https://avatars1.githubusercontent.com/u/1559563?v=3&s=100
+#   - name: 题叶
+#     info: FP, GUI, Writing
+#     url: http://tiye.me/
+#     avatar: https://avatars2.githubusercontent.com/u/449224?v=3&s=100
+#   - name: McChen
+#     info: Stay Hungry, Stay Foolish
+#     url: http://mcchen.club/
+#     avatar: https://avatars0.githubusercontent.com/u/8033333?v=3&s=100
 
 
 project:
