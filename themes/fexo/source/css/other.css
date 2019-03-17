@@ -104,7 +104,10 @@ body {
 	}
 	.content-post .assist-btn1, .assist-btn2{
 		display:none;
-	}
+    }
+    .content {
+        border-left: none;
+    }
 }
 
 .assist-btn1,.assist-btn2 {
