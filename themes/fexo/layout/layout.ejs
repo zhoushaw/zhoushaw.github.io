@@ -1,6 +1,7 @@
 <%- partial('_partial/head') %>
 <body>
-  
+
+
   <% if(theme.toolbox && theme.toolbox.isShow == true && page.base !== '') { %>
     <span id="toolbox-mobile" class="toolbox-mobile"><%=  theme.toolbox.text %></span>
   <% } %>
@@ -17,10 +18,5 @@
   <% } %>
 
   <%- partial('_partial/load-script') %>
-
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/clicklove.js"></script>
- 
-  
 </body>
 </html>

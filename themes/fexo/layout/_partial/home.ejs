@@ -23,16 +23,5 @@
       </li>
     <% }) %>
   </ul>
-</div>
 
-<canvas id="canvas" class="canvas" style="position: fixed;top: 0;height: 100%;width: 100%;z-index; 0;" ></canvas>
-<script src="https://cdn.jsdelivr.net/npm/trianglify@2.0.0/dist/trianglify.min.js"></script>
-<script>
-var isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);
-Trianglify({
-    width: window.innerWidth,
-    height: window.innerHeight,
-    cell_size: isMobile ? 32 : 75
-}).canvas(document.getElementById('canvas'));
-</script>
-<script type="text/javascript" src="public/analyze.js?t=2017-03-07"></script>  
+</div>
