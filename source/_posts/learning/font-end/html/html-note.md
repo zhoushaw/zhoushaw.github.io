@@ -8,10 +8,13 @@ categories: learning
 
 <div><!-- more--></div>
 
-## 删除线: ##
+## 删除线:
     1.<strike>
     2.<del>
+    
+## div可编辑
 
+`contenteditable="true"`属性设置，可将div变成可编辑状态，可通过元素属性来
 
 
 ## 特殊符号: ##
