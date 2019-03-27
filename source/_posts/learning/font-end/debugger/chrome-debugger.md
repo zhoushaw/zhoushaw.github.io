@@ -19,4 +19,10 @@ categories: debugger
 
 [协议](https://deskid.github.io/2018/04/02/h5-debug/)
 
+## chrome常用调试方法
+
+> 代码搜索
+
+command + option + f可打开chrome全局搜索，搜索包括代码库中内容
+
 
