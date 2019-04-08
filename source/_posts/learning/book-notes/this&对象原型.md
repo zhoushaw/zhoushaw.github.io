@@ -404,3 +404,146 @@ myObj.key = value;
 * Error
 
 
+### 基本字面量
+
+在JavaScript中基本字面量会转换成对象
+
+
+
+<p class="tip">一般来说，我们通过基本字面量：`let str = 'hello world';`创建的字符串，他只是个基本类型按道理来说不存在属性，但通过`str.length`却可以轻松渠道str字符串的长度，这是怎么回事呢，原来JavaScript会将**字面量形式的str**，转变成`String`对象形式的字符串</p>
+
+> 基本字面量转变成对象的类型
+
+* String
+* Number
+* Boolean
+* RegExp
+
+
+
+
+> 深浅拷贝
+
+在进行深浅拷贝前，我们先明确，基本数据类型和复杂类型赋值的不同：
+
+* 在我们进行赋值操作的时候，基本数据类型的赋值（=）是在内存中新开辟一段栈内存，然后再把再将值赋值到新的栈中
+* 但是引用类型的赋值是传址。只是改变指针的指向，例如，也就是说引用类型的赋值是对象保存在栈中的地址的赋值，这样的话两个变量就指向同一个对象，因此两者之间操作互相有影响
+
+
+> 赋值（=）和浅拷贝的区别
+
+浅复制只会将对象的各个属性进行依次复制，并不会进行递归复制，而 JavaScript 存储对象都是存地址的，所以浅复制会导致赋值后的对象属性指向同一个内存地址
+
+
+### 属性描述符
+
+
+> 获取对象属性性质
+
+```
+var myObject = {
+	a: 2
+};
+
+Object.getOwnPropertyDescriptor( myObject, "a" );
+// {
+//    value: 2,
+//    writable: true,
+//    enumerable: true,
+//    configurable: true
+// }
+```
+
+
+> 明确定义一个属性
+
+```
+var myObject = {};
+
+Object.defineProperty( myObject, "a", {
+	value: 2,
+	writable: true,
+	configurable: true,
+	enumerable: true
+} );
+
+myObject.a; // 2
+```
+
+<p class="tip">使用 defineProperty(..)，我们手动、明确地在 myObject 上添加了一个直白的，普通的 a 属性。然而，你通常不会使用这种手动方法，除非你想要把描述符的某个性质修改为不同的值。</p>
+
+
+> 修改属性性质
+
+```
+var myObject = {
+    a: 2
+};
+
+Object.defineProperty( myObject, "a", {
+	value: 2, 
+	writable: true,
+	configurable: true,
+	enumerable: true 
+} );
+
+```
+
+* value
+    * 默认值：设置的初始值
+* writable
+    * 可修改性
+    * 默认值：true
+    * 将属性设置true后，修改属性值，将会发生`TypeError`(如果你试图改变一个不可配置属性的描述符定义，就会发生 TypeError)
+* configurable
+    * 可配置性
+    * 能否通过defineProperty重新定义特性
+    * 设置false后无法，更改特性
+    * 默认值：true
+    * 阻止的另外一个事情是使用 delete 操作符移除既存属性的能力
+* enumerable
+    * 可遍历性
+    * 默认值：true
+
+
+### 设置对象的几个方法
+
+#### 防止扩展(Prevent Extensions)
+
+`Object.preventExtensions(..)`
+
+
+<p class="tip">不能添加新的属性</p>
+
+```
+var myObject = {
+	a: 2
+};
+
+Object.preventExtensions( myObject );
+
+myObject.b = 3;
+myObject.b; // undefined
+```
+
+#### 封印（Seal）
+
+
+`Object.Seal(..)`
+
+<p class="tip">它实质上在当前的对象上调用 Object.preventExtensions(..)、并且属性标记为 configurable:false</p>
+
+```
+var myObject = {
+	a: 2
+};
+
+Object.Seal( myObject );
+```
+
+#### 冻结（Freeze）
+
+`Object.freeze(..)`
+
+<p class="tip">Object.freeze(..) 创建一个冻结的对象，这意味着它实质上在当前的对象上调用 Object.seal(..)，同时也将它所有的“数据访问”属性设置为 writable:false，所以它们的值不可改变。</p>
+
