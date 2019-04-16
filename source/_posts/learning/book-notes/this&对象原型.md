@@ -547,3 +547,8 @@ Object.Seal( myObject );
 
 <p class="tip">Object.freeze(..) 创建一个冻结的对象，这意味着它实质上在当前的对象上调用 Object.seal(..)，同时也将它所有的“数据访问”属性设置为 writable:false，所以它们的值不可改变。</p>
 
+
+## 三、原型与原型链
+
+[JavaScript深入之原型链](https://github.com/mqyqingfeng/Blog/issues/2)
+
