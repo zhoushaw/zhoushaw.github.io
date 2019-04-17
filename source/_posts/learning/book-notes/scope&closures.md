@@ -1,5 +1,5 @@
 ---
-title: scope&closures
+title: scope & closures
 date: 2019-4-5 4:36:35
 categories: js
 tags: js
@@ -384,3 +384,4 @@ var MyModules = (function Manager() {
 })();
 
 ```
+
