@@ -547,7 +547,6 @@ Object.Seal( myObject );
 
 <p class="tip">Object.freeze(..) 创建一个冻结的对象，这意味着它实质上在当前的对象上调用 Object.seal(..)，同时也将它所有的“数据访问”属性设置为 writable:false，所以它们的值不可改变。</p>
 
-<<<<<<< HEAD
 ### 混合（淆）“类”的对象
 
 
@@ -648,10 +647,4 @@ Object.getPrototypeOf( a ) === Foo.prototype; // true
 <p class="tip">当一个属性/方法引用在一个对象上发生，而这样的属性/方法又不存在时，这个链接就会被使用。在这种情况下，[[Prototype]] 链接告诉引擎去那个被链接的对象上寻找该属性/方法。接下来，如果那个对象也不能满足查询，就沿着它的 [[Prototype]] 查询，如此继续。这种对象间的一系列链接构成了所谓的“原形链”。
 </p>
 
-=======
-
-## 三、原型与原型链
-
-[JavaScript深入之原型链](https://github.com/mqyqingfeng/Blog/issues/2)
->>>>>>> 82ad19f98037f9c0449f18497adbaf282561ff70
 
