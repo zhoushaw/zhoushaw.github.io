@@ -34,3 +34,16 @@ Infinity,超棒的无广告，体验好的。导航页
 
 解决跨域神器。有时候后端跟你说，线下不支持跨域？？没办法自己支持吧，就用这个神器
 
+> Tampermonkey
+
+俗称为猴油浏览器插件，支持第三方JS注入，实现比较酷炫的事情。
+![](https://s10.mogucdn.com/mlcdn/c45406/190419_122h6g0jhf8c2353fga0gaecb51ee_2494x556.png)
+
+下面列举一下：
+
+* 豆瓣资源大师
+![](https://s10.mogucdn.com/mlcdn/c45406/190419_4g6gk82abld135e11d57gi7b90g77_2472x1330.png)
+* 百度云下载助手
+![](https://s10.mogucdn.com/mlcdn/c45406/190419_4b5l6ahibd5cgfdd4cj7dc3e76bcb_1966x1296.png)
+
+
