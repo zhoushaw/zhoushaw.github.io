@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo折腾记 | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="hexo," />
+  
+
+  <meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo折腾记">
+<meta property="og:url" content="http://zhoushaw.github.io/2017/04/29/other/build blog/Hexo-note/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-14T13:54:11.954Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo折腾记">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建hexo"><span class="toc-text">搭建hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高亮代码显示"><span class="toc-text">高亮代码显示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#增加hexo，热更新"><span class="toc-text">增加hexo，热更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#站点文件-config-yml中配置"><span class="toc-text">站点文件_config.yml中配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#themes文件-config-yml中配置"><span class="toc-text">themes文件_config.yml中配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo主题默认a标签带下划线"><span class="toc-text">hexo主题默认a标签带下划线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为Hexo-Next主题添加哈林摇特效"><span class="toc-text">为Hexo Next主题添加哈林摇特效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客的搜索插件"><span class="toc-text">博客的搜索插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git，部署常用命令"><span class="toc-text">git，部署常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSS订阅"><span class="toc-text">RSS订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用locovpn无法上传博客"><span class="toc-text">使用locovpn无法上传博客</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客出问题时"><span class="toc-text">博客出问题时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索功能"><span class="toc-text">搜索功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数字统计功能"><span class="toc-text">数字统计功能</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-other/build blog/Hexo-note" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Hexo折腾记</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.04.29</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/other/">other</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 479字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 1分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+       <div><a id="more"></a></div>
+
+<h2 id="搭建hexo"><a href="#搭建hexo" class="headerlink" title="搭建hexo"></a>搭建hexo</h2><p><a href="https://xuanwo.org/2015/03/26/hexo-intor/" target="_blank" rel="noopener">hexo搭建参考文章</a><br>搭建要使用ssh秘钥链接</p>
+<h2 id="高亮代码显示"><a href="#高亮代码显示" class="headerlink" title="高亮代码显示"></a>高亮代码显示</h2><p>语法格式<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(```c)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> main();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"> (```)</span><br></pre></td></tr></table></figure></p>
+<p>这样的写法才能显示出高亮的代码，并且附带行数，给hexo主题去解析去掉括号</p>
+<h2 id="增加hexo，热更新"><a href="#增加hexo，热更新" class="headerlink" title="增加hexo，热更新"></a>增加hexo，热更新</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">npm install hexo-browsersync --save</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/hexojs/hexo-browsersync" target="_blank" rel="noopener">browersync插件</a></p>
+<h3 id="站点文件-config-yml中配置"><a href="#站点文件-config-yml中配置" class="headerlink" title="站点文件_config.yml中配置"></a>站点文件_config.yml中配置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">highlight:</span><br><span class="line">  enable: <span class="literal">true</span></span><br><span class="line">  line_number: <span class="literal">true</span></span><br><span class="line">  auto_detect: <span class="literal">true</span></span><br><span class="line">  tab_replace:</span><br></pre></td></tr></table></figure>
+<h3 id="themes文件-config-yml中配置"><a href="#themes文件-config-yml中配置" class="headerlink" title="themes文件_config.yml中配置"></a>themes文件_config.yml中配置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">highlight_theme: night eighties<span class="comment">//看主题提供了什么样的格式</span></span><br></pre></td></tr></table></figure>
+<p>这样子就完成了配置</p>
+<h2 id="hexo主题默认a标签带下划线"><a href="#hexo主题默认a标签带下划线" class="headerlink" title="hexo主题默认a标签带下划线"></a>hexo主题默认a标签带下划线</h2><p>因为hexo默认的是a标签带border-bottom:black样式，所以在文章中要使用border-bottom: none；样式来清除自带的属性</p>
+<p>blog\themes\next\source\css_common\components\sidebar\sidebar.sty<br>中可以设置友链接的下划线</p>
+<h2 id="为Hexo-Next主题添加哈林摇特效"><a href="#为Hexo-Next主题添加哈林摇特效" class="headerlink" title="为Hexo Next主题添加哈林摇特效"></a>为Hexo Next主题添加哈林摇特效</h2><p><a href="http://www.iamlj.com/2016/08/add-special-effect-harlem-shake-for-hexo/" target="_blank" rel="noopener">添加哈林摇特效,原作地址</a></p>
+<h2 id="博客的搜索插件"><a href="#博客的搜索插件" class="headerlink" title="博客的搜索插件"></a>博客的搜索插件</h2><p>可以去next官方文档查看</p>
+<h2 id="git，部署常用命令"><a href="#git，部署常用命令" class="headerlink" title="git，部署常用命令"></a>git，部署常用命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo -g #安装  </span><br><span class="line">npm update hexo -g #升级  </span><br><span class="line">hexo init #初始化</span><br><span class="line">	</span><br><span class="line">hexo n &quot;我的博客&quot; == hexo new &quot;我的博客&quot; #新建文章</span><br><span class="line">hexo p == hexo publish</span><br><span class="line">hexo g == hexo generate#生成</span><br><span class="line">hexo s == hexo server #启动服务预览</span><br><span class="line">hexo d == hexo deploy#部署</span><br></pre></td></tr></table></figure>
+<p>服务器</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hexo server #Hexo 会监视文件变动并自动更新，您无须重启服务器。</span><br><span class="line">hexo server -s #静态模式</span><br><span class="line">hexo server -p <span class="number">5000</span> #更改端口</span><br><span class="line">hexo server -i <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span> #自定义 IP</span><br><span class="line">hexo clean #清除缓存 网页正常情况下可以忽略此条命令</span><br><span class="line">hexo g #生成静态网页</span><br><span class="line">hexo d #开始部署</span><br></pre></td></tr></table></figure>
+<h2 id="RSS订阅"><a href="#RSS订阅" class="headerlink" title="RSS订阅"></a>RSS订阅</h2><p>安装RSS插件</p>
+<p>npm install hexo-generator-feed –save<br>开启RSS功能</p>
+<p>编辑hexo/_config.yml，添加如下代码:</p>
+<p>rss: /atom.xml #rss地址  默认即可</p>
+<h2 id="使用locovpn无法上传博客"><a href="#使用locovpn无法上传博客" class="headerlink" title="使用locovpn无法上传博客"></a>使用locovpn无法上传博客</h2><p>上传博客时，关闭vpn</p>
+<h2 id="博客出问题时"><a href="#博客出问题时" class="headerlink" title="博客出问题时"></a>博客出问题时</h2><p>hexo clean </p>
+<p>hexo init /<em>初始化数据</em>/</p>
+<p>hexo g</p>
+<p>hexo d -g</p>
+<h2 id="搜索功能"><a href="#搜索功能" class="headerlink" title="搜索功能"></a>搜索功能</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo-search</span><br></pre></td></tr></table></figure>
+<h2 id="数字统计功能"><a href="#数字统计功能" class="headerlink" title="数字统计功能"></a>数字统计功能</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo-wordcount</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/03/05/learning/http/http-question/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/05/23/other/tool/sublime-config/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

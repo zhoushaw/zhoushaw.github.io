@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>throttle 和 debounce | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="js," />
+  
+
+  <meta name="description" content="throttle 和 debounce是控制频率的高阶函数，返回一个包装后的匿名函数  在实际工作中的很多场景下都会使用到这两个高阶函数，并且在javascript中利用了闭包这一特性。下面对这两个函数进行详细讲解应用场景:  resize 重新计算样式布局   –debounce input输入停止1s时，获取ajax请求     –debounce scroll 计算当前是否大于固定值，显示">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="throttle 和 debounce">
+<meta property="og:url" content="http://zhoushaw.github.io/2018/10/23/learning/font-end/js/throttle 和 debounce/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="throttle 和 debounce是控制频率的高阶函数，返回一个包装后的匿名函数  在实际工作中的很多场景下都会使用到这两个高阶函数，并且在javascript中利用了闭包这一特性。下面对这两个函数进行详细讲解应用场景:  resize 重新计算样式布局   –debounce input输入停止1s时，获取ajax请求     –debounce scroll 计算当前是否大于固定值，显示">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-14T13:54:11.949Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="throttle 和 debounce">
+<meta name="twitter:description" content="throttle 和 debounce是控制频率的高阶函数，返回一个包装后的匿名函数  在实际工作中的很多场景下都会使用到这两个高阶函数，并且在javascript中利用了闭包这一特性。下面对这两个函数进行详细讲解应用场景:  resize 重新计算样式布局   –debounce input输入停止1s时，获取ajax请求     –debounce scroll 计算当前是否大于固定值，显示">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#throttle"><span class="toc-text">throttle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debounce"><span class="toc-text">debounce</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/font-end/js/throttle 和 debounce" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">throttle 和 debounce</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.10.23</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 796字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 3分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <blockquote>
+<p>throttle 和 debounce是控制频率的高阶函数，返回一个包装后的匿名函数</p>
+</blockquote>
+<p>在实际工作中的很多场景下都会使用到这两个高阶函数，并且在javascript中利用了闭包这一特性。下面对这两个函数进行详细讲解<br>应用场景:</p>
+<ul>
+<li>resize 重新计算样式布局   –debounce</li>
+<li>input输入停止1s时，获取ajax请求     –debounce</li>
+<li>scroll 计算当前是否大于固定值，显示头部   –throttle<div><a id="more"></a></div>
+
+
+</li>
+</ul>
+<h2 id="throttle"><a href="#throttle" class="headerlink" title="throttle"></a>throttle</h2><p>throttle也可以称之为节流函数，主要用于控制一段时间内，只允许执行一次指定函数。类似于打开阀门的水龙头，每过固定的时间内，滴出不超过一滴水</p>
+<p>主要场景用于:</p>
+<ul>
+<li>scroll</li>
+<li>resize</li>
+<li>mouse move</li>
+</ul>
+<p>在我们的实际工作中，基于性能和效率上的考虑，要限制函数的执行频率可以使用throttle</p>
+<p>以地铁为例进行说明:</p>
+<p>某个函数去乘坐地铁，必须等待🚇到站后，才能上车。🚇到站函数可以上车，但在固定时间点后，不管有没有人继续上车，🚇将会发车。</p>
+<p>在实际工作中的应用，列如:</p>
+<p>淘宝网需要在用户滑动滚轮，距离顶部500px时，隐藏顶部导航栏，这个时候我们需要对用户的滑动事件进行监听，当用户进行滑动时，我们可以获取到用户当前滑动的距离，与500px进行比较。当用户的滑动距离大于等于500时，执行隐藏操作。</p>
+<p>通常实现:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&quot;scroll&quot;, () =&gt; &#123;</span><br><span class="line">    let scrollTop = document.documentElement.scrollTop</span><br><span class="line">    if (scrollTop &gt;= 500) &#123;</span><br><span class="line">       // 隐藏头部逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>但是滚动事件的触发频率非常高，这样将会造成性能上的浪费，我们可以通过throttle函数来控制频率，我们可以控制用户在滚动滚轮时，在500毫秒内只触发一次检测，当前用户距离是否距离顶部大于等于500</p>
+<p>具体实现:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># throttle函数</span><br><span class="line">function throttle(fn,delay = 250)&#123;</span><br><span class="line">    let timer;</span><br><span class="line">    let last;</span><br><span class="line">    </span><br><span class="line">    return function () &#123;</span><br><span class="line">        let now = +new Date();</span><br><span class="line">        if (last &amp;&amp; last + delay &gt; now) &#123;</span><br><span class="line">            clearTimeout(timer);</span><br><span class="line">            timer = setTimeout(function () &#123;</span><br><span class="line">                last = now;</span><br><span class="line">                fn.apply(this, arguments);</span><br><span class="line">            &#125;,delay)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            last = now;</span><br><span class="line">            fn.apply(this, arguments);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="debounce"><a href="#debounce" class="headerlink" title="debounce"></a>debounce</h2><p>debounce更类似于按压的弹簧，当你用力按压时，弹簧是不会弹起的。也可以比喻成电梯，电梯在一层停留时，只要有人进入就会一直陷入等待进入状态，等到没有人进入时就会移动。</p>
+<p>例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">以输入框的输入事件为例，淘宝网有一个银行卡添加页面，当用户在输入框输入银行卡时，会通过ajax请求获取当前银行卡类型，并检测是否支持。若用户每输入一个数字就进行校验，会造成性能上的浪费，可以通过debounce防抖函数，设置用户停止输入一秒后，对银行卡进行校验识别。</span><br></pre></td></tr></table></figure>
+<p>具体实现:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function debounce(fn, delay = 1000) &#123;</span><br><span class="line">    var timer;</span><br><span class="line">    var context = this;</span><br><span class="line">    return function() &#123;</span><br><span class="line">        if (timer) &#123;</span><br><span class="line">            clearTimeout(timer);</span><br><span class="line">            timer = setTimeout(function() &#123;</span><br><span class="line">                fn.apply(context,arguments);</span><br><span class="line">            &#125;, delay)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            timer = setTimeout(function() &#123;</span><br><span class="line">                fn.apply(context,arguments);</span><br><span class="line">            &#125;, delay)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/30/learning/font-end/js/CORS/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/01/09/2018总结/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Event loop | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="js," />
+  
+
+  <meta name="description" content="前言 请问下面输出的结果是什么  12345678910111213console.log(&amp;apos;script start&amp;apos;);setTimeout(function() &amp;#123;  console.log(&amp;apos;setTimeout&amp;apos;);&amp;#125;, 0);Promise.resolve().then(function() &amp;#123;  console.l">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Event loop">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/03/01/learning/font-end/event loop/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="前言 请问下面输出的结果是什么  12345678910111213console.log(&amp;apos;script start&amp;apos;);setTimeout(function() &amp;#123;  console.log(&amp;apos;setTimeout&amp;apos;);&amp;#125;, 0);Promise.resolve().then(function() &amp;#123;  console.l">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190301_80cgh13fd23fjkahjd296l7ig9e68_1152x241.jpg">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190301_3g51f9k9h099ga3lecj98d6adchh5_1344x752.jpg">
+<meta property="og:updated_time" content="2019-04-14T13:54:11.947Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Event loop">
+<meta name="twitter:description" content="前言 请问下面输出的结果是什么  12345678910111213console.log(&amp;apos;script start&amp;apos;);setTimeout(function() &amp;#123;  console.log(&amp;apos;setTimeout&amp;apos;);&amp;#125;, 0);Promise.resolve().then(function() &amp;#123;  console.l">
+<meta name="twitter:image" content="https://s10.mogucdn.com/mlcdn/c45406/190301_80cgh13fd23fjkahjd296l7ig9e68_1152x241.jpg">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Event-loop"><span class="toc-text">Event loop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#储备知识"><span class="toc-text">储备知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Event-loop任务"><span class="toc-text">Event loop任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器Event-loop"><span class="toc-text">浏览器Event loop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解答文章头部提出的问题"><span class="toc-text">解答文章头部提出的问题</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/font-end/event loop" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Event loop</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.03.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 1.2k字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 4分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>请问下面输出的结果是什么</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;script start&apos;);</span><br><span class="line"></span><br><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(&apos;setTimeout&apos;);</span><br><span class="line">&#125;, 0);</span><br><span class="line"></span><br><span class="line">Promise.resolve().then(function() &#123;</span><br><span class="line">  console.log(&apos;promise1&apos;);</span><br><span class="line">&#125;).then(function() &#123;</span><br><span class="line">  console.log(&apos;promise2&apos;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(&apos;script end&apos;);</span><br></pre></td></tr></table></figure>
+<p>纳尼？？仿佛又回想了当初被面试官支配时的恐惧了！！</p>
+<p>骚年稳住别慌，这道面试题考察的是你对Event loop事件循环的理解，当你深入了解浏览器或Node中如何处理事件循环的时候，上面此类题目对你来说就是so easy，好了话不多说让我们快速进入正题吧。</p>
+<div><a id="more"></a></div>
+
+
+<h2 id="Event-loop"><a href="#Event-loop" class="headerlink" title="Event loop"></a>Event loop</h2><blockquote>
+<p>是什么</p>
+</blockquote>
+<p><strong>Event loop</strong>即事件循环，是浏览器和Node环境中运行<strong>单线程JavaScript</strong>一种不阻塞运行的一种机制。也就是我们常常称之为的异步的原理。</p>
+<blockquote>
+<p>有什么作用</p>
+</blockquote>
+<ul>
+<li><p>类似于上面问答中的代码，一般情况下是不会产生的。但是由于一些业务场景迫使我们<strong>不可避免的编写出多个异步事件</strong>，而我们对其<strong>运行顺序不知其所以然</strong>，难免会造成不必要的困扰</p>
+</li>
+<li><p>当然Event loop也是面试场上的常胜将军，大多数同学都<strong>折戟于此</strong></p>
+</li>
+<li><p>市场上框架、新技术层出不穷，想要在风云突变的战场上稳住脚跟就必须<strong>修炼好内功</strong>，了解一些底层原理无非是非常好的路径</p>
+</li>
+</ul>
+<h2 id="储备知识"><a href="#储备知识" class="headerlink" title="储备知识"></a>储备知识</h2><p>在正式Event loop讲解前，我们先回顾一下基本数据结构知识</p>
+<blockquote>
+<p>队列</p>
+</blockquote>
+<p>队列是一种操作受限制的线性表，它只运行从<strong>表的前端(front)</strong>进行删除操作，<strong>表的后端(rear)</strong>进行添加操作。</p>
+<p>进行删除操作的称之为<strong>表头</strong>，添加操作的称之为<strong>表尾</strong>，空的队列称之为<strong>空队列</strong>。</p>
+<p>队列的线性结构赋予<strong>其先进先出</strong>的特性</p>
+<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190301_80cgh13fd23fjkahjd296l7ig9e68_1152x241.jpg" alt=""></p>
+<blockquote>
+<p>栈</p>
+</blockquote>
+<p>栈是一种操作受限制的线性表，它只运行从表的<strong>尾端(rear)</strong>进行<strong>添加操作和删除操作</strong></p>
+<p>栈的限制结构赋予其<strong>先进后出</strong>的特性</p>
+<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190301_3g51f9k9h099ga3lecj98d6adchh5_1344x752.jpg" alt=""></p>
+<h2 id="Event-loop任务"><a href="#Event-loop任务" class="headerlink" title="Event loop任务"></a>Event loop任务</h2><p>在JavaScript中，会将执行的任务分为两类，一种是<strong>宏任务</strong>(MacroTask)简称为<strong>Task</strong>,另一种是<strong>微任务</strong>(MicroTask)</p>
+<blockquote>
+<p>宏任务类型</p>
+</blockquote>
+<p><strong>script全部代码</strong>、<strong>setTimeout</strong>、<strong>setInterval</strong>、<strong>I/O</strong>、<strong>UI Rendering</strong></p>
+<blockquote>
+<p>微任务</p>
+</blockquote>
+<p><strong>Process.nextTick</strong>（Node独有）、<strong>Promise</strong>、<strong>MutationObserver</strong></p>
+<h2 id="浏览器Event-loop"><a href="#浏览器Event-loop" class="headerlink" title="浏览器Event loop"></a>浏览器Event loop</h2><p>在JavaScript中有一个<strong>主线程</strong>(main thread) 和<strong>调用栈</strong> (call-stack) ,所有任务都会被放到调用栈等待主线程执行。</p>
+<blockquote>
+<p>JS调用栈</p>
+</blockquote>
+<p>JS调用栈采用栈结构，是先进后出规则，当函数执行的时候会放到栈的顶部，当函数执行完成会将函数从栈顶移除，遇到新函数会新函数将推入栈内，执行完成从栈顶移除，直到栈被清空</p>
+<p>列如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function task1 () &#123;</span><br><span class="line">    console.log(&apos;task1&apos;);</span><br><span class="line">&#125;</span><br><span class="line">function task2 () &#123;</span><br><span class="line">    task1();</span><br><span class="line">    console.log(&apos;hello world&apos;);</span><br><span class="line">&#125;</span><br><span class="line">task2();</span><br></pre></td></tr></table></figure>
+<p>执行到task1()时，栈内容为:task2 task1，依次执行并移除task1、task2</p>
+<blockquote>
+<p>同步任务和异步任务</p>
+</blockquote>
+<p>在JavaScript将任务分为同步任务和异步任务，同步任务将依次放入调用栈中按照先进后出的规则，放入主线程执行。异步任务则是等待执行结果返回后放入任务队列中等待主线程空闲时(调用栈为空时，同步任务被执行完成时)，被读取到调用栈内等待主线程执行。</p>
+<p>简单来说可以将其区域分为三个区域:</p>
+<ul>
+<li>任务队列区</li>
+<li>主线程执行区</li>
+<li>MacroTask区</li>
+<li>MicroTask区</li>
+</ul>
+<blockquote>
+<p>任务之间执行顺序</p>
+</blockquote>
+<p>JavaScript代码在运行时，主线程顺序执行代码，按照栈的结构先进后出，将微任务存入微任务区，宏任务存入宏任务区。</p>
+<p>##<br>当任务队列任务为空时，将会查看MicroTask区队列是否为空，若为空则查询MacroTask区并执行。若不为空则执行MicroTask区任务，若遇到任务中存在MacroTask将存入MacroTask区队尾。执行MicroTask任务完成后将，执行MacroTask区任务</p>
+<h2 id="解答文章头部提出的问题"><a href="#解答文章头部提出的问题" class="headerlink" title="解答文章头部提出的问题"></a>解答文章头部提出的问题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;script start&apos;);</span><br><span class="line"></span><br><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(&apos;setTimeout&apos;);</span><br><span class="line">&#125;, 0);</span><br><span class="line"></span><br><span class="line">Promise.resolve().then(function() &#123;</span><br><span class="line">  console.log(&apos;promise1&apos;);</span><br><span class="line">&#125;).then(function() &#123;</span><br><span class="line">  console.log(&apos;promise2&apos;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(&apos;script end&apos;);</span><br></pre></td></tr></table></figure>
+<p>JavaScript在运行这段代码逐行执行，按照调用栈、宏任务、微任务执行过程如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">#过程一:</span><br><span class="line"></span><br><span class="line">MicroTask: </span><br><span class="line">MacroTask: setTimeout</span><br><span class="line"></span><br><span class="line">call-Task: </span><br><span class="line"></span><br><span class="line">Log: script start</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#过程二:</span><br><span class="line"></span><br><span class="line">MicroTask: Promise.then</span><br><span class="line">MacroTask: setTimeout</span><br><span class="line"></span><br><span class="line">call-Task: </span><br><span class="line"></span><br><span class="line">Log: script start</span><br><span class="line"></span><br><span class="line">#过程三:</span><br><span class="line"></span><br><span class="line">MicroTask: </span><br><span class="line">MacroTask: setTimeout</span><br><span class="line"></span><br><span class="line">call-Task: Promise.then</span><br><span class="line"></span><br><span class="line">Log:  script start、 script end</span><br><span class="line"></span><br><span class="line">#过程四:</span><br><span class="line"></span><br><span class="line">MicroTask: Promise.then promise2</span><br><span class="line">MacroTask: setTimeout</span><br><span class="line"></span><br><span class="line">call-Task: </span><br><span class="line"></span><br><span class="line">Log:  script start、 script end、promise1</span><br><span class="line"></span><br><span class="line">#过程五:</span><br><span class="line"></span><br><span class="line">MicroTask: </span><br><span class="line">MacroTask: setTimeout</span><br><span class="line"></span><br><span class="line">call-Task: Promise.then promise2</span><br><span class="line"></span><br><span class="line">Log:  script start、 script end、promise1</span><br><span class="line"></span><br><span class="line">#过程五:</span><br><span class="line"></span><br><span class="line">MicroTask: </span><br><span class="line">MacroTask: setTimeout</span><br><span class="line"></span><br><span class="line">call-Task: </span><br><span class="line"></span><br><span class="line">Log:  script start、 script end、promise1、promise2</span><br><span class="line"></span><br><span class="line">#过程六:</span><br><span class="line"></span><br><span class="line">MicroTask: </span><br><span class="line">MacroTask:</span><br><span class="line"></span><br><span class="line">call-Task: setTimeout</span><br><span class="line"></span><br><span class="line">Log:  script start、 script end、promise1、promise2</span><br><span class="line"></span><br><span class="line">#过程七:</span><br><span class="line"></span><br><span class="line">MicroTask: </span><br><span class="line">MacroTask:</span><br><span class="line"></span><br><span class="line">call-Task:</span><br><span class="line"></span><br><span class="line">Log:  script start、 script end、promise1、promise2、setTimeout</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/03/01/other/tool/Alfred3/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/03/16/other/tool/chrome-extend/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

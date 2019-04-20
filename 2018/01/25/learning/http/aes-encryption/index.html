@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>AES对称加密 | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="js,aes," />
+  
+
+  <meta name="keywords" content="js,aes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AES对称加密">
+<meta property="og:url" content="http://zhoushaw.github.io/2018/01/25/learning/http/aes-encryption/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://sf.dankal.cn/tmp/wxb6cbb81471348fec.o6zAJszA0KOosUhoTLKll8Q2-ufA.46e2722ada5f99c4d6cbca3b488da45c.jpg">
+<meta property="og:updated_time" content="2019-04-14T13:54:11.952Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AES对称加密">
+<meta name="twitter:image" content="http://sf.dankal.cn/tmp/wxb6cbb81471348fec.o6zAJszA0KOosUhoTLKll8Q2-ufA.46e2722ada5f99c4d6cbca3b488da45c.jpg">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目结构"><span class="toc-text">项目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pako-js"><span class="toc-text">pako.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CryptoJS核心"><span class="toc-text">CryptoJS核心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript-base64位编码"><span class="toc-text">javascript base64位编码</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/http/aes-encryption" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">AES对称加密</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.01.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 1.7k字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 9分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="http://sf.dankal.cn/tmp/wxb6cbb81471348fec.o6zAJszA0KOosUhoTLKll8Q2-ufA.46e2722ada5f99c4d6cbca3b488da45c.jpg" alt=""></p>
+<div><a id="more"></a></div>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>数据安全</p>
+</blockquote>
+<p>对于一款应用无疑非常重要,明文的数据传输对于应用而言非常致命。</p>
+<blockquote>
+<p>用户的数据，接口、信息等等都暴露在攻击者的面前</p>
+</blockquote>
+<p>1.攻击者只需要获取用户的token信息，就可以通过接口模拟<code>用户行为</code><br>2.使用用户信息模拟<code>用户操作</code></p>
+<blockquote>
+<p>解决目前的安全隐患</p>
+</blockquote>
+<p>前后端统一使用<code>Base64</code> -&gt; <code>AES</code> (<code>key</code>:keyname, <code>iv</code>:ivnum) -&gt; <code>gzip</code>的方式来，进行加密、解密。来确保数据安全</p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">util</span><br><span class="line">│  </span><br><span class="line">├─encryption</span><br><span class="line">│  ├─Base64.js</span><br><span class="line">│  ├─lock.js</span><br><span class="line">│  ├─pako.js</span><br><span class="line">│  ├─DataCrypt.js</span><br><span class="line">│  │  </span><br><span class="line">│  └─cryptojs</span><br><span class="line">│      ├─lib</span><br><span class="line">│      ├─cryptojs.js</span><br><span class="line">│      ├─package.json</span><br><span class="line">│      └─README.md</span><br><span class="line">└─comutil</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>工具类下的工具函数封装应用</p>
+</blockquote>
+<ul>
+<li>DataCrypt.js 对AES方法进行封装实现自定义key，vi</li>
+<li>pako 实现数据的压缩与解压缩</li>
+<li>base64对数据进行64位编码</li>
+<li>lock.js对以上数据处理方法进行整体封装</li>
+</ul>
+<blockquote>
+<p>locak.js的封装</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入AES加解密方法</span></span><br><span class="line"><span class="keyword">import</span> &#123; Encrypt,Decrypt &#125; <span class="keyword">from</span> <span class="string">'./DataCrypt.js'</span></span><br><span class="line"><span class="comment">// 引入Base64位，装换方法。</span></span><br><span class="line"><span class="keyword">import</span> &#123; Base64 &#125; <span class="keyword">from</span> <span class="string">'./Base64.js'</span>;</span><br><span class="line"><span class="comment">// 引入gizp，js中的压缩与解压缩</span></span><br><span class="line"><span class="keyword">let</span> pako = <span class="built_in">require</span>(<span class="string">'./pako.js'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> lock = <span class="function">(<span class="params">obj</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> jsonStringify,base64Encode,aesEncrypt,deflateString</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将json数据转成strting类型</span></span><br><span class="line">  jsonStringify = <span class="built_in">JSON</span>.stringify(obj)</span><br><span class="line">  <span class="comment">// 将jsonString数据转成base64位数据</span></span><br><span class="line">  base64Encode = Base64.encode(jsonStringify)</span><br><span class="line">  <span class="comment">// 将base64位数据使用AES进行加密</span></span><br><span class="line">  aesEncrypt = Encrypt(base64Encode); </span><br><span class="line">  <span class="comment">// 将aes加密数据进行压缩</span></span><br><span class="line">  deflateString = pako.deflate(aesEncrypt, &#123; <span class="attr">to</span>: <span class="string">'string'</span> &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> deflateString</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> unlock = <span class="function">(<span class="params">obj</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> jsonParse,base64Decode,aesDecrypt,inflateString</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将压缩的数据解压缩</span></span><br><span class="line">  inflateString = pako.inflate(obj, &#123; <span class="attr">to</span>: <span class="string">'string'</span> &#125;)</span><br><span class="line">  <span class="comment">// 将数据使用AES解码</span></span><br><span class="line">  aesDecrypt = Decrypt(inflateString)</span><br><span class="line">  <span class="comment">// 将base64位数据转成jsonstring格式</span></span><br><span class="line">  base64Decode = Base64.decode(aesDecrypt)</span><br><span class="line">  <span class="comment">// 将jsonstringify格式数据转成JSON数据</span></span><br><span class="line">  jsonParse = <span class="built_in">JSON</span>.parse(base64Decode)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> jsonParse</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; lock,unlock &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="pako-js"><a href="#pako-js" class="headerlink" title="pako.js"></a>pako.js</h2><blockquote>
+<p>压缩模块，可以对内容进行压缩和解压缩</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pako</span><br></pre></td></tr></table></figure>
+<p>模块安装完成之后使用，dist目录内的pako.js即可</p>
+<blockquote>
+<p>使用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> pako = <span class="built_in">require</span>(<span class="string">'./pako.js'</span>);</span><br><span class="line"><span class="keyword">let</span> deflateString = pako.deflate(obj, &#123; <span class="attr">to</span>: <span class="string">'string'</span> &#125;);</span><br><span class="line"><span class="keyword">let</span> inflateString = pako.inflate(obj, &#123; <span class="attr">to</span>: <span class="string">'string'</span> &#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="CryptoJS核心"><a href="#CryptoJS核心" class="headerlink" title="CryptoJS核心"></a>CryptoJS核心</h2><p>AES加密在密码学中又称Rijndael加密法，是美国联邦政府采用的一种区块加密标准</p>
+<blockquote>
+<p>起步</p>
+</blockquote>
+<pre>
+    npm install cryptojs
+</pre>
+
+<blockquote>
+<p>封装 DataCrypt.js,对cryptojs进行使用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> Crypto = <span class="built_in">require</span>(<span class="string">'./cryptojs/cryptojs'</span>).Crypto;</span><br><span class="line"><span class="keyword">const</span> Encrypt = <span class="function">(<span class="params">word</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> mode = <span class="keyword">new</span> Crypto.mode.CBC(Crypto.pad.pkcs7);</span><br><span class="line">    <span class="keyword">var</span> eb = Crypto.charenc.UTF8.stringToBytes(word);</span><br><span class="line">    <span class="keyword">var</span> kb = Crypto.charenc.UTF8.stringToBytes(<span class="string">"dankal1234567891"</span>);<span class="comment">//KEY</span></span><br><span class="line">    <span class="keyword">var</span> vb = Crypto.charenc.UTF8.stringToBytes(<span class="string">"12345678"</span>);<span class="comment">//IV</span></span><br><span class="line">    <span class="keyword">var</span> ub = Crypto.AES.encrypt(eb,kb,&#123;<span class="attr">iv</span>:vb,<span class="attr">mode</span>:mode,<span class="attr">asBpytes</span>:<span class="literal">true</span>&#125;);</span><br><span class="line">    <span class="keyword">return</span> ub;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//解密:</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span>   Decrypt = <span class="function">(<span class="params">word</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> mode = <span class="keyword">new</span> Crypto.mode.CBC(Crypto.pad.pkcs7);</span><br><span class="line">    <span class="keyword">var</span> eb = Crypto.util.base64ToBytes(word);</span><br><span class="line">    <span class="keyword">var</span> kb = Crypto.charenc.UTF8.stringToBytes(<span class="string">"dankal1234567891"</span>);<span class="comment">//KEY</span></span><br><span class="line">    <span class="keyword">var</span> vb = Crypto.charenc.UTF8.stringToBytes(<span class="string">"12345678"</span>);<span class="comment">//IV</span></span><br><span class="line">    <span class="keyword">var</span> ub = Crypto.AES.decrypt(eb,kb,&#123;<span class="attr">asBpytes</span>:<span class="literal">true</span>,<span class="attr">mode</span>:mode,<span class="attr">iv</span>:vb&#125;);</span><br><span class="line">    <span class="keyword">return</span> ub;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">    Encrypt,</span><br><span class="line">    Decrypt</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="javascript-base64位编码"><a href="#javascript-base64位编码" class="headerlink" title="javascript base64位编码"></a>javascript base64位编码</h2><blockquote>
+<p>由于在小程序中有诸多限制base64位转码方法有特定限制</p>
+</blockquote>
+<p>base64文件可以自行下载，这里列出一个，我再项目中使用的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Base64 &#125; <span class="keyword">from</span> <span class="string">'./Base64.js'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//编码</span></span><br><span class="line"> base64Encode = Base64.encode(jsonStringify)</span><br><span class="line"></span><br><span class="line"><span class="comment">//解码</span></span><br><span class="line"> base64Decode = Base64.decode(aesDecrypt)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>base64源码</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">;(<span class="function"><span class="keyword">function</span> (<span class="params">global, factory</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">typeof</span> exports === <span class="string">'object'</span> &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">module</span> !== <span class="string">'undefined'</span></span><br><span class="line">        ? <span class="built_in">module</span>.exports = factory(global)</span><br><span class="line">        : <span class="keyword">typeof</span> define === <span class="string">'function'</span> &amp;&amp; define.amd</span><br><span class="line">        ? define(factory) : <span class="literal">null</span></span><br><span class="line">&#125;((</span><br><span class="line">    <span class="keyword">typeof</span> self !== <span class="string">'undefined'</span> ? self</span><br><span class="line">        : <span class="keyword">typeof</span> <span class="built_in">window</span> !== <span class="string">'undefined'</span> ? <span class="built_in">window</span></span><br><span class="line">        : <span class="keyword">typeof</span> global !== <span class="string">'undefined'</span> ? global</span><br><span class="line">: <span class="keyword">this</span></span><br><span class="line">), <span class="function"><span class="keyword">function</span>(<span class="params">global</span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><span class="line">    <span class="comment">// existing version for noConflict()</span></span><br><span class="line">    <span class="keyword">var</span> _Base64 = global.Base64;</span><br><span class="line">    <span class="keyword">var</span> version = <span class="string">"2.4.2"</span>;</span><br><span class="line">    <span class="comment">// if node.js, we use Buffer</span></span><br><span class="line">    <span class="keyword">var</span> buffer;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">module</span> !== <span class="string">'undefined'</span> &amp;&amp; <span class="built_in">module</span>.exports) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            buffer = <span class="built_in">require</span>(<span class="string">'buffer'</span>).Buffer;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (err) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// constants</span></span><br><span class="line">    <span class="keyword">var</span> b64chars</span><br><span class="line">        = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'</span>;</span><br><span class="line">    <span class="keyword">var</span> b64tab = <span class="function"><span class="keyword">function</span>(<span class="params">bin</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> t = &#123;&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = bin.length; i &lt; l; i++) t[bin.charAt(i)] = i;</span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125;(b64chars);</span><br><span class="line">    <span class="keyword">var</span> fromCharCode = <span class="built_in">String</span>.fromCharCode;</span><br><span class="line">    <span class="comment">// encoder stuff</span></span><br><span class="line">    <span class="keyword">var</span> cb_utob = <span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (c.length &lt; <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> cc = c.charCodeAt(<span class="number">0</span>);</span><br><span class="line">            <span class="keyword">return</span> cc &lt; <span class="number">0x80</span> ? c</span><br><span class="line">                : cc &lt; <span class="number">0x800</span> ? (fromCharCode(<span class="number">0xc0</span> | (cc &gt;&gt;&gt; <span class="number">6</span>))</span><br><span class="line">                                + fromCharCode(<span class="number">0x80</span> | (cc &amp; <span class="number">0x3f</span>)))</span><br><span class="line">                : (fromCharCode(<span class="number">0xe0</span> | ((cc &gt;&gt;&gt; <span class="number">12</span>) &amp; <span class="number">0x0f</span>))</span><br><span class="line">                   + fromCharCode(<span class="number">0x80</span> | ((cc &gt;&gt;&gt;  <span class="number">6</span>) &amp; <span class="number">0x3f</span>))</span><br><span class="line">                   + fromCharCode(<span class="number">0x80</span> | ( cc         &amp; <span class="number">0x3f</span>)));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> cc = <span class="number">0x10000</span></span><br><span class="line">                + (c.charCodeAt(<span class="number">0</span>) - <span class="number">0xD800</span>) * <span class="number">0x400</span></span><br><span class="line">                + (c.charCodeAt(<span class="number">1</span>) - <span class="number">0xDC00</span>);</span><br><span class="line">            <span class="keyword">return</span> (fromCharCode(<span class="number">0xf0</span> | ((cc &gt;&gt;&gt; <span class="number">18</span>) &amp; <span class="number">0x07</span>))</span><br><span class="line">                    + fromCharCode(<span class="number">0x80</span> | ((cc &gt;&gt;&gt; <span class="number">12</span>) &amp; <span class="number">0x3f</span>))</span><br><span class="line">                    + fromCharCode(<span class="number">0x80</span> | ((cc &gt;&gt;&gt;  <span class="number">6</span>) &amp; <span class="number">0x3f</span>))</span><br><span class="line">                    + fromCharCode(<span class="number">0x80</span> | ( cc         &amp; <span class="number">0x3f</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> re_utob = <span class="regexp">/[\uD800-\uDBFF][\uDC00-\uDFFFF]|[^\x00-\x7F]/g</span>;</span><br><span class="line">    <span class="keyword">var</span> utob = <span class="function"><span class="keyword">function</span>(<span class="params">u</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> u.replace(re_utob, cb_utob);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> cb_encode = <span class="function"><span class="keyword">function</span>(<span class="params">ccc</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> padlen = [<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>][ccc.length % <span class="number">3</span>],</span><br><span class="line">        ord = ccc.charCodeAt(<span class="number">0</span>) &lt;&lt; <span class="number">16</span></span><br><span class="line">            | ((ccc.length &gt; <span class="number">1</span> ? ccc.charCodeAt(<span class="number">1</span>) : <span class="number">0</span>) &lt;&lt; <span class="number">8</span>)</span><br><span class="line">            | ((ccc.length &gt; <span class="number">2</span> ? ccc.charCodeAt(<span class="number">2</span>) : <span class="number">0</span>)),</span><br><span class="line">        chars = [</span><br><span class="line">            b64chars.charAt( ord &gt;&gt;&gt; <span class="number">18</span>),</span><br><span class="line">            b64chars.charAt((ord &gt;&gt;&gt; <span class="number">12</span>) &amp; <span class="number">63</span>),</span><br><span class="line">            padlen &gt;= <span class="number">2</span> ? <span class="string">'='</span> : b64chars.charAt((ord &gt;&gt;&gt; <span class="number">6</span>) &amp; <span class="number">63</span>),</span><br><span class="line">            padlen &gt;= <span class="number">1</span> ? <span class="string">'='</span> : b64chars.charAt(ord &amp; <span class="number">63</span>)</span><br><span class="line">        ];</span><br><span class="line">        <span class="keyword">return</span> chars.join(<span class="string">''</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> btoa = global.btoa ? <span class="function"><span class="keyword">function</span>(<span class="params">b</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> global.btoa(b);</span><br><span class="line">    &#125; : <span class="function"><span class="keyword">function</span>(<span class="params">b</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> b.replace(<span class="regexp">/[\s\S]&#123;1,3&#125;/g</span>, cb_encode);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> _encode = buffer ?</span><br><span class="line">        buffer.from &amp;&amp; buffer.from !== <span class="built_in">Uint8Array</span>.from ? <span class="function"><span class="keyword">function</span> (<span class="params">u</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (u.constructor === buffer.constructor ? u : buffer.from(u))</span><br><span class="line">                .toString(<span class="string">'base64'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        :  <span class="function"><span class="keyword">function</span> (<span class="params">u</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (u.constructor === buffer.constructor ? u : <span class="keyword">new</span>  buffer(u))</span><br><span class="line">                .toString(<span class="string">'base64'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        : <span class="function"><span class="keyword">function</span> (<span class="params">u</span>) </span>&#123; <span class="keyword">return</span> btoa(utob(u)) &#125;</span><br><span class="line">    ;</span><br><span class="line">    <span class="keyword">var</span> encode = <span class="function"><span class="keyword">function</span>(<span class="params">u, urisafe</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !urisafe</span><br><span class="line">            ? _encode(<span class="built_in">String</span>(u))</span><br><span class="line">            : _encode(<span class="built_in">String</span>(u)).replace(<span class="regexp">/[+\/]/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">m0</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> m0 == <span class="string">'+'</span> ? <span class="string">'-'</span> : <span class="string">'_'</span>;</span><br><span class="line">            &#125;).replace(<span class="regexp">/=/g</span>, <span class="string">''</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">encodeURI</span> = <span class="function"><span class="keyword">function</span>(<span class="params">u</span>) </span>&#123; <span class="keyword">return</span> encode(u, <span class="literal">true</span>) &#125;;</span><br><span class="line">    <span class="comment">// decoder stuff</span></span><br><span class="line">    <span class="keyword">var</span> re_btou = <span class="keyword">new</span> <span class="built_in">RegExp</span>([</span><br><span class="line">        <span class="string">'[\xC0-\xDF][\x80-\xBF]'</span>,</span><br><span class="line">        <span class="string">'[\xE0-\xEF][\x80-\xBF]&#123;2&#125;'</span>,</span><br><span class="line">        <span class="string">'[\xF0-\xF7][\x80-\xBF]&#123;3&#125;'</span></span><br><span class="line">    ].join(<span class="string">'|'</span>), <span class="string">'g'</span>);</span><br><span class="line">    <span class="keyword">var</span> cb_btou = <span class="function"><span class="keyword">function</span>(<span class="params">cccc</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span>(cccc.length) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">            <span class="keyword">var</span> cp = ((<span class="number">0x07</span> &amp; cccc.charCodeAt(<span class="number">0</span>)) &lt;&lt; <span class="number">18</span>)</span><br><span class="line">                |    ((<span class="number">0x3f</span> &amp; cccc.charCodeAt(<span class="number">1</span>)) &lt;&lt; <span class="number">12</span>)</span><br><span class="line">                |    ((<span class="number">0x3f</span> &amp; cccc.charCodeAt(<span class="number">2</span>)) &lt;&lt;  <span class="number">6</span>)</span><br><span class="line">                |     (<span class="number">0x3f</span> &amp; cccc.charCodeAt(<span class="number">3</span>)),</span><br><span class="line">            offset = cp - <span class="number">0x10000</span>;</span><br><span class="line">            <span class="keyword">return</span> (fromCharCode((offset  &gt;&gt;&gt; <span class="number">10</span>) + <span class="number">0xD800</span>)</span><br><span class="line">                    + fromCharCode((offset &amp; <span class="number">0x3FF</span>) + <span class="number">0xDC00</span>));</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> fromCharCode(</span><br><span class="line">                ((<span class="number">0x0f</span> &amp; cccc.charCodeAt(<span class="number">0</span>)) &lt;&lt; <span class="number">12</span>)</span><br><span class="line">                    | ((<span class="number">0x3f</span> &amp; cccc.charCodeAt(<span class="number">1</span>)) &lt;&lt; <span class="number">6</span>)</span><br><span class="line">                    |  (<span class="number">0x3f</span> &amp; cccc.charCodeAt(<span class="number">2</span>))</span><br><span class="line">            );</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span>  fromCharCode(</span><br><span class="line">                ((<span class="number">0x1f</span> &amp; cccc.charCodeAt(<span class="number">0</span>)) &lt;&lt; <span class="number">6</span>)</span><br><span class="line">                    |  (<span class="number">0x3f</span> &amp; cccc.charCodeAt(<span class="number">1</span>))</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> btou = <span class="function"><span class="keyword">function</span>(<span class="params">b</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> b.replace(re_btou, cb_btou);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> cb_decode = <span class="function"><span class="keyword">function</span>(<span class="params">cccc</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> len = cccc.length,</span><br><span class="line">        padlen = len % <span class="number">4</span>,</span><br><span class="line">        n = (len &gt; <span class="number">0</span> ? b64tab[cccc.charAt(<span class="number">0</span>)] &lt;&lt; <span class="number">18</span> : <span class="number">0</span>)</span><br><span class="line">            | (len &gt; <span class="number">1</span> ? b64tab[cccc.charAt(<span class="number">1</span>)] &lt;&lt; <span class="number">12</span> : <span class="number">0</span>)</span><br><span class="line">            | (len &gt; <span class="number">2</span> ? b64tab[cccc.charAt(<span class="number">2</span>)] &lt;&lt;  <span class="number">6</span> : <span class="number">0</span>)</span><br><span class="line">            | (len &gt; <span class="number">3</span> ? b64tab[cccc.charAt(<span class="number">3</span>)]       : <span class="number">0</span>),</span><br><span class="line">        chars = [</span><br><span class="line">            fromCharCode( n &gt;&gt;&gt; <span class="number">16</span>),</span><br><span class="line">            fromCharCode((n &gt;&gt;&gt;  <span class="number">8</span>) &amp; <span class="number">0xff</span>),</span><br><span class="line">            fromCharCode( n         &amp; <span class="number">0xff</span>)</span><br><span class="line">        ];</span><br><span class="line">        chars.length -= [<span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>][padlen];</span><br><span class="line">        <span class="keyword">return</span> chars.join(<span class="string">''</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> atob = global.atob ? <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> global.atob(a);</span><br><span class="line">    &#125; : <span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a.replace(<span class="regexp">/[\s\S]&#123;1,4&#125;/g</span>, cb_decode);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> _decode = buffer ?</span><br><span class="line">        buffer.from &amp;&amp; buffer.from !== <span class="built_in">Uint8Array</span>.from ? <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (a.constructor === buffer.constructor</span><br><span class="line">                    ? a : buffer.from(a, <span class="string">'base64'</span>)).toString();</span><br><span class="line">        &#125;</span><br><span class="line">        : <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (a.constructor === buffer.constructor</span><br><span class="line">                    ? a : <span class="keyword">new</span> buffer(a, <span class="string">'base64'</span>)).toString();</span><br><span class="line">        &#125;</span><br><span class="line">        : <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123; <span class="keyword">return</span> btou(atob(a)) &#125;;</span><br><span class="line">    <span class="keyword">var</span> decode = <span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> _decode(</span><br><span class="line">            <span class="built_in">String</span>(a).replace(<span class="regexp">/[-_]/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">m0</span>) </span>&#123; <span class="keyword">return</span> m0 == <span class="string">'-'</span> ? <span class="string">'+'</span> : <span class="string">'/'</span> &#125;)</span><br><span class="line">                .replace(<span class="regexp">/[^A-Za-z0-9\+\/]/g</span>, <span class="string">''</span>)</span><br><span class="line">        );</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> noConflict = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> Base64 = global.Base64;</span><br><span class="line">        global.Base64 = _Base64;</span><br><span class="line">        <span class="keyword">return</span> Base64;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// export Base64</span></span><br><span class="line">    global.Base64 = &#123;</span><br><span class="line">        VERSION: version,</span><br><span class="line">        atob: atob,</span><br><span class="line">        btoa: btoa,</span><br><span class="line">        fromBase64: decode,</span><br><span class="line">        toBase64: encode,</span><br><span class="line">        utob: utob,</span><br><span class="line">        encode: encode,</span><br><span class="line">        <span class="built_in">encodeURI</span>: <span class="built_in">encodeURI</span>,</span><br><span class="line">        btou: btou,</span><br><span class="line">        decode: decode,</span><br><span class="line">        noConflict: noConflict</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// if ES5 is available, make Base64.extendString() available</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">Object</span>.defineProperty === <span class="string">'function'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> noEnum = <span class="function"><span class="keyword">function</span>(<span class="params">v</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;<span class="attr">value</span>:v,<span class="attr">enumerable</span>:<span class="literal">false</span>,<span class="attr">writable</span>:<span class="literal">true</span>,<span class="attr">configurable</span>:<span class="literal">true</span>&#125;;</span><br><span class="line">        &#125;;</span><br><span class="line">        global.Base64.extendString = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">Object</span>.defineProperty(</span><br><span class="line">                <span class="built_in">String</span>.prototype, <span class="string">'fromBase64'</span>, noEnum(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> decode(<span class="keyword">this</span>)</span><br><span class="line">                &#125;));</span><br><span class="line">            <span class="built_in">Object</span>.defineProperty(</span><br><span class="line">                <span class="built_in">String</span>.prototype, <span class="string">'toBase64'</span>, noEnum(<span class="function"><span class="keyword">function</span> (<span class="params">urisafe</span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> encode(<span class="keyword">this</span>, urisafe)</span><br><span class="line">                &#125;));</span><br><span class="line">            <span class="built_in">Object</span>.defineProperty(</span><br><span class="line">                <span class="built_in">String</span>.prototype, <span class="string">'toBase64URI'</span>, noEnum(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> encode(<span class="keyword">this</span>, <span class="literal">true</span>)</span><br><span class="line">                &#125;));</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// export Base64 to the namespace</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="keyword">if</span> (global[<span class="string">'Meteor'</span>]) &#123; <span class="comment">// Meteor.js</span></span><br><span class="line">        Base64 = global.Base64;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// module.exports and AMD are mutually exclusive.</span></span><br><span class="line">    <span class="comment">// module.exports has precedence.</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">module</span> !== <span class="string">'undefined'</span> &amp;&amp; <span class="built_in">module</span>.exports) &#123;</span><br><span class="line">        <span class="built_in">module</span>.exports.Base64 = global.Base64;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">'function'</span> &amp;&amp; define.amd) &#123;</span><br><span class="line">        <span class="comment">// AMD. Register as an anonymous module.</span></span><br><span class="line">        define([], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> global.Base64 &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// that's it!</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="attr">Base64</span>: global.Base64&#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/01/24/learning/python/python-basics/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/01/26/learning/game/egret/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>types &amp; grammar | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="js," />
+  
+
+  <meta name="description" content="一、类型 基本类型  JavaScript 定义了七种内建类型： nullundefinedbooleannumberstringsymbol – 在 ES6 中被加入的！object 注意： 除了 object 所有这些类型都被称为“基本类型（primitives）”。  类型检测  typeof 操作符可以检测给定值的类型，而且总是返回七种字符串值中的一种 12345678typeof und">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="types &amp; grammar">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/04/01/learning/book-notes/types & grammar/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="一、类型 基本类型  JavaScript 定义了七种内建类型： nullundefinedbooleannumberstringsymbol – 在 ES6 中被加入的！object 注意： 除了 object 所有这些类型都被称为“基本类型（primitives）”。  类型检测  typeof 操作符可以检测给定值的类型，而且总是返回七种字符串值中的一种 12345678typeof und">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-20T12:39:57.662Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="types &amp; grammar">
+<meta name="twitter:description" content="一、类型 基本类型  JavaScript 定义了七种内建类型： nullundefinedbooleannumberstringsymbol – 在 ES6 中被加入的！object 注意： 除了 object 所有这些类型都被称为“基本类型（primitives）”。  类型检测  typeof 操作符可以检测给定值的类型，而且总是返回七种字符串值中的一种 12345678typeof und">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、类型"><span class="toc-text">一、类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined-vs-“undeclared”"><span class="toc-text">undefined vs “undeclared”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#typeof-Undeclared"><span class="toc-text">typeof Undeclared</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/book-notes/types &amp; grammar" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">types &amp; grammar</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.04.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 834字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 3分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="一、类型"><a href="#一、类型" class="headerlink" title="一、类型"></a>一、类型</h2><blockquote>
+<p>基本类型</p>
+</blockquote>
+<p>JavaScript 定义了七种内建类型：</p>
+<p>null<br>undefined<br>boolean<br>number<br>string<br>symbol – 在 ES6 中被加入的！<br>object</p>
+<p><strong>注意</strong>： 除了 object 所有这些类型都被称为“基本类型（primitives）”。</p>
+<blockquote>
+<p>类型检测</p>
+</blockquote>
+<p>typeof 操作符可以检测给定值的类型，而且总是返回七种字符串值中的一种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">typeof undefined     === &quot;undefined&quot;; // true</span><br><span class="line">typeof true          === &quot;boolean&quot;;   // true</span><br><span class="line">typeof 42            === &quot;number&quot;;    // true</span><br><span class="line">typeof &quot;42&quot;          === &quot;string&quot;;    // true</span><br><span class="line">typeof &#123; life: 42 &#125;  === &quot;object&quot;;    // true</span><br><span class="line"></span><br><span class="line">// 在 ES6 中被加入的！</span><br><span class="line">typeof Symbol()      === &quot;symbol&quot;;    // true</span><br></pre></td></tr></table></figure>
+<p>在上面的列表中剔除了 null。它是 特殊的 – 特殊在它与 typeof 操作符组合时是有 bug 的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typeof null === &quot;object&quot;; // true</span><br></pre></td></tr></table></figure>
+<h3 id="undefined-vs-“undeclared”"><a href="#undefined-vs-“undeclared”" class="headerlink" title="undefined vs “undeclared”"></a>undefined vs “undeclared”</h3><p>当前 还不拥有值的变量，实际上拥有 undefined 值。对这样的变量调用 typeof 将会返回 <code>&quot;undefined&quot;</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var a;</span><br><span class="line"></span><br><span class="line">typeof a; // &quot;undefined&quot;</span><br><span class="line"></span><br><span class="line">var b = 42;</span><br><span class="line">var c;</span><br><span class="line"></span><br><span class="line">// 稍后</span><br><span class="line">b = c;</span><br><span class="line"></span><br><span class="line">typeof b; // &quot;undefined&quot;</span><br><span class="line">typeof c; // &quot;undefined&quot;</span><br></pre></td></tr></table></figure>
+<p>大多数开发者考虑“undefined”这个词的方式会诱使他们认为它是“undeclared（未声明）”的同义词。然而在 JS 中，这两个概念十分不同。</p>
+<p>一个“undefined”变量是在可访问的作用域中已经被声明过的，但是在 这个时刻 它里面没有任何值。相比之下，一个“undeclared”变量是在可访问的作用域中还没有被正式声明的。</p>
+<blockquote>
+<p>考虑这段代码：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a;</span><br><span class="line"></span><br><span class="line">a; // undefined</span><br><span class="line">b; // ReferenceError: b is not defined</span><br></pre></td></tr></table></figure>
+<p>在上面代码中，b未声明时进行了使用，浏览器反馈的错误是：<code>b is not defined</code>.这当然很容易而且很合理地使人将它与“b is undefined.”搞混。需要重申的是，“undefined”和“is not defined”是非常不同的东西。要是浏览器能告诉我们类似于“b is not found”或者“b is not declared”之类的东西就好了，那会减少这种困惑！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var a;</span><br><span class="line"></span><br><span class="line">typeof a; // &quot;undefined&quot;</span><br><span class="line"></span><br><span class="line">typeof b; // &quot;undefined&quot;</span><br></pre></td></tr></table></figure>
+<p><code>type</code> 对于未undeclared的变量，返回值也是<code>undefined</code>。即使 是一个未声明变量，也不会有错误被抛出。这是 typeof 的一种特殊的安全防卫行为</p>
+<h3 id="typeof-Undeclared"><a href="#typeof-Undeclared" class="headerlink" title="typeof Undeclared"></a>typeof Undeclared</h3><p>由于typeof安全防卫的特性，我们可以将其用来判断一个变量是否在作用域内进行了赋值操作，倘若不使用typeof，若变量不存在将会发生异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">if (typeof sss === &quot;undefined&quot;) &#123;</span><br><span class="line">	sss = function() &#123; /*..*/ &#125;;</span><br><span class="line">&#125;</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">&gt; 使用场景</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">作为一个简单的例子，想象在你的程序中有一个“调试模式”，它是通过一个称为 DEBUG 的全局变量（标志）来控制的。在实施类似于在控制台上输出一条日志消息这样的调试任务之前，你想要检查这个变量是否被声明了。一个顶层的全局 var DEBUG = true 声明只包含在一个“debug.js”文件中，这个文件仅在你开发/测试时才被加载到浏览器中，而在生产环境中则不会。</span><br><span class="line"></span><br><span class="line">然而，在你其他的程序代码中，你不得不小心你是如何检查这个全局的 DEBUG 变量的，这样你才不会抛出一个 ReferenceError。这种情况下 typeof 上的安全防卫就是我们的朋友。</span><br></pre></td></tr></table></figure>
+<p>// 噢，这将抛出一个错误！<br>if (DEBUG) {<br>    console.log( “Debugging is starting” );<br>}</p>
+<p>// 这是一个安全的存在性检查<br>if (typeof DEBUG !== “undefined”) {<br>    console.log( “Debugging is starting” );<br>}<br><code>`</code></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/04/01/learning/book-notes/this&对象原型/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/04/05/learning/book-notes/scope&closures/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

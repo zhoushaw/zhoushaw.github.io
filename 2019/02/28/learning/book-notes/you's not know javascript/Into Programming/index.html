@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>译文:you don&#39;t know js 之 Into Programming | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="book," />
+  
+
+  <meta name="description" content="Chapter 1: Into ProgrammingWelcome to the You Don’t Know JS (YDKJS) series. 欢迎来到你不懂js系列">
+<meta name="keywords" content="book">
+<meta property="og:type" content="article">
+<meta property="og:title" content="译文:you don&#39;t know js 之 Into Programming">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/02/28/learning/book-notes/you's not know javascript/Into Programming/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="Chapter 1: Into ProgrammingWelcome to the You Don’t Know JS (YDKJS) series. 欢迎来到你不懂js系列">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-14T13:54:11.946Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="译文:you don&#39;t know js 之 Into Programming">
+<meta name="twitter:description" content="Chapter 1: Into ProgrammingWelcome to the You Don’t Know JS (YDKJS) series. 欢迎来到你不懂js系列">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-Into-Programming"><span class="toc-text">Chapter 1: Into Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Expressions"><span class="toc-text">Expressions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Executing-a-Program"><span class="toc-text">Executing a Program</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Output"><span class="toc-text">Output</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Operators"><span class="toc-text">Operators</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/book-notes/you&#39;s not know javascript/Into Programming" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">译文:you don&#39;t know js 之 Into Programming</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.02.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 5.1k字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 25分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="Chapter-1-Into-Programming"><a href="#Chapter-1-Into-Programming" class="headerlink" title="Chapter 1: Into Programming"></a>Chapter 1: Into Programming</h2><p>Welcome to the You Don’t Know JS (YDKJS) series.</p>
+<p>欢迎来到你不懂js系列</p>
+<div><a id="more"></a></div>
+
+<p>Up &amp; Going is an introduction to several basic concepts of programming – of course we lean toward JavaScript (often abbreviated JS) specifically – and how to approach and understand the rest of the titles in this series. Especially if you’re just getting into programming and/or JavaScript, this book will briefly explore what you need to get up and going.</p>
+<p>Up &amp; Going是为了介绍程序基本概念的，当然我们特别倾向于javascript(通常简称为JS)，如何看待与裂解本系列其他书目。如果你准备好进入程序或者javascript了。这本书将简单浏览你需要什么来入门与进阶。</p>
+<p>This book starts off explaining the basic principles of programming at a very high level. It’s mostly intended if you are starting YDKJS with little to no prior programming experience, and are looking to these books to help get you started along a path to understanding programming through the lens of JavaScript.</p>
+<p>本书开始解释程序的基础原则在很高的级别。如果你开始阅读YDKJS带有较少或没有程序经验并且寻找这些书通过javascrpt去帮助你开始理解程序，那么本书的主要目的就是帮助你了解如何开始YDKJS。</p>
+<p>Chapter 1 should be approached as a quick overview of the things you’ll want to learn more about and practice to get into programming. There are also many other fantastic programming introduction resources that can help you dig into these topics further, and I encourage you to learn from them in addition to this chapter.</p>
+<p>第一章应该适合快速的预览你想要学习和训练进入程序。这里有很多能帮助你深入这些话题的有用的程序资源，我鼓励你在这一章之外向他们学习。</p>
+<p>Once you feel comfortable with general programming basics, Chapter 2 will help guide you to a familiarity with JavaScript’s flavor of programming. Chapter 2 introduces what JavaScript is about, but again, it’s not a comprehensive guide – that’s what the rest of the YDKJS books are for!</p>
+<p>一旦你对普通的程序基础适应了，第二章将会帮助你熟悉javascript的程序。第二章介绍了javascript是关于什么的，再者，它不只是全面的指南 – 这是其余YDKJS系列书的作用。</p>
+<p>If you’re already fairly comfortable with JavaScript, first check out Chapter 3 as a brief glimpse of what to expect from YDKJS, then jump right in!</p>
+<p>如果你已经很熟练javascript，那么首先快速的预览一下第三章，然后快速的进入学习吧。</p>
+<p>##Code</p>
+<p>Let’s start from the beginning.</p>
+<p>让我们从这开始吧。</p>
+<p>A program, often referred to as source code or just code, is a set of special instructions to tell the computer what tasks to perform. Usually code is saved in a text file, although with JavaScript you can also type code directly into a developer console in a browser, which we’ll cover shortly.</p>
+<p>一个程序，经常被交付源码或者就是编码，去设置了一个特殊的介绍告诉计算机哪些任务被执行。通常代码被使用文本文件存储，通过javascript，你也可以输入代码直接在浏览器的开发者区输入代码，稍后我们会讲到这一点。</p>
+<p>The rules for valid format and combinations of instructions is called a computer language, sometimes referred to as its syntax, much the same as English tells you how to spell words and how to create valid sentences using words and punctuation.</p>
+<p>有效的格式和混合的指令被称之为计算机语言，有时被作为它的预发，更像是英语告诉你如何使用单词和标点拼写单词并且如何创造有效的句子。</p>
+<p>##Statements</p>
+<p>In a computer language, a group of words, numbers, and operators that performs a specific task is a statement. In JavaScript, a statement might look as follows:</p>
+<p>在计算机中，一组单词、数字和运算符执行一个特殊的任务是一个句子。在javascript中一个句子可能看来像下面这样:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = b * 2;</span><br></pre></td></tr></table></figure>
+<p>The characters a and b are called variables (see “Variables”), which are like simple boxes you can store any of your stuff in. In programs, variables hold values (like the number 42) to be used by the program. Think of them as symbolic placeholders for the values themselves.</p>
+<p>字符a和b被称之为变量，就像是一个你能存储任何东西在里面的盒子。在程序中，变量存放值(像数字42)来给程序用。将他们看做值本身的符号占位符。</p>
+<p>By contrast, the 2 is just a value itself, called a literal value, because it stands alone without being stored in a variable.</p>
+<p>相比之下，2就是这个值的本身，称之为字面量。因为它独立存在没有存在任何变量中。</p>
+<p>The = and * characters are operators (see “Operators”) – they perform actions with the values and variables such as assignment and mathematic multiplication.</p>
+<p>=和*字符是操作符 – 他们使用值和变量执行运算相比如赋值和乘法运算。</p>
+<p>Most statements in JavaScript conclude with a semicolon (;) at the end.</p>
+<p>大多javascript声明的结尾带有;号。</p>
+<p>The statement a = b <em> 2; tells the computer, roughly, to get the current value stored in the variable b, multiply that value by 2, then store the result back into another variable we call a.<br>a = b </em>2声明告诉计算机，概略的是，获取当前值存储在变量b中，乘2，然后存储到我们称之为a的变量中。</p>
+<p>Programs are just collections of many such statements, which together describe all the steps that it takes to perform your program’s purpose.</p>
+<p>程序就是有相当多的声明，这些声明一同描述了它执行你程序目的的所有步骤。</p>
+<h2 id="Expressions"><a href="#Expressions" class="headerlink" title="Expressions"></a>Expressions</h2><p>Statements are made up of one or more expressions. An expression is any reference to a variable or value, or a set of variable(s) and value(s) combined with operators.</p>
+<p>声明是由一个或多个表达式构成的。</p>
+<p>For example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = b * 2;</span><br></pre></td></tr></table></figure>
+<p>This statement has four expressions in it:</p>
+<p>这个声明有四个表达式:</p>
+<p>2 is a literal value expression</p>
+<p>2是一个字面量表达式</p>
+<p>b is a variable expression, which means to retrieve its current value</p>
+<p>b是一个变量表达式，它检索当前的值</p>
+<p>b * 2 is an arithmetic expression, which means to do the multiplication</p>
+<p>b * 2 是一个算术表达式，意味着乘法</p>
+<p>a = b <em> 2 is an assignment expression, which means to assign the result of the b </em> 2 expression to the variable a (more on assignments later)</p>
+<p>a = b <em> 2是一个任务表达式，以为着b </em> 2表达式的结果存储到变量a上</p>
+<p>A general expression that stands alone is also called an expression statement, such as the following:</p>
+<p>一般表达式独立存在的也称之为表达式语句，例如下面的</p>
+<p>b * 2;<br>This flavor of expression statement is not very common or useful, as generally it wouldn’t have any effect on the running of the program – it would retrieve the value of b and multiply it by 2, but then wouldn’t do anything with that result.<br>这种风格的表达式语句不是很常见和有效，运行这个程序通常不会产生任何影响 – 它将会检索b的值然后乘2，但是不会对结果做任何处理</p>
+<p>A more common expression statement is a call expression statement (see “Functions”), as the entire statement is the function call expression itself:</p>
+<p>一个最常见的声明语句是调用表达式语句(参见函数)，整个表达式语句被称之为函数它自己。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert( a );</span><br></pre></td></tr></table></figure></p>
+<h2 id="Executing-a-Program"><a href="#Executing-a-Program" class="headerlink" title="Executing a Program"></a>Executing a Program</h2><p>How do those collections of programming statements tell the computer what to do? The program needs to be executed, also referred to as running the program.</p>
+<p>如何通过这些收集的程序语句来告诉计算机做什么？程序需要被执行，也被称为运行项目。</p>
+<p>Statements like a = b * 2 are helpful for developers when reading and writing, but are not actually in a form the computer can directly understand. So a special utility on the computer (either an interpreter or a compiler) is used to translate the code you write into commands a computer can understand.</p>
+<p>在阅读和编写时像<code>a = b *2</code>这样的语句对于开发者来说是有帮助的，但是事实上计算机不能直接理解。所以在计算机中(也可以是 一个翻译者 或 编译者)一个特殊的工具被用来翻译你写的代码转变成计算机能够理解的命令。</p>
+<p>For some computer languages, this translation of commands is typically done from top to bottom, line by line, every time the program is run, which is usually called interpreting the code.</p>
+<p>对于一些计算机语言，翻译命令通常是从上至下翻译，一行一行向下，每次运行程序，通常被称之为解析代码。</p>
+<p>For other languages, the translation is done ahead of time, called compiling the code, so when the program runs later, what’s running is actually the already compiled computer instructions ready to go.</p>
+<p>对于一些其他语言，提前翻译完成，称之为编译代码，所以当程序稍后运行时，他运行的实际上是已经编译完成能够运行的计算机结构。</p>
+<p>It’s typically asserted that JavaScript is interpreted, because your JavaScript source code is processed each time it’s run. But that’s not entirely accurate. The JavaScript engine actually compiles the program on the fly and then immediately runs the compiled code.</p>
+<p>一般宣称JavaScript为解释性语言，因为每次运行JavaScript源码是都会处理它。但是不是完全精准，JavaScript引擎动态编译代码，并且立即运行编译的代码。</p>
+<p>Note: For more information on JavaScript compiling, see the first two chapters of the Scope &amp; Closures title of this series.</p>
+<p>笔记:更多关于JavaScript的编译信息，看这一系列的作用域 &amp; 闭包的标题的前两章。</p>
+<p>##Try It Yourself</p>
+<p>This chapter is going to introduce each programming concept with simple snippets of code, all written in JavaScript (obviously!).</p>
+<p>这一章是使用简单的一段代码来讲述每一段程序的概念，所有使用代码JavaScript编写的(显而易见的！)</p>
+<p>It cannot be emphasized enough: while you go through this chapter – and you may need to spend the time to go over it several times – you should practice each of these concepts by typing the code yourself. The easiest way to do that is to open up the developer tools console in your nearest browser (Firefox, Chrome, IE, etc.).</p>
+<p>这一点无论如何强调都不过分: 当你开始阅读这一章 – 并且你可能需要花一些时间去反复阅读它。你应该通过编写代码来锻炼这些概念。最简单的方式是打开最近的浏览器的开发者工具(火狐、谷歌、Ie，其他)</p>
+<p>Tip: Typically, you can launch the developer console with a keyboard shortcut or from a menu item. For more detailed information about launching and using the console in your favorite browser, see “Mastering The Developer Tools Console” (<a href="http://blog.teamtreehouse.com/mastering-developer-tools-console)" target="_blank" rel="noopener">http://blog.teamtreehouse.com/mastering-developer-tools-console)</a>. To type multiple lines into the console at once, use <shift> + <enter> to move to the next new line. Once you hit <enter> by itself, the console will run everything you’ve just typed.</enter></enter></shift></p>
+<p>提示:通常，你可以通过键盘的快捷键或者菜单选项打开开发者输入台，更多关于在你最喜欢的浏览器中打开和使用控制台，请看“掌握开发者控制台” (<a href="http://blog.teamtreehouse.com/mastering-developer-tools-console)，一次在控制台中输入多行，使用" target="_blank" rel="noopener">http://blog.teamtreehouse.com/mastering-developer-tools-console)，一次在控制台中输入多行，使用</a><shift> + <enter> 移动光标到下一行，一旦你按下回车，控制台将会运行你输入的一切。</enter></shift></p>
+<p>Let’s get familiar with the process of running code in the console. First, I suggest opening up an empty tab in your browser. I prefer to do this by typing about:blank into the address bar. Then, make sure your developer console is open, as we just mentioned.</p>
+<p>让我们熟悉一下在控台内代码运行的过程。首先，我建议你在你的浏览器上打开一个新的标签，我更喜欢在地址栏输入<code>about:blank</code>，然后，确保你的开发者控制台是打开的，就像我们刚才提及的那样。</p>
+<p>Now, type this code and see how it runs:</p>
+<p>现在，输入这段代码然后看它执行:</p>
+<p>a = 21;</p>
+<p>b = a * 2;</p>
+<p>console.log( b );<br>Typing the preceding code into the console in Chrome should produce something like the following:</p>
+<p>输入过程之前的代码到谷歌控制台应该产生一些向下面的事情:</p>
+<p>Go on, try it. The best way to learn programming is to start coding!</p>
+<p>继续，试试看。学习程序最好的方法是开始编码。</p>
+<h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><p>In the previous code snippet, we used console.log(..). Briefly, let’s look at what that line of code is all about.</p>
+<p>在先前的代码片段，我们使用了console.log(..).短暂的，让我们寻找一下这一行代码是关于什么的。</p>
+<p>You may have guessed, but that’s exactly how we print text (aka output to the user) in the developer console. There are two characteristics of that statement that we should explain.</p>
+<p>你可能已经猜到了，但是那正是我们如何在开发者控制台中打印文本(输入用户名)，我们应该解释这个语句中的那两个字符。</p>
+<p>First, the log( b ) part is referred to as a function call (see “Functions”). What’s happening is we’re handing the b variable to that function, which asks it to take the value of b and print it to the console.</p>
+<p>首先，这个log(b)部分被称为函数(看 “函数”)。我们将变量b交给这个函数发生了什么，这个函数要求它取b的值并且打印在控制台上。</p>
+<p>Second, the console. part is an object reference where the log(..) function is located. We cover objects and their properties in more detail in Chapter 2.</p>
+<p>第二，<code>console.</code>部分是位于<code>log(..)</code>函数部分对象的引用，我们在第二章介绍了对象和他们属性更多的细节。</p>
+<p>Another way of creating output that you can see is to run an alert(..) statement. For example:</p>
+<p>你能看到其他方式创建输出语句是使用<code>alert()</code>语句。例如:</p>
+<p>alert( b );<br>If you run that, you’ll notice that instead of printing the output to the console, it shows a popup “OK” box with the contents of the b variable. However, using console.log(..) is generally going to make learning about coding and running your programs in the console easier than using alert(..), because you can output many values at once without interrupting the browser interface.</p>
+<p>如果你运行这段代码，你将会注意到它代替了输出在控制台上,它显示一个弹出的“ok”框带有变量b的内容。然而，通常使用<code>console.log(..)</code>学习关于编程和运行程序比使用<code>alert(..)</code>更容易，因为你可以一次性输出很多值并且不会中断页面。</p>
+<p>For this book, we’ll use console.log(..) for output.</p>
+<p>对于本书，我们使用<code>console.log(..)</code>来输出</p>
+<p>##Input</p>
+<p>While we’re discussing output, you may also wonder about input (i.e., receiving information from the user).</p>
+<p>当我们在讨论输出时，你可能也想要知道输入(接收用户的信息)</p>
+<p>The most common way that happens is for the HTML page to show form elements (like text boxes) to a user that they can type into, and then using JS to read those values into your program’s variables.</p>
+<p>发生这种最常见的方式是HTML页面展示表单元素(想文本输入框)给用户输入，然后使用JS去读取这些变量到你程序的变量中。</p>
+<p>But there’s an easier way to get input for simple learning and demonstration purposes such as what you’ll be doing throughout this book. Use the prompt(..) function:</p>
+<p>但是最简单方式的获取用户输入对于简单的学习和演示目的，比如你将要通过本书来做的。使用<code>prompt(..)</code>函数:</p>
+<p>age = prompt( “Please tell me your age:” );</p>
+<p>console.log( age );<br>As you may have guessed, the message you pass to prompt(..) – in this case, “Please tell me your age:” – is printed into the popup.</p>
+<p>你可能已经猜到了，你输入到<code>prompt(..)</code>的信息 –在这个案例里。“请告诉我你的名字:” – 打印在这个弹窗上。</p>
+<p>This should look similar to the following:</p>
+<p>看起来跟下列的很相似:</p>
+<p>Once you submit the input text by clicking “OK,” you’ll observe that the value you typed is stored in the age variable, which we then output with console.log(..):</p>
+<p>一旦你通过点击“ok”来提交输入文本，你将会观察到你输入的将会存储到age变量中，然后我们通过<code>console.log(..)</code>输出变量</p>
+<p>To keep things simple while we’re learning basic programming concepts, the examples in this book will not require input. But now that you’ve seen how to use prompt(..), if you want to challenge yourself you can try to use input in your explorations of the examples.</p>
+<p>当我们学习基础程序概念时保持简单，在这本书的案例中将不需要输入。但是现在你已经知道如何使用<code>prompt(..)</code>，如果你想要挑战你自己你可以尝试使用input来探索这个案例。</p>
+<h2 id="Operators"><a href="#Operators" class="headerlink" title="Operators"></a>Operators</h2><p>Operators are how we perform actions on variables and values. We’ve already seen two JavaScript operators, the = and the *.</p>
+<p>操作符是我们如何操作变量和值，我们已经看到两个JavaScript操作符，=号和*号。</p>
+<p>The * operator performs mathematic multiplication. Simple enough, right?</p>
+<p>*号操作符执行数学乘法运算，很简单对吗？</p>
+<p>The = equals operator is used for assignment – we first calculate the value on the right-hand side (source value) of the = and then put it into the variable that we specify on the left-hand side (target variable).</p>
+<p>=号操作符通常用来复制– 我们首先计算等号右边的值然后将值=号左边的变量中(目标变量).</p>
+<p>Warning: This may seem like a strange reverse order to specify assignment. Instead of a = 42, some might prefer to flip the order so the source value is on the left and the target variable is on the right, like 42 -&gt; a (this is not valid JavaScript!). Unfortunately, the a = 42 ordered form, and similar variations, is quite prevalent in modern programming languages. If it feels unnatural, just spend some time rehearsing that ordering in your mind to get accustomed to it.</p>
+<p>Consider:</p>
+<p>a = 2;<br>b = a + 1;<br>Here, we assign the 2 value to the a variable. Then, we get the value of the a variable (still 2), add 1 to it resulting in the value 3, then store that value in the b variable.</p>
+<p>While not technically an operator, you’ll need the keyword var in every program, as it’s the primary way you declare (aka create) variables (see “Variables”).</p>
+<p>You should always declare the variable by name before you use it. But you only need to declare a variable once for each scope (see “Scope”); it can be used as many times after that as needed. For example:</p>
+<p>var a = 20;</p>
+<p>a = a + 1;<br>a = a * 2;</p>
+<p>console.log( a );    // 42<br>Here are some of the most common operators in JavaScript:</p>
+<p>Assignment: = as in a = 2.</p>
+<p>Math: + (addition), - (subtraction), <em> (multiplication), and / (division), as in a </em> 3.</p>
+<p>Compound Assignment: +=, -=, *=, and /= are compound operators that combine a math operation with assignment, as in a += 2 (same as a = a + 2).</p>
+<p>Increment/Decrement: ++ (increment), – (decrement), as in a++ (similar to a = a + 1).</p>
+<p>Object Property Access: . as in console.log().</p>
+<p>Objects are values that hold other values at specific named locations called properties. obj.a means an object value called obj with a property of the name a. Properties can alternatively be accessed as obj[“a”]. See Chapter 2.</p>
+<p>Equality: == (loose-equals), === (strict-equals), != (loose not-equals), !== (strict not-equals), as in a == b.</p>
+<p>See “Values &amp; Types” and Chapter 2.</p>
+<p>Comparison: &lt; (less than), &gt; (greater than), &lt;= (less than or loose-equals), &gt;= (greater than or loose-equals), as in a &lt;= b.</p>
+<p>See “Values &amp; Types” and Chapter 2.</p>
+<p>Logical: &amp;&amp; (and), || (or), as in a || b that selects either a or b.</p>
+<p>These operators are used to express compound conditionals (see “Conditionals”), like if either a or b is true.</p>
+<p>Note: For much more detail, and coverage of operators not mentioned here, see the Mozilla Developer Network (MDN)’s “Expressions and Operators” (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators)" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators)</a>.</p>
+<p>Values &amp; Types<br>If you ask an employee at a phone store how much a certain phone costs, and they say “ninety-nine, ninety-nine” (i.e., $99.99), they’re giving you an actual numeric dollar figure that represents what you’ll need to pay (plus taxes) to buy it. If you want to buy two of those phones, you can easily do the mental math to double that value to get $199.98 for your base cost.</p>
+<p>If that same employee picks up another similar phone but says it’s “free” (perhaps with air quotes), they’re not giving you a number, but instead another kind of representation of your expected cost ($0.00) – the word “free.”</p>
+<p>When you later ask if the phone includes a charger, that answer could only have been either “yes” or “no.”</p>
+<p>In very similar ways, when you express values in a program, you choose different representations for those values based on what you plan to do with them.</p>
+<p>These different representations for values are called types in programming terminology. JavaScript has built-in types for each of these so called primitive values:</p>
+<p>When you need to do math, you want a number.<br>When you need to print a value on the screen, you need a string (one or more characters, words, sentences).<br>When you need to make a decision in your program, you need a boolean (true or false).<br>Values that are included directly in the source code are called literals. string literals are surrounded by double quotes “…” or single quotes (‘…’) – the only difference is stylistic preference. number and boolean literals are just presented as is (i.e., 42, true, etc.).</p>
+<p>Consider:</p>
+<p>“I am a string”;<br>‘I am also a string’;</p>
+<p>42;</p>
+<p>true;<br>false;<br>Beyond string/number/boolean value types, it’s common for programming languages to provide arrays, objects, functions, and more. We’ll cover much more about values and types throughout this chapter and the next.</p>
+<p>Converting Between Types<br>If you have a number but need to print it on the screen, you need to convert the value to a string, and in JavaScript this conversion is called “coercion.” Similarly, if someone enters a series of numeric characters into a form on an ecommerce page, that’s a string, but if you need to then use that value to do math operations, you need to coerce it to a number.</p>
+<p>JavaScript provides several different facilities for forcibly coercing between types. For example:</p>
+<p>var a = “42”;<br>var b = Number( a );</p>
+<p>console.log( a );    // “42”<br>console.log( b );    // 42<br>Using Number(..) (a built-in function) as shown is an explicit coercion from any other type to the number type. That should be pretty straightforward.</p>
+<p>But a controversial topic is what happens when you try to compare two values that are not already of the same type, which would require implicit coercion.</p>
+<p>When comparing the string “99.99” to the number 99.99, most people would agree they are equivalent. But they’re not exactly the same, are they? It’s the same value in two different representations, two different types. You could say they’re “loosely equal,” couldn’t you?</p>
+<p>To help you out in these common situations, JavaScript will sometimes kick in and implicitly coerce values to the matching types.</p>
+<p>So if you use the == loose equals operator to make the comparison “99.99” == 99.99, JavaScript will convert the left-hand side “99.99” to its number equivalent 99.99. The comparison then becomes 99.99 == 99.99, which is of course true.</p>
+<p>While designed to help you, implicit coercion can create confusion if you haven’t taken the time to learn the rules that govern its behavior. Most JS developers never have, so the common feeling is that implicit coercion is confusing and harms programs with unexpected bugs, and should thus be avoided. It’s even sometimes called a flaw in the design of the language.</p>
+<p>However, implicit coercion is a mechanism that can be learned, and moreover should be learned by anyone wishing to take JavaScript programming seriously. Not only is it not confusing once you learn the rules, it can actually make your programs better! The effort is well worth it.</p>
+<p>Note: For more information on coercion, see Chapter 2 of this title and Chapter 4 of the Types &amp; Grammar title of this series.</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/02/26/learning/book-notes/you's not know javascript/Into YDKJS/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/03/01/other/tool/Alfred3/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

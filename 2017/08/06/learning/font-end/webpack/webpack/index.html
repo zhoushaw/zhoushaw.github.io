@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>webpack打包工具 | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nodejs," />
+  
+
+  <meta name="keywords" content="nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack打包工具">
+<meta property="og:url" content="http://zhoushaw.github.io/2017/08/06/learning/font-end/webpack/webpack/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-14T13:54:11.951Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack打包工具">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack环境配置"><span class="toc-text">webpack环境配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack-config配置"><span class="toc-text">webpack.config配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#entry"><span class="toc-text">entry</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#output"><span class="toc-text">output</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#path"><span class="toc-text">path</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#module"><span class="toc-text">module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#plugins"><span class="toc-text">plugins</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babel"><span class="toc-text">babel</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/font-end/webpack/webpack" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">webpack打包工具</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.08.06</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 1.5k字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 6分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <div><a id="more"></a></div>
+
+
+<h2 id="webpack环境配置"><a href="#webpack环境配置" class="headerlink" title="webpack环境配置"></a>webpack环境配置</h2><p>npm install webpack –save-dev<br>npm install -g webpack</p>
+<p>npm install vue –save<br>npm install vue-loader –save-dev<br>会自动安装vue-compiler和css-loader<br>npm install style-loader<br>npm install babel-loader –save-dev<br>会自动安装babel-core<br>npm install babel-preset-es2015 –save-dev<br>npm install babel-preset-stage-0 –savedev</p>
+<p>npm install babel-plugin-transform-runtime –save-dev</p>
+<p>如果不使用他，自己定义的函数，被多次使用，就会每次在使用这个函数的时候，就会被打包一次，使用了transform-runtime可以解决多余的代码<br>解决全局函数的污染，因为全局函数需要单独生成函数本省实现</p>
+<p>缺点是:<br>1.无法解决实例的方法，实例的方法需要借助polyfile</p>
+<p>使用:跟babelrc文件中使用，第二种，在packconfig.js中配置<br>{<br>    “pre<br>    “plugins”:[‘transform-runtime’]<br>}<br>npm install</p>
+<p>去了解vue的运行时构建错误<br>alias:别名<br>resolve:{<br>    alias:{<br>        ‘vue$’:’vue/dist/vue.common.js’<br>    }</p>
+<p>}</p>
+<p>用来在webpack中打包css、vue文件(加载器)<br>css-loader、:用于解决css调用引入问题<br>vue-loader<br>file-loader:用于处理css链入的外部文件处理<br>url-loader:在file-loader的基础上进行了扩展,增加了文件转化base编码功能</p>
+<h2 id="webpack-config配置"><a href="#webpack-config配置" class="headerlink" title="webpack.config配置"></a>webpack.config配置</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports=&#123;</span><br><span class="line">	entry:<span class="string">''</span>,</span><br><span class="line">	output:&#123;&#125;,</span><br><span class="line">	<span class="built_in">module</span>:&#123;&#125;,</span><br><span class="line">	plugins:[]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h3><p>注意事项:</p>
+<ul>
+<li><ol>
+<li>entry参数:配置入口文件参数，可以放多入口文件</li>
+</ol>
+</li>
+<li><ol>
+<li>一般将源文件放在src文件夹中</li>
+</ol>
+</li>
+</ul>
+<p>entry:”./a.js”                        :把当前目录下的a.js打包成bundle.js,打包入口文件，一定要写好相对路径，不能直接写文件名<br>entry:[“./src/a.js”,”./src/b.js”]    :这里表示有一个出口文件，并且这个文件对应两个js文件(多文件入口，单文件出口)<br>entry:{<br>    output1:’./src/a.js’,<br>    output2:[‘./src/b.js’,’./src/c.js’]<br>},</p>
+<h3 id="output"><a href="#output" class="headerlink" title="output"></a>output</h3><p>output:{                            :这里指产生两个出口文件，并且对应了(多文件入口多文件出口)<br>    filename:’[name].js’,<br>    path:__dirname+’/dist’<br>}<br>filename        :表示对应的出口文件名，不输入文件名默认为哈希值,’[name].js]’表示以源文件名进行输出(如果是多文件入口是，并且给文件对应加了名字，最终就是在入口文件设置的名字)<br>path            :表示输出的文件存放的位置,这个路径的位置</p>
+<h4 id="path"><a href="#path" class="headerlink" title="path"></a>path</h4><p>path文件夹的位置确定的方式:<br>源文件中的路径是:’../images/big.jpg’</p>
+<ul>
+<li>最后生成的路径是:’images/big.jpg’</li>
+<li>filel-loader在解析生成url路径时，的参照路径是配置文件中的output中的path的值:’demo4/dist’,最后生成了’demo4/images/big.jpg’,demo4本身是根目录，把这个路径最终进行简化就是/images/big.jpg</li>
+<li></li>
+<li>根据上面的原理我们按一下过程分布:</li>
+<li>1.源文件中的路径是:’../images/big.jpg’;</li>
+<li>2.真正要使用的图在路径是:’/dist/images/big.jpg’;</li>
+<li></li>
+<li>3.从1.2我们可以知道,index.html中要使用图片路径应该是:’/dist/images/big.jpg’;</li>
+<li>4.综上参考路径应该是’/dist/‘</li>
+<li>5.将file-loader的publicPath设为’./dist’,表示告诉file-loader吧源文件中的路径中的相对定位入’../直接去掉，然后白身下的直接拼在一起./dist后面，就成了/dist/images/big.jpg’</li>
+</ul>
+<h3 id="module"><a href="#module" class="headerlink" title="module"></a>module</h3><p>在module参数里面配置，webpack打包时候所需要的插件,每个加载的对象:第一个参数:配置要对什么类型的文件，第二个参数:用什么样的模块去加载<br>webpack1.x写法<br>loaders:[<br>    //当遇到文件名为.css结尾的文件去加载css-loader模块<br>    //管道pipe，从右往左执行对应的，将css-loader中的内容，通过style-loader将内容放到页面的style头部中<br>    {test:/.css$/,loader:’style-loader!css-loader’},<br>],<br>webpack2.x写法<br>rules:[<br>    //数组写法也需要是pipe的写法<br>    {test:/.css$/,use:[‘style-loader’,’css-loader’]}<br>]</p>
+<p>url-loader模块，比file-loader模块了一个base编码功能，可以设置大小，小于多少的变成base编码,减少请求数据<br>{<br>    test:/.(gif|jpg|png|svg|jpe?g)$/,<br>    //loader:’file-loader?name=[name].[ext]&amp;outPath=/images/‘<br>    loader:’url-loader’,<br>    options:{<br>        // 如果小于base64位编码，把图片变成base编码<br>        limit:8192,<br>        //没有配置名字默认使用哈希值来命名、使用这种命名规范，打包成文件之后，采用以前的命名规则，name名字ext后缀名<br>        name:’[name].[ext]’,<br>        //在输出之前，在这个文件名前面在加一个路径，用于区分文件存放<br>        outputPath:’/images/‘,<br>        // 此处要给相对于output配置的一个相对路径<br>        publicPath:’dist’<br>    }<br>},<br>上面的loader加载方式是以前的方法,新版方法</p>
+<p>{</p>
+<pre><code>test:/\.(gif|jpg|png|svg|jpe?g)$/,
+use:{
+    loader:&apos;url-loader&apos;,
+    options:{
+        limit:8192,
+        name:&apos;[name].[ext]&apos;,
+    }
+}
+</code></pre><p>}</p>
+<h3 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h3><p>扩展插件使用:<br>plugins:[<br>    new webpack.optimize.UglifyJsPlugin({<br>        compress:{warnings:false}<br>    }),<br>    /<em>偷懒自动生成测试用html，而且这个html会自动应用我们生成的bundle.js文件</em>/<br>    new HtmlwebpackPlugin({title:’test’}),<br>    //热模块替换插件<br>    new webpack.HotModuleReplacementPlugin()<br>]</p>
+<p>new webpack.optimize.UglifyJsPlugin:使用webpack里面自带的UglifyJs压缩插件，对文件进行压缩<br>这种使用情况需要导入webpack，才能使用</p>
+<p>new UglifyJsPlugin({compress:{warning:false}}):单独下载了UglifyJsPlugin插件</p>
+<p>HtmlwebpackPlugin:会将当前导出的所有文件路径引入到自动生成的一个html中，进行测试使用<br>引入:webpack-dev-server插件才能使用:<br>默认情况下不开启热替换(热替换的优势，在于对修改的内容进行替换，提高性能，不开启热替换，会全局替换，耗性能)<br>HotModuleReplacementPlugin:在修改文件之后，进行了保存操作，会触发保存在内存中，使用的数据，</p>
+<p>启动webpack服务，可以将命令行保存在package.js中，使用npm run dev启动webpack-sev-server,并且开启一个express微型服务器，用来测试，当前的运行网站的状态</p>
+<p>“build”:”node_modules\.bin\webpack –watch”,    启动webpack，并且实时监测当前文件的状态，如果发生改变就对导入的文件重新打包,监测除了webpack.config.js以外的文件<br>“dev”:”node_modules\.bin\webpack-dev-server –inline”    启动webpack-dev-server,并实时监测当前文件的状态，如果发生改变就刷新服务器上的页面</p>
+<h2 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h2><p>rules{</p>
+<pre><code>use:{
+    test:/\.js$/,
+    use:[&quot;babel-loader&quot;],
+    options:{
+
+    }
+    exclude:&apos;/node_modules/&apos;
+}
+</code></pre><p>}</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/06/12/other/linux-command/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/26/learning/font-end/wechat/wechat/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

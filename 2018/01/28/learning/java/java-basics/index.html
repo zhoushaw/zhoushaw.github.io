@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java基础语法 | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="java," />
+  
+
+  <meta name="description" content="什么是javajava是一门程序设计语言，用于与计算机进行沟通。可用于web后台应用开发、安卓应用开发 JDK、JRE、JVM的区别与联系 英文全称   JVM — java virtual machine JRE — java runtime environment JDK — java development kit">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础语法">
+<meta property="og:url" content="http://zhoushaw.github.io/2018/01/28/learning/java/java-basics/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="什么是javajava是一门程序设计语言，用于与计算机进行沟通。可用于web后台应用开发、安卓应用开发 JDK、JRE、JVM的区别与联系 英文全称   JVM — java virtual machine JRE — java runtime environment JDK — java development kit">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190218_62c9782df17lej916jgigg37712il_840x390.png">
+<meta property="og:updated_time" content="2019-04-14T13:54:11.953Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础语法">
+<meta name="twitter:description" content="什么是javajava是一门程序设计语言，用于与计算机进行沟通。可用于web后台应用开发、安卓应用开发 JDK、JRE、JVM的区别与联系 英文全称   JVM — java virtual machine JRE — java runtime environment JDK — java development kit">
+<meta name="twitter:image" content="https://s10.mogucdn.com/mlcdn/c45406/190218_62c9782df17lej916jgigg37712il_840x390.png">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是java"><span class="toc-text">什么是java</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK、JRE、JVM的区别与联系"><span class="toc-text">JDK、JRE、JVM的区别与联系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#包"><span class="toc-text">包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#书写规范"><span class="toc-text">书写规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进制"><span class="toc-text">进制</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/java/java-basics" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Java基础语法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.01.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 898字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 3分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="什么是java"><a href="#什么是java" class="headerlink" title="什么是java"></a>什么是java</h2><p>java是一门程序设计语言，用于与计算机进行沟通。可用于web后台应用开发、安卓应用开发</p>
+<h2 id="JDK、JRE、JVM的区别与联系"><a href="#JDK、JRE、JVM的区别与联系" class="headerlink" title="JDK、JRE、JVM的区别与联系"></a>JDK、JRE、JVM的区别与联系</h2><blockquote>
+<p>英文全称</p>
+</blockquote>
+<ul>
+<li>JVM — java virtual machine</li>
+<li>JRE — java runtime environment</li>
+<li>JDK — java development kit</li>
+</ul>
+<div><a id="more"></a></div>
+
+<blockquote>
+<p>功能作用</p>
+</blockquote>
+<ul>
+<li><p>JVM: JVM就是我们常说的java虚拟机，它是整个java实现跨平台的 最核心的部分，所有的java程序会首先被编译为.class的类文件，这种类文件可 以在虚拟机上执行，也就是说class并不直接与机器的操作系统相对应，而是经过虚拟机间接与操作系统交互，由虚拟机将程序解 释给本地系统执行。</p>
+</li>
+<li><p>Jre: JRE是指java运行环境。光有JVM还不能成class的 执行，因为在解释class的时候JVM需要调用解释所需要的类库lib。 在JDK的安装目 录里你可以找到jre目录，里面有两个文件夹bin和lib,在 这里可以认为bin里的就是jvm，lib中则是jvm工 作所需要的类库，而jvm和 lib和起来就称为jre。所以，在你写完java程序编译成.class之后，你可以把这个.class文件 和jre一起打包发给朋友，这样你的朋友就 可以运行你写程序了</p>
+</li>
+<li><p>Jdk: JDK是java开发工具包，基本上每个学java的人都会先在机器 上装一个JDK，那他都包含哪几部分呢？让我们看一下JDK的安装目录。在目录下面有 六个文件夹、一个src类库源码压缩包、和其他几个声明文件。其中，真正在运行java时起作用的 是以下四个文件夹:bin、include、lib、 jre。现在我们可以看出这样一个关系，JDK包含JRE，而JRE包 含JVM。</p>
+</li>
+</ul>
+<h2 id="包"><a href="#包" class="headerlink" title="包"></a>包</h2><p>其实就是文件夹，用于把相同的类名进行区分，全部小写，单级:liuyi，多级:cn.itcast</p>
+<blockquote>
+<p>Java中的包是专门用来存放类的，通常功能相同的类存放在相同的包中。在声明包时，使用package语句，具体示例如下:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">package cn.itcast.chapter01; // 使用package关键字声明包</span><br><span class="line">public class Example01&#123;…&#125;</span><br></pre></td></tr></table></figure>
+<p>使用import可以在程序中一次导入某个指定包下的类，这样就不必在每次用到该类时都书写完整类名，简化了代码量。使用import关键字的具体格式如下所示:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import 包名.类名;</span><br></pre></td></tr></table></figure>
+<h2 id="书写规范"><a href="#书写规范" class="headerlink" title="书写规范"></a>书写规范</h2><blockquote>
+<p>类或者接口</p>
+</blockquote>
+<p>一个单词:单词的首字母必须大写，举例:Student,Dog<br>多个单词:每个单词的首字母必须大写举例:HelloWorld，StudentName</p>
+<blockquote>
+<p>方法和变量</p>
+</blockquote>
+<p>一个单词:单词的首字母小写，举例:main,age<br>多个单词:从第二个单词开始，每个单词的首字母大写，举例:studentAge,showAllNames()</p>
+<blockquote>
+<p>常量</p>
+</blockquote>
+<p>一个单词:全部大写，举例:PI<br>多个单词:每个字母都大写，用_隔开，举例:STUDENT_MAX_AGE</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><ul>
+<li>单行注释，格式: //注释文字</li>
+<li>多行注释，格式: /<em> 注释文字 </em>/</li>
+<li>文档注释，格式:/*<em> 注释文字 </em>/</li>
+</ul>
+<h2 id="进制"><a href="#进制" class="headerlink" title="进制"></a>进制</h2><p><img src="https://s10.mogucdn.com/mlcdn/c45406/190218_62c9782df17lej916jgigg37712il_840x390.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">    不同进制的数据表现:</span><br><span class="line">        二进制:由0，1组成。以0b开头。</span><br><span class="line">        八进制:由0,1,...7组成。以0开头。</span><br><span class="line">        十进制:由0,1,...9组成。默认整数是十进制。</span><br><span class="line">        十六进制:由0,1,...9,a,b,c,d,e,f(大小写均可)组成。以0x开头。</span><br><span class="line">*/</span><br><span class="line">class JinZhiDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(100); //十进制 100</span><br><span class="line">        System.out.println(0b100); //二进制，4</span><br><span class="line">        System.out.println(0100); //八进制，64</span><br><span class="line">        System.out.println(0x100); //十六进制，256</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/01/26/learning/game/egret/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/02/01/learning/font-end/js/js-interview/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

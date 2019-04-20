@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>深入MVVM | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="vue," />
+  
+
+  <meta name="description" content="MVVM框架大行其道，这么炫酷的视图渲染模式。骚年有没有兴趣一起了解一波，那就让我们一起开始吧_(:з」∠)">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入MVVM">
+<meta property="og:url" content="http://zhoushaw.github.io/2018/03/17/learning/font-end/vue/MVVM/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="MVVM框架大行其道，这么炫酷的视图渲染模式。骚年有没有兴趣一起了解一波，那就让我们一起开始吧_(:з」∠)">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://zhoushaw.github.io/2018/03/17/learning/font-end/vue/MVVM/media/2.png">
+<meta property="og:image" content="http://zhoushaw.github.io/2018/03/17/learning/font-end/vue/MVVM/media/3.png">
+<meta property="og:updated_time" content="2019-04-14T13:54:11.950Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入MVVM">
+<meta name="twitter:description" content="MVVM框架大行其道，这么炫酷的视图渲染模式。骚年有没有兴趣一起了解一波，那就让我们一起开始吧_(:з」∠)">
+<meta name="twitter:image" content="http://zhoushaw.github.io/2018/03/17/learning/font-end/vue/MVVM/media/2.png">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Object-defineProperty"><span class="toc-text">Object.defineProperty</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现思路"><span class="toc-text">实现思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#要实现mvvm的双向绑定，就必须要实现以下几点"><span class="toc-text">要实现mvvm的双向绑定，就必须要实现以下几点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现Observer"><span class="toc-text">实现Observer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现Watcher"><span class="toc-text">实现Watcher</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/font-end/vue/MVVM" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">深入MVVM</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.03.17</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/vue/">vue</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 3k字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 12分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>MVVM框架大行其道，这么炫酷的视图渲染模式。骚年有没有兴趣一起了解一波，那就让我们一起开始吧_(:з」∠)</p>
+<div><a id="more"></a></div>
+
+<h2 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h2><blockquote>
+<p>在了解双向绑定原理之前我们先了解一个重要的属性Object.defineProperty</p>
+</blockquote>
+<p>该方法可以用于定义数据可修改性、可否遍历，已经设定属性读取时触发对应的函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(obj,<span class="string">'a'</span>,&#123;</span><br><span class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 该函数在访问该属性时，被调用</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'获取到这个值啦，哈哈哈'</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    set: <span class="function"><span class="keyword">function</span>(<span class="params">newValue</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'你要赋新的值给我啊，哈哈.并且这个值是'</span>,newValue)</span><br><span class="line">    &#125;,</span><br><span class="line">    enumerable: <span class="literal">false</span>,<span class="comment">// 设置为false之后该属性不可以被遍历读取</span></span><br><span class="line">    configurable: <span class="literal">false</span>,<span class="comment">//设置configurable为false之后，该属性不可以再使用defineProperty重新对该属性定义</span></span><br><span class="line">    <span class="comment">// writable: true,// 设置writeable之后，设置的属性不可以改写</span></span><br><span class="line">    <span class="comment">// value: 'hello world'</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 不能 同时设置访问器 (get 和 set) 和 wriable 或 value</span></span><br><span class="line"><span class="comment">// 默认该三个属性都为false</span></span><br><span class="line">obj.a = <span class="string">'hello'</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>get函数</p>
+</blockquote>
+<p>该函数在属性被访问时触发，返回值是获取到的值</p>
+<p>例:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    a: <span class="string">'hello world'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj,<span class="string">'a'</span>,&#123;</span><br><span class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'你想要获取obj的a属性值是吗'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.a);<span class="comment">// 输出你想要获取obj的a属性值是吗</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>setter函数</p>
+</blockquote>
+<p>该函数在属性被写入时触发<br>例:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    a: <span class="string">'hello world'</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj,<span class="string">'a'</span>,&#123;</span><br><span class="line">    set: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'你在给a属性设置新值'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">obj.a = <span class="string">'good byes world'</span><span class="comment">// 你在给a属性设置新值</span></span><br></pre></td></tr></table></figure></p>
+<p>enumerable: false,// 设置为false之后该属性不可以被遍历读取<br>configurable: false,//设置configurable为false之后，该属性不可以再使用defineProperty重新对该属性定义<br>writable: true,// 设置writeable之后，设置的属性不可以改写<br>value: ‘hello world’// 获取该值时，返回value内容，value不可以与set或get函数同时存在</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>了解实现核心概念后，我们一起来了解一下总体实现思路</p>
+<h3 id="要实现mvvm的双向绑定，就必须要实现以下几点"><a href="#要实现mvvm的双向绑定，就必须要实现以下几点" class="headerlink" title="要实现mvvm的双向绑定，就必须要实现以下几点"></a>要实现mvvm的双向绑定，就必须要实现以下几点</h3><p>实现一个数据监听器Observer，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者<br>实现一个指令解析器Compile，对每个元素节点的指令进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数<br>实现一个Watcher，作为连接Observer和Compile的桥梁，能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图<br>mvvm入口函数，整合以上三者</p>
+<p>上述流程如图所示:</p>
+<p><img src="media/2.png" alt="2"></p>
+<h3 id="实现Observer"><a href="#实现Observer" class="headerlink" title="实现Observer"></a>实现Observer</h3><ul>
+<li>我们知道可以利用Obeject.defineProperty()来监听属性变动</li>
+<li>那么将需要observe的数据对象进行递归遍历，包括子属性对象的属性，都加上setter和getter</li>
+<li>这样的话，给这个对象的某个值赋值，就会触发setter，那么就能监听到了数据变化。相关代码可以是这样</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">var data = &#123;name: &apos;kindeng&apos;&#125;;</span><br><span class="line">observe(data);</span><br><span class="line">data.name = &apos;dmq&apos;; // 哈哈哈，监听到值变化了 kindeng --&gt; dmq</span><br><span class="line"></span><br><span class="line">function observe(data) &#123;</span><br><span class="line">    if (!data || typeof data !== &apos;object&apos;) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    // 取出所有属性遍历</span><br><span class="line">    Object.keys(data).forEach(function(key) &#123;</span><br><span class="line">	    defineReactive(data, key, data[key]);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function defineReactive(data, key, val) &#123;</span><br><span class="line">    observe(val); // 监听子属性</span><br><span class="line">    Object.defineProperty(data, key, &#123;</span><br><span class="line">        enumerable: true, // 可枚举</span><br><span class="line">        configurable: false, // 不能再define</span><br><span class="line">        get: function() &#123;</span><br><span class="line">            return val;</span><br><span class="line">        &#125;,</span><br><span class="line">        set: function(newVal) &#123;</span><br><span class="line">            console.log(&apos;哈哈哈，监听到值变化了 &apos;, val, &apos; --&gt; &apos;, newVal);</span><br><span class="line">            val = newVal;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这样我们已经可以监听每个数据的变化了，那么监听到变化之后就是怎么通知订阅者了，所以接下来我们需要实现一个消息订阅器，很简单，维护一个数组，用来收集订阅者，数据变动触发notify，再调用订阅者的update方法，代码改善之后是这样</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// ... 省略</span><br><span class="line">function defineReactive(data, key, val) &#123;</span><br><span class="line">	var dep = new Dep();</span><br><span class="line">    observe(val); // 监听子属性</span><br><span class="line"></span><br><span class="line">    Object.defineProperty(data, key, &#123;</span><br><span class="line">        // ... 省略</span><br><span class="line">        set: function(newVal) &#123;</span><br><span class="line">        	if (val === newVal) return;</span><br><span class="line">            console.log(&apos;哈哈哈，监听到值变化了 &apos;, val, &apos; --&gt; &apos;, newVal);</span><br><span class="line">            val = newVal;</span><br><span class="line">            dep.notify(); // 通知所有订阅者</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function Dep() &#123;</span><br><span class="line">    this.subs = [];</span><br><span class="line">&#125;</span><br><span class="line">Dep.prototype = &#123;</span><br><span class="line">    addSub: function(sub) &#123;</span><br><span class="line">        this.subs.push(sub);</span><br><span class="line">    &#125;,</span><br><span class="line">    notify: function() &#123;</span><br><span class="line">        this.subs.forEach(function(sub) &#123;</span><br><span class="line">            sub.update();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>那么问题来了，谁是订阅者，怎么往订阅器添加订阅者？</li>
+<li>没错，上面的思路整理中我们已经明确订阅者应该是Watcher, 而且var dep = new Dep();是在 defineReactive方法内部定义的，所以想通过dep添加订阅者，就必须要在闭包内操作，所以我们可以在getter里面动手脚:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// Observer.js</span><br><span class="line">// ...省略</span><br><span class="line">Object.defineProperty(data, key, &#123;</span><br><span class="line">	get: function() &#123;</span><br><span class="line">		// 由于需要在闭包内添加watcher，所以通过Dep定义一个全局target属性，暂存watcher, 添加完移除</span><br><span class="line">		Dep.target &amp;&amp; dep.addDep(Dep.target);</span><br><span class="line">		return val;</span><br><span class="line">	&#125;</span><br><span class="line">    // ... 省略</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// Watcher.js</span><br><span class="line">Watcher.prototype = &#123;</span><br><span class="line">	get: function(key) &#123;</span><br><span class="line">		Dep.target = this;</span><br><span class="line">		this.value = data[key];	// 这里会触发属性的getter，从而添加订阅者</span><br><span class="line">		Dep.target = null;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里已经实现了一个Observer了，已经具备了监听数据和数据变化通知订阅者的功能。那么接下来就是实现Compile了</li>
+</ul>
+<blockquote>
+<p>实现Compile</p>
+</blockquote>
+<ul>
+<li>compile主要做的事情是解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图</li>
+<li>并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图，如图所示</li>
+</ul>
+<p>因为遍历解析的过程有多次操作dom节点，为提高性能和效率，会先将跟节点el转换成文档碎片fragment进行解析编译操作<br>解析完成，再将fragment添加回原来的真实dom节点中</p>
+<p><img src="media/3.png" alt="3"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function Compile(el) &#123;</span><br><span class="line">    this.$el = this.isElementNode(el) ? el : document.querySelector(el);</span><br><span class="line">    if (this.$el) &#123;</span><br><span class="line">        this.$fragment = this.node2Fragment(this.$el);</span><br><span class="line">        this.init();</span><br><span class="line">        this.$el.appendChild(this.$fragment);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Compile.prototype = &#123;</span><br><span class="line">	init: function() &#123; this.compileElement(this.$fragment); &#125;,</span><br><span class="line">    node2Fragment: function(el) &#123;</span><br><span class="line">        var fragment = document.createDocumentFragment(), child;</span><br><span class="line">        // 将原生节点拷贝到fragment</span><br><span class="line">        while (child = el.firstChild) &#123;</span><br><span class="line">            fragment.appendChild(child);</span><br><span class="line">        &#125;</span><br><span class="line">        return fragment;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>compileElement方法将遍历所有节点及其子节点，进行扫描解析编译，调用对应的指令渲染函数进行数据渲染，并调用对应的指令更新函数进行绑定，详看代码及注释说明</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">Compile.prototype = &#123;</span><br><span class="line">	// ... 省略</span><br><span class="line">	compileElement: function(el) &#123;</span><br><span class="line">        var childNodes = el.childNodes, me = this;</span><br><span class="line">        [].slice.call(childNodes).forEach(function(node) &#123;</span><br><span class="line">            var text = node.textContent;</span><br><span class="line">            var reg = /\&#123;\&#123;(.*)\&#125;\&#125;/;	// 表达式文本</span><br><span class="line">            // 按元素节点方式编译</span><br><span class="line">            if (me.isElementNode(node)) &#123;</span><br><span class="line">                me.compile(node);</span><br><span class="line">            &#125; else if (me.isTextNode(node) &amp;&amp; reg.test(text)) &#123;</span><br><span class="line">                me.compileText(node, RegExp.$1);</span><br><span class="line">            &#125;</span><br><span class="line">            // 遍历编译子节点</span><br><span class="line">            if (node.childNodes &amp;&amp; node.childNodes.length) &#123;</span><br><span class="line">                me.compileElement(node);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    compile: function(node) &#123;</span><br><span class="line">        var nodeAttrs = node.attributes, me = this;</span><br><span class="line">        [].slice.call(nodeAttrs).forEach(function(attr) &#123;</span><br><span class="line">            // 规定:指令以 v-xxx 命名</span><br><span class="line">            // 如 &lt;span v-text=&quot;content&quot;&gt;&lt;/span&gt; 中指令为 v-text</span><br><span class="line">            var attrName = attr.name;	// v-text</span><br><span class="line">            if (me.isDirective(attrName)) &#123;</span><br><span class="line">                var exp = attr.value; // content</span><br><span class="line">                var dir = attrName.substring(2);	// text</span><br><span class="line">                if (me.isEventDirective(dir)) &#123;</span><br><span class="line">                	// 事件指令, 如 v-on:click</span><br><span class="line">                    compileUtil.eventHandler(node, me.$vm, exp, dir);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                	// 普通指令</span><br><span class="line">                    compileUtil[dir] &amp;&amp; compileUtil[dir](node, me.$vm, exp);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 指令处理集合</span><br><span class="line">var compileUtil = &#123;</span><br><span class="line">    text: function(node, vm, exp) &#123;</span><br><span class="line">        this.bind(node, vm, exp, &apos;text&apos;);</span><br><span class="line">    &#125;,</span><br><span class="line">    // ...省略</span><br><span class="line">    bind: function(node, vm, exp, dir) &#123;</span><br><span class="line">        var updaterFn = updater[dir + &apos;Updater&apos;];</span><br><span class="line">        // 第一次初始化视图</span><br><span class="line">        updaterFn &amp;&amp; updaterFn(node, vm[exp]);</span><br><span class="line">        // 实例化订阅者，此操作会在对应的属性消息订阅器中添加了该订阅者watcher</span><br><span class="line">        new Watcher(vm, exp, function(value, oldValue) &#123;</span><br><span class="line">        	// 一旦属性值有变化，会收到通知执行此更新函数，更新视图</span><br><span class="line">            updaterFn &amp;&amp; updaterFn(node, value, oldValue);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 更新函数</span><br><span class="line">var updater = &#123;</span><br><span class="line">    textUpdater: function(node, value) &#123;</span><br><span class="line">        node.textContent = typeof value == &apos;undefined&apos; ? &apos;&apos; : value;</span><br><span class="line">    &#125;</span><br><span class="line">    // ...省略</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里通过递归遍历保证了每个节点及子节点都会解析编译到</li>
+<li>指令的声明规定是通过特定前缀的节点属性来标记，如&lt;span v-text=”content”中v-text便是指令</li>
+<li>监听数据、绑定更新函数的处理是在compileUtil.bind()这个方法中，通过new Watcher()添加回调来接收数据变化的通知</li>
+<li>至此，一个简单的Compile就完成了。接下来要看看Watcher这个订阅者的具体实现了</li>
+</ul>
+<h3 id="实现Watcher"><a href="#实现Watcher" class="headerlink" title="实现Watcher"></a>实现Watcher</h3><blockquote>
+<p>Watcher订阅者作为Observer和Compile之间通信的桥梁，主要做的事情是</p>
+</blockquote>
+<ul>
+<li>在自身实例化时往属性订阅器dep里面添加自己</li>
+<li>自身必须有一个update()方法</li>
+<li>待属性变动dep.notice()通知时，能调用自身的update()方法，并触发Compile中绑定的回调，则功成身退。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">function Watcher(vm, exp, cb) &#123;</span><br><span class="line">    this.cb = cb;</span><br><span class="line">    this.vm = vm;</span><br><span class="line">    this.exp = exp;</span><br><span class="line">    // 此处为了触发属性的getter，从而在dep添加自己，结合Observer更易理解</span><br><span class="line">    this.value = this.get(); </span><br><span class="line">&#125;</span><br><span class="line">Watcher.prototype = &#123;</span><br><span class="line">    update: function() &#123;</span><br><span class="line">        this.run();	// 属性值变化收到通知</span><br><span class="line">    &#125;,</span><br><span class="line">    run: function() &#123;</span><br><span class="line">        var value = this.get(); // 取到最新值</span><br><span class="line">        var oldVal = this.value;</span><br><span class="line">        if (value !== oldVal) &#123;</span><br><span class="line">            this.value = value;</span><br><span class="line">            this.cb.call(this.vm, value, oldVal); // 执行Compile中绑定的回调，更新视图</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    get: function() &#123;</span><br><span class="line">        Dep.target = this;	// 将当前订阅者指向自己</span><br><span class="line">        var value = this.vm[exp];	// 触发getter，添加自己到属性订阅器中</span><br><span class="line">        Dep.target = null;	// 添加完毕，重置</span><br><span class="line">        return value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">// 这里再次列出Observer和Dep，方便理解</span><br><span class="line">Object.defineProperty(data, key, &#123;</span><br><span class="line">	get: function() &#123;</span><br><span class="line">		// 由于需要在闭包内添加watcher，所以可以在Dep定义一个全局target属性，暂存watcher, 添加完移除</span><br><span class="line">		Dep.target &amp;&amp; dep.addDep(Dep.target);</span><br><span class="line">		return val;</span><br><span class="line">	&#125;</span><br><span class="line">    // ... 省略</span><br><span class="line">&#125;);</span><br><span class="line">Dep.prototype = &#123;</span><br><span class="line">    notify: function() &#123;</span><br><span class="line">        this.subs.forEach(function(sub) &#123;</span><br><span class="line">            sub.update(); // 调用订阅者的update方法，通知变化</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>实例化Watcher的时候，调用get()方法，通过Dep.target = watcherInstance标记订阅者是当前watcher实例，强行触发属性定义的getter方法，getter方法执行的时候，就会在属性的订阅器dep添加当前watcher实例，从而在属性值有变化的时候，watcherInstance就能收到更新通知。</li>
+<li>基本上vue中数据绑定相关比较核心的几个模块也是这几个，猛戳这里 , 在src 目录可找到vue源码。</li>
+</ul>
+<blockquote>
+<p>实现MVVM</p>
+</blockquote>
+<p><code>MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -&gt; 视图更新；视图交互变化(input) -&gt; 数据model变更的双向绑定效果。</code></p>
+<blockquote>
+<p>一个简单的MVVM构造器是这样子:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function MVVM(options) &#123;</span><br><span class="line">    this.$options = options;</span><br><span class="line">    var data = this._data = this.$options.data;</span><br><span class="line">    observe(data, this);</span><br><span class="line">    this.$compile = new Compile(options.el || document.body, this)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>但是这里有个问题，从代码中可看出监听的数据对象是options.data，每次需要更新视图，则必须通过var vm = new MVVM({data:{name: ‘kindeng’}}); vm._data.name = ‘dmq’;这样的方式来改变数据。</li>
+<li>显然不符合我们一开始的期望，我们所期望的调用方式应该是这样的:</li>
+<li>var vm = new MVVM({data: {name: ‘kindeng’}}); vm.name = ‘dmq’;</li>
+<li>所以这里需要给MVVM实例添加一个属性代理的方法，使访问vm的属性代理为访问vm._data的属性，改造后的代码如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">function MVVM(options) &#123;</span><br><span class="line">    this.$options = options;</span><br><span class="line">    var data = this._data = this.$options.data, me = this;</span><br><span class="line">    // 属性代理，实现 vm.xxx -&gt; vm._data.xxx</span><br><span class="line">    Object.keys(data).forEach(function(key) &#123;</span><br><span class="line">        me._proxy(key);</span><br><span class="line">    &#125;);</span><br><span class="line">    observe(data, this);</span><br><span class="line">    this.$compile = new Compile(options.el || document.body, this)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MVVM.prototype = &#123;</span><br><span class="line">	_proxy: function(key) &#123;</span><br><span class="line">		var me = this;</span><br><span class="line">        Object.defineProperty(me, key, &#123;</span><br><span class="line">            configurable: false,</span><br><span class="line">            enumerable: true,</span><br><span class="line">            get: function proxyGetter() &#123;</span><br><span class="line">                return me._data[key];</span><br><span class="line">            &#125;,</span><br><span class="line">            set: function proxySetter(newVal) &#123;</span><br><span class="line">                me._data[key] = newVal;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里主要还是利用了Object.defineProperty()这个方法来劫持了vm实例对象的属性的读写权，使读写vm实例的属性转成读写了vm._data的属性值，达到鱼目混珠的效果</li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/03/16/learning/font-end/vue/analyze-vue/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/04/26/learning/font-end/webpack/webpack4.0/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
