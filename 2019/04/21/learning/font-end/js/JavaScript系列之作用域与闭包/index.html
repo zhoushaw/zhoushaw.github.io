@@ -7,23 +7,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>webpack优化 | zhou shaw</title>
+  <title>JavaScript系列之作用域与闭包 | zhou shaw</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="gulp," />
+    <meta name="keywords" content="js," />
   
 
-  <meta name="keywords" content="gulp">
+  <meta name="description" content="作用域在进入作用域的讨论之前先明什么是作用域，通过一句话简单描述就是：一组明确定义的规则，它定义如何在某些位置存储变量，以及如何在稍后找到这些变量 词法作用域作用域的工作方式有两种占统治地位的模型。其中的第一种是最最常见，在绝大多数的编程语言中被使用的。它称为 词法作用域，我们将深入检视它。另一种仍然被一些语言（比如 Bash 脚本，Perl 中的一些模式，等等）使用的模型，称为 动态作用域。 J">
+<meta name="keywords" content="js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="webpack优化">
-<meta property="og:url" content="http://zhoushaw.github.io/2018/04/27/learning/font-end/webpack/webpack-optimize/index.html">
+<meta property="og:title" content="JavaScript系列之作用域与闭包">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/04/21/learning/font-end/js/JavaScript系列之作用域与闭包/index.html">
 <meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="作用域在进入作用域的讨论之前先明什么是作用域，通过一句话简单描述就是：一组明确定义的规则，它定义如何在某些位置存储变量，以及如何在稍后找到这些变量 词法作用域作用域的工作方式有两种占统治地位的模型。其中的第一种是最最常见，在绝大多数的编程语言中被使用的。它称为 词法作用域，我们将深入检视它。另一种仍然被一些语言（比如 Bash 脚本，Perl 中的一些模式，等等）使用的模型，称为 动态作用域。 J">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-14T13:54:11.950Z">
+<meta property="og:updated_time" content="2019-04-21T14:28:31.170Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="webpack优化">
+<meta name="twitter:title" content="JavaScript系列之作用域与闭包">
+<meta name="twitter:description" content="作用域在进入作用域的讨论之前先明什么是作用域，通过一句话简单描述就是：一组明确定义的规则，它定义如何在某些位置存储变量，以及如何在稍后找到这些变量 词法作用域作用域的工作方式有两种占统治地位的模型。其中的第一种是最最常见，在绝大多数的编程语言中被使用的。它称为 词法作用域，我们将深入检视它。另一种仍然被一些语言（比如 Bash 脚本，Perl 中的一些模式，等等）使用的模型，称为 动态作用域。 J">
 
   
 
@@ -160,20 +163,20 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#体积优化"><span class="toc-text">体积优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检测打包时间"><span class="toc-text">检测打包时间</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用域"><span class="toc-text">作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#词法作用域"><span class="toc-text">词法作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态作用域"><span class="toc-text">动态作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量提升"><span class="toc-text">变量提升</span></a></li></ol></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-learning/font-end/webpack/webpack-optimize" class="article article-type-post" itemprop="blogPost">
+   <article id="post-learning/font-end/js/JavaScript系列之作用域与闭包" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">webpack优化</h1>
+    <h1 class="post-title">JavaScript系列之作用域与闭包</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2018.04.27</span>
+        <span>2019.04.21</span>
       </span>
 
       
@@ -204,12 +207,12 @@
        
           <span class="post-count">
             <i class="fa fa-file-word-o"></i>&nbsp
-            <span>字数统计 89字</span>
+            <span>字数统计 624字</span>
           </span>
 
           <span class="post-count">
             <i class="fa fa-columns"></i>&nbsp
-            <span>阅读时长 1分</span>
+            <span>阅读时长 2分</span>
           </span>
       
     </div>
@@ -217,14 +220,31 @@
 
   <div class="article-content">
     
-      <div><a id="more"></a></div>
-
-<h2 id="体积优化"><a href="#体积优化" class="headerlink" title="体积优化"></a>体积优化</h2><p>插件:<br><code>yarn install webpack-bundle-analyzer --save-dev</code></p>
-<p>webpack.prod.conf.js配置:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const BundleAnalyzerPlugin = require(&apos;webpack-bundle-analyzer&apos;).BundleAnalyzerPlugin;</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line"></span><br><span class="line">  plugins: [</span><br><span class="line"></span><br><span class="line">    new BundleAnalyzerPlugin()</span><br><span class="line"></span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>启动:<br>在package.json中的script上添加<br><code>“analyz”: “NODE_ENV=production npm_config_report=true npm run build”</code></p>
-<p>使用npm run analyz</p>
-<h2 id="检测打包时间"><a href="#检测打包时间" class="headerlink" title="检测打包时间"></a>检测打包时间</h2><p>在package.json内加入–profile，它会告诉你编译过程中哪些步骤耗时最长。</p>
+      <h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><p>在进入作用域的讨论之前先明什么是作用域，通过一句话简单描述就是：<strong>一组明确定义的规则，它定义如何在某些位置存储变量，以及如何在稍后找到这些变量</strong></p>
+<h3 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h3><p>作用域的工作方式有两种占统治地位的模型。其中的第一种是最最常见，在绝大多数的编程语言中被使用的。它称为 <strong>词法作用域</strong>，我们将深入检视它。另一种仍然被一些语言（比如 Bash 脚本，Perl 中的一些模式，等等）使用的模型，称为 <strong>动态作用域</strong>。</p>
+<p>JavaScript采用的是<strong>词法作用域</strong>，这意味着<strong>作用域</strong>是编写时确定的，而不是运行时确定的，当然也可以通过<strong>欺骗</strong>来达到动态作用域，例如使用：<code>eval</code>、<code>with</code>等关键词</p>
+<blockquote>
+<p>词法分析</p>
+</blockquote>
+<p>JavaScript的代码运行，并不是像你想象的<strong>逐行编译</strong>，而是在进行编译前会进行<strong>词法分析</strong>。也就形成了我们所说的<strong>词法作用域</strong>。</p>
+<p>可以通过下面的🌰来看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var value = 1;</span><br><span class="line"></span><br><span class="line">function foo() &#123;</span><br><span class="line">    console.log(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function bar() &#123;</span><br><span class="line">    var value = 2;</span><br><span class="line">    foo();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar();</span><br><span class="line"></span><br><span class="line">// 结果是 ???</span><br></pre></td></tr></table></figure>
+<p>大多数人看到这个🌰第一个反应结果是：输出<code>2</code>，但是需要注意的是foo的作用域并不存在与<code>bar函数</code>中,因为JavaScript的<code>作用域</code>是词法作用域，所以并不能获取到bar函数中 <code>var value = 2</code>的声明。</p>
+<p>下面我们来简单描述一下这段代码的执行过程：</p>
+<ul>
+<li>在全局环境下声明了<code>value变量</code>、<code>foo函数</code>、<code>bar函数</code></li>
+<li>执行<code>bar函数</code>，</li>
+<li>在函数<code>bar</code>内部声明了<code>value变量</code>并赋值为2</li>
+<li>执行，<code>foo函数</code></li>
+<li>在函数内寻找<code>value变量</code>声明，未找到,向上一层作用域继续寻找</li>
+<li>在顶层作用域<code>window</code>下寻找到了<code>value</code>变量，若直到顶层作用域任未找到则报错</li>
+<li>输出结果<code>1</code></li>
+</ul>
+<h3 id="动态作用域"><a href="#动态作用域" class="headerlink" title="动态作用域"></a>动态作用域</h3><p>上面已经描述了词法作用域的工作方式，这里我们来稍微讲讲与<strong>词法作用域</strong>完全对立的<strong>动态作用域</strong></p>
+<p>我们这里就以bash为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">value=1</span><br><span class="line">function foo () &#123;</span><br><span class="line">    echo $value;</span><br><span class="line">&#125;</span><br><span class="line">function bar () &#123;</span><br><span class="line">    local value=2;</span><br><span class="line">    foo;</span><br><span class="line">&#125;</span><br><span class="line">bar // 2</span><br></pre></td></tr></table></figure>
+<p>我们将上面代码保存为<code>scope.bash</code>的文件，通过执行<code>bash scope.bash</code>,最终输出<code>1</code></p>
+<h3 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h3><p>在代码执行前会进行代码设计</p>
 
     
   </div>
@@ -236,10 +256,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/04/27/learning/font-end/webpack/gulp/">
+    <a class="show pull-left" href="/2019/04/20/learning/font-end/js/JavaScript系列之原型与原型链/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/06/02/2018毕业了的/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

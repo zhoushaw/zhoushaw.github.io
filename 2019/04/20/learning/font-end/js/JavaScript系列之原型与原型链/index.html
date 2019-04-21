@@ -15,23 +15,23 @@
     <meta name="keywords" content="js," />
   
 
-  <meta name="description" content="前言在JavaScript语言中实际上并不存在“类”，那么它是如何实现继承、多态、实例化等特性呢。它采用了与类不同的另一种技术，将其称之为原型，并通过原型链来实现继承、多态等特性。 但是需要注意的是JavaScript的继承,与Java的继承实际上有很大的区别，在Java语言中，继承是一个拷贝过程在物理地址上发生了拷贝，而JavaScript语言是通过原型链将其链接在一起，没有发生实际的拷贝。">
+  <meta name="description" content="前言在JavaScript语言中实际上并不存在“类”，那么它是如何实现继承、多态、实例化等特性呢。它采用了与类不同的另一种技术，将其称之为原型，并通过原型链来实现继承、多态等特性。 但是需要注意的是JavaScript的继承,与Java的继承实际上有很大的区别，在Java语言中，继承是一个拷贝过程在物理地址上发生了拷贝，而JavaScript语言是通过原型链将其”链接”在一起，没有发生实际的拷贝。">
 <meta name="keywords" content="js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript系列之原型与原型链">
-<meta property="og:url" content="http://zhoushaw.github.io/2019/04/20/learning/font-end/js/原型与原型链/index.html">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/04/20/learning/font-end/js/JavaScript系列之原型与原型链/index.html">
 <meta property="og:site_name" content="zhou shaw">
-<meta property="og:description" content="前言在JavaScript语言中实际上并不存在“类”，那么它是如何实现继承、多态、实例化等特性呢。它采用了与类不同的另一种技术，将其称之为原型，并通过原型链来实现继承、多态等特性。 但是需要注意的是JavaScript的继承,与Java的继承实际上有很大的区别，在Java语言中，继承是一个拷贝过程在物理地址上发生了拷贝，而JavaScript语言是通过原型链将其链接在一起，没有发生实际的拷贝。">
+<meta property="og:description" content="前言在JavaScript语言中实际上并不存在“类”，那么它是如何实现继承、多态、实例化等特性呢。它采用了与类不同的另一种技术，将其称之为原型，并通过原型链来实现继承、多态等特性。 但是需要注意的是JavaScript的继承,与Java的继承实际上有很大的区别，在Java语言中，继承是一个拷贝过程在物理地址上发生了拷贝，而JavaScript语言是通过原型链将其”链接”在一起，没有发生实际的拷贝。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_21bijk293k7244lgcie0j4fgbe5g2_1058x578.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_1235011ggh2af3b01hj7941010l4l_990x668.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_1345h0c13a027556c48j45lj2ib2e_1104x556.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_7b4h6c755ckcg3ig1719c71jjdlcc_1244x990.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_7cebll7hhc7ea3jfe102f2g4fj4fa_836x772.png">
-<meta property="og:updated_time" content="2019-04-21T11:34:48.727Z">
+<meta property="og:updated_time" content="2019-04-21T13:49:53.766Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript系列之原型与原型链">
-<meta name="twitter:description" content="前言在JavaScript语言中实际上并不存在“类”，那么它是如何实现继承、多态、实例化等特性呢。它采用了与类不同的另一种技术，将其称之为原型，并通过原型链来实现继承、多态等特性。 但是需要注意的是JavaScript的继承,与Java的继承实际上有很大的区别，在Java语言中，继承是一个拷贝过程在物理地址上发生了拷贝，而JavaScript语言是通过原型链将其链接在一起，没有发生实际的拷贝。">
+<meta name="twitter:description" content="前言在JavaScript语言中实际上并不存在“类”，那么它是如何实现继承、多态、实例化等特性呢。它采用了与类不同的另一种技术，将其称之为原型，并通过原型链来实现继承、多态等特性。 但是需要注意的是JavaScript的继承,与Java的继承实际上有很大的区别，在Java语言中，继承是一个拷贝过程在物理地址上发生了拷贝，而JavaScript语言是通过原型链将其”链接”在一起，没有发生实际的拷贝。">
 <meta name="twitter:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_21bijk293k7244lgcie0j4fgbe5g2_1058x578.png">
 
   
@@ -175,7 +175,7 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-learning/font-end/js/原型与原型链" class="article article-type-post" itemprop="blogPost">
+   <article id="post-learning/font-end/js/JavaScript系列之原型与原型链" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
     <h1 class="post-title">JavaScript系列之原型与原型链</h1>
 
@@ -227,7 +227,7 @@
   <div class="article-content">
     
       <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在JavaScript语言中实际上并不存在“类”，那么它是如何实现<strong>继承</strong>、<strong>多态</strong>、<strong>实例化</strong>等特性呢。它采用了与类不同的另一种技术，将其称之为<strong>原型</strong>，并通过<strong>原型链</strong>来实现<strong>继承</strong>、<strong>多态</strong>等特性。</p>
-<p>但是需要注意的是JavaScript的<strong>继承</strong>,与Java的继承实际上有很大的区别，在Java语言中，<strong>继承</strong>是一个<strong>拷贝过程</strong>在物理地址上发生了拷贝，而JavaScript语言是通过<strong>原型链</strong>将其链接在一起，没有发生实际的拷贝。</p>
+<p>但是需要注意的是JavaScript的<strong>继承</strong>,与Java的继承实际上有很大的区别，在Java语言中，<strong>继承</strong>是一个<strong>拷贝过程</strong>在物理地址上发生了拷贝，而JavaScript语言是通过<strong>原型链</strong>将其”链接”在一起，没有发生实际的拷贝。</p>
 <div><a id="more"></a></div>
 
 <h2 id="构造函数创建对象"><a href="#构造函数创建对象" class="headerlink" title="构造函数创建对象"></a>构造函数创建对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">person.name = &apos;Kevin&apos;;</span><br><span class="line">console.log(person.name) // Kevin</span><br></pre></td></tr></table></figure>
@@ -250,7 +250,7 @@
 <h3 id="proto"><a href="#proto" class="headerlink" title="proto"></a><strong>proto</strong></h3><p>在上面的<strong>prototype</strong>中我们详细描述了<strong>构造函数</strong>如何与实例原型联系起来，那<strong>实例</strong>如何与<strong>实例原型</strong>之间如何联系呢？</p>
 <p>在标准浏览器中构造函数的<strong>实例</strong>都拥有一个<code>__proto__</code>属性，通过这个<strong>实例</strong>上的<strong>属性</strong>可以找到这个实例的原型</p>
 <p><img src="https://s10.mogucdn.com/mlcdn/c45406/190421_1235011ggh2af3b01hj7941010l4l_990x668.png" alt=""></p>
-<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><p>每个原型都有一个 constructor 属性指向关联的构造函数</p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><p>每个原型都有一个 <strong>constructor</strong> 属性指向关联的构造函数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">console.log(Person === Person.prototype.constructor); // true</span><br></pre></td></tr></table></figure>
 <p><img src="https://s10.mogucdn.com/mlcdn/c45406/190421_1345h0c13a027556c48j45lj2ib2e_1104x556.png" alt=""></p>
 <p>综上我们已经得出：</p>
@@ -286,7 +286,7 @@
     <a class="show pull-left" href="/2019/04/16/learning/font-end/security/前端安全与防范/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2019/04/21/learning/font-end/js/JavaScript系列之作用域与闭包/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
