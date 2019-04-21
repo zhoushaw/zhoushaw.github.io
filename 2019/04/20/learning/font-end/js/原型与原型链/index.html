@@ -24,7 +24,11 @@
 <meta property="og:description" content="前言在JavaScript语言中实际上并不存在“类”，那么它是如何实现继承、多态、实例化等特性呢。它采用了与类不同的另一种技术，将其称之为原型，并通过原型链来实现继承、多态等特性。 但是需要注意的是JavaScript的继承,与Java的继承实际上有很大的区别，在Java语言中，继承是一个拷贝过程在物理地址上发生了拷贝，而JavaScript语言是通过原型链将其链接在一起，没有发生实际的拷贝。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_21bijk293k7244lgcie0j4fgbe5g2_1058x578.png">
-<meta property="og:updated_time" content="2019-04-20T16:15:00.009Z">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_1235011ggh2af3b01hj7941010l4l_990x668.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_1345h0c13a027556c48j45lj2ib2e_1104x556.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_7b4h6c755ckcg3ig1719c71jjdlcc_1244x990.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190421_7cebll7hhc7ea3jfe102f2g4fj4fa_836x772.png">
+<meta property="og:updated_time" content="2019-04-21T11:34:48.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript系列之原型与原型链">
 <meta name="twitter:description" content="前言在JavaScript语言中实际上并不存在“类”，那么它是如何实现继承、多态、实例化等特性呢。它采用了与类不同的另一种技术，将其称之为原型，并通过原型链来实现继承、多态等特性。 但是需要注意的是JavaScript的继承,与Java的继承实际上有很大的区别，在Java语言中，继承是一个拷贝过程在物理地址上发生了拷贝，而JavaScript语言是通过原型链将其链接在一起，没有发生实际的拷贝。">
@@ -165,7 +169,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造函数创建对象"><span class="toc-text">构造函数创建对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原型"><span class="toc-text">原型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prototype"><span class="toc-text">prototype</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proto"><span class="toc-text">proto</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造函数创建对象"><span class="toc-text">构造函数创建对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型"><span class="toc-text">原型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#prototype"><span class="toc-text">prototype</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proto"><span class="toc-text">proto</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constructor-NaN"><span class="toc-text">constructor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例与原型"><span class="toc-text">实例与原型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型的原型"><span class="toc-text">原型的原型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
   </div>
 
 
@@ -209,12 +213,12 @@
        
           <span class="post-count">
             <i class="fa fa-file-word-o"></i>&nbsp
-            <span>字数统计 464字</span>
+            <span>字数统计 994字</span>
           </span>
 
           <span class="post-count">
             <i class="fa fa-columns"></i>&nbsp
-            <span>阅读时长 1分</span>
+            <span>阅读时长 3分</span>
           </span>
       
     </div>
@@ -228,7 +232,7 @@
 
 <h2 id="构造函数创建对象"><a href="#构造函数创建对象" class="headerlink" title="构造函数创建对象"></a>构造函数创建对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">person.name = &apos;Kevin&apos;;</span><br><span class="line">console.log(person.name) // Kevin</span><br></pre></td></tr></table></figure>
 <p>在这个例子中，Person 就是一个构造函数，我们使用 new 创建了一个实例对象 person。</p>
-<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><h3 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h3><p>什么是原型呢？可以这样理解：每一个JavaScript对象(null除外)在创建的时候就会与之<strong>关联</strong>另一个对象，这个对象就是我们所说的<strong>原型</strong>，每一个对象都会从<strong>原型</strong>“<strong>继承</strong>“属性。</p>
+<h2 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h2><h3 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h3><p>什么是原型呢？可以这样理解：每一个JavaScript对象(null除外)在创建的时候就会与之<strong>关联</strong>另一个对象，这个对象就是我们所说的<strong>原型</strong>，每一个对象都会从<strong>原型</strong>“<strong>继承</strong>“属性。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">// 虽然写在注释里，但是你要注意：</span><br><span class="line">// prototype是函数才会有的属性</span><br><span class="line">Person.prototype.name = &apos;Kevin&apos;;</span><br><span class="line">var person1 = new Person();</span><br><span class="line">var person2 = new Person();</span><br><span class="line">console.log(person1.name) // Kevin</span><br><span class="line">console.log(person2.name) // Kevin</span><br></pre></td></tr></table></figure>
 <p>这个函数的 prototype 属性到底指向的是什么呢？是这个函数的原型吗？</p>
 <blockquote>
@@ -243,7 +247,27 @@
 </ul>
 <p>用一张图解释<strong>构造函数</strong>与<strong>实例原型</strong>的关系</p>
 <p><img src="https://s10.mogucdn.com/mlcdn/c45406/190421_21bijk293k7244lgcie0j4fgbe5g2_1058x578.png" alt=""></p>
-<h3 id="proto"><a href="#proto" class="headerlink" title="proto"></a><strong>proto</strong></h3><p>在上面的prototype中我们详细描述了</p>
+<h3 id="proto"><a href="#proto" class="headerlink" title="proto"></a><strong>proto</strong></h3><p>在上面的<strong>prototype</strong>中我们详细描述了<strong>构造函数</strong>如何与实例原型联系起来，那<strong>实例</strong>如何与<strong>实例原型</strong>之间如何联系呢？</p>
+<p>在标准浏览器中构造函数的<strong>实例</strong>都拥有一个<code>__proto__</code>属性，通过这个<strong>实例</strong>上的<strong>属性</strong>可以找到这个实例的原型</p>
+<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190421_1235011ggh2af3b01hj7941010l4l_990x668.png" alt=""></p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><p>每个原型都有一个 constructor 属性指向关联的构造函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">console.log(Person === Person.prototype.constructor); // true</span><br></pre></td></tr></table></figure>
+<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190421_1345h0c13a027556c48j45lj2ib2e_1104x556.png" alt=""></p>
+<p>综上我们已经得出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var person = new Person();</span><br><span class="line"></span><br><span class="line">console.log(person.__proto__ == Person.prototype) // true</span><br><span class="line">console.log(Person.prototype.constructor == Person) // true</span><br><span class="line">// 顺便学习一个ES5的方法,可以获得对象的原型</span><br><span class="line">console.log(Object.getPrototypeOf(person) === Person.prototype) // true</span><br></pre></td></tr></table></figure>
+<p>并且我们得出了：<code>构造函数</code>、<code>原型</code>、<code>实例</code>之间的关系</p>
+<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190421_7b4h6c755ckcg3ig1719c71jjdlcc_1244x990.png" alt=""></p>
+<h2 id="实例与原型"><a href="#实例与原型" class="headerlink" title="实例与原型"></a>实例与原型</h2><p>当我们读取<strong>对象</strong>属性时，若我们读取的对象不存在，将会自动到对象的<strong>原型</strong>上查找属性是否存在，如果属性不存在将会到<strong>原型的原型</strong>上查找，一直会找到null为止</p>
+<p>通过🌰我们来进行说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.name = &apos;Kevin&apos;;</span><br><span class="line"></span><br><span class="line">var person = new Person();</span><br><span class="line"></span><br><span class="line">person.name = &apos;Daisy&apos;;</span><br><span class="line">console.log(person.name) // Daisy</span><br><span class="line"></span><br><span class="line">delete person.name;</span><br><span class="line">console.log(person.name) // Kevin</span><br></pre></td></tr></table></figure>
+<p>第一次log输出时我们得到了预期输出<code>Daisy</code>,随后我们通过<code>delete</code>关键词删除了person实例上的<code>name</code>属性，第二次输出是通过查询发现person实例中并不存在属性<code>name</code>，到<code>person</code>实例的原型<code>Person.prototype</code>上进行查找找到<code>name</code>属性，查询终止。</p>
+<p>若<code>Person.prototype</code>上任然不存在<code>name</code>属性呢，将会从何处进行查询?</p>
+<h2 id="原型的原型"><a href="#原型的原型" class="headerlink" title="原型的原型"></a>原型的原型</h2><p>从<code>实例</code>与<code>实例原型</code>的关系里面可以知道，通过<code>__proto__</code>属性我们可以查询到期原型，那么原型的原型是什么呢?</p>
+<p>通过这个🌰我们可以很清晰的知道，构造函数的原型的原型是<code>Object.prototype</code>,<code>Object.prototype</code>的原型是<code>null</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Person()&#123;&#125;</span><br><span class="line">Person.prototype.__proto__ === Object.prototype // true</span><br><span class="line">Object.prototype.__proto__ === null // true</span><br></pre></td></tr></table></figure>
+<p>通过上述的知识点我们可以构建成一幅完整的关系：</p>
+<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190421_7cebll7hhc7ea3jfe102f2g4fj4fa_836x772.png" alt=""></p>
+<p>其中<strong>青色</strong><code>__proto__</code>的线路就是我们通常所说的原型链</p>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
 <li><a href="https://github.com/getify/You-Dont-Know-JS/blob/1ed-zh-CN/this%20%26%20object%20prototypes/ch5.md" target="_blank" rel="noopener">you don’t know js: this &amp; prototype</a></li>
 <li><a href="https://github.com/mqyqingfeng/Blog/issues/2" target="_blank" rel="noopener">JavaScript深入之从原型到原型链</a></li>
