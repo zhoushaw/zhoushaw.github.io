@@ -42,3 +42,11 @@ ifconfig ip地址查询
   1.查看使用8800端口的进程方法:lsof -i :8800
   2.关闭使用某端口的进程方法:kill -9 PID，注:PID是进程ID
 
+
+## 文件常见操作
+
+>  显示系统版本
+
+```
+cat  /etc/redhat-release
+```
