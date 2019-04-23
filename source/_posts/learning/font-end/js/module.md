@@ -1,0 +1,494 @@
+---
+title: 前端模块化
+date: 2019-03-27 11:43:35
+categories: js
+tags: js
+---
+
+## 前言
+
+在学习新一个东西前，最好的办法是了解它能给我们带来什么好处我们为什么学习它，从而激发学习兴趣，哈哈哈~又扯了一堆，下面进入我们前端模块化探索之旅吧。
+
+
+> 模块化的历史
+
+在正式进入模块化学习前我们来了解一下前端模块化的前生今世。
+
+<div><!--more--></div>
+
+这里我就不过多赘述了，可以参考玉伯大佬的[前端模块化开发的价值](https://github.com/seajs/seajs/issues/547)
+
+> 模块化规范
+
+现有模块化标准：
+
+* CommonJS
+* AMD
+* CMD
+* ES6
+
+## 浏览器加载脚本
+
+> 传统方法
+
+```
+<!-- 页面内嵌的脚本 -->
+<script type="application/javascript">
+  // module code
+</script>
+
+<!-- 外部脚本 -->
+<script type="application/javascript" src="path/to/myModule.js">
+</script>
+```
+
+默认情况下，浏览器是同步加载 JavaScript 脚本，即渲染引擎遇到`<script>`标签就会停下来，等到执行完脚本，再继续向下渲染。如果是外部脚本，还必须加入脚本下载的时间。
+
+如果脚本体积很大，下载和执行的时间就会很长，因此造成浏览器堵塞，用户会感觉到浏览器“卡死”了，没有任何响应。这显然是很不好的体验，所以浏览器允许脚本异步加载，下面就是两种异步加载的语法。
+
+* defer是“渲染完再执行”
+* async是“下载完就执行”
+
+## CommonJS
+
+**Node.js是commonJS规范的主要实践者**，它有四个重要的环境变量为模块化的实现提供支持：**module**、**exports**、**require**、**global**。实际使用时，用**module.exports**定义当前模块对外输出的接口（不推荐直接用**exports**），用**require**加载模块。
+
+每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。
+
+### 模块化
+
+```
+// example.js
+var x = 5;
+var addX = function (value) {
+  return value + x;
+};
+```
+
+**上面代码中，变量x和函数addX，是当前文件example.js私有的，其他文件不可见。**
+
+### global对象
+
+如果想在多个文件分享变量
+
+```
+global.__ENV__ = dev;
+```
+上面代码的__ENV__变量，可以被所有文件读取。当然，需要尽量避免定义全局属性
+
+### 导出模块
+
+CommonJS规范规定，每个模块内部，**module**变量代表当前模块。这个变量是一个对象，它的**exports**属性（即**module.exports**）是对外的接口。加载某个模块，其实是加载该模块的**module.exports**属性。
+
+为了方便，Node为每个模块提供一个exports变量，指向module.exports。这等同在每个模块头部，有一行这样的命令。
+
+```
+var exports = module.exports;
+```
+
+在对外输出模块接口时，可以向**exports**对象添加方法
+
+```
+exports.area = function (r) {
+  return Math.PI * r * r;
+};
+
+exports.circumference = function (r) {
+  return 2 * Math.PI * r;
+};
+```
+
+**注意，不能直接将exports变量指向一个值，因为这样等于切断了exports与module.exports的联系。**
+
+```
+exports = function(x) {console.log(x)};
+```
+
+这意味着，如果一个模块的对外接口，就是一个单一的值，不能使用exports输出，只能使用module.exports输出。
+
+
+```
+exports.hello = function() {
+  return 'hello';
+};
+
+module.exports = 'Hello world';
+```
+下面代码中，hello函数是无法对外输出的，因为module.exports被重新赋值了
+
+### 引入模块
+
+Node使用CommonJS模块规范，内置的**require**命令用于加载模块文件。
+
+require命令的基本功能是，**读入并执行一个JavaScript文件**，然后返回**该模块的exports对象**。如果没有发现指定模块，会报错。
+
+
+> 特性
+
+commonJS用同步的方式加载模块。在服务端，模块文件都存在本地磁盘，读取非常快，所以这样做不会有问题。但是在浏览器端，限于网络原因，更合理的方案是使用异步加载。
+
+> 导入模块
+
+```
+// math.js
+var basicNum = 0;
+function add(a, b) {
+  return a + b;
+}
+module.exports = { //在这里写上需要向外暴露的函数、变量
+  add: add,
+  basicNum: basicNum
+}
+
+// index.js
+var math = require('./math');
+//{
+//    add: [Function],
+//    basicNum: 0
+//}
+```
+
+> 加载规则
+
+1. 如果参数字符串以“/”开头，则表示加载的是一个位于绝对路径的模块文件。比如，require('/home/marco/foo.js')将加载/home/marco/foo.js。
+
+2. 如果参数字符串以“./”开头，则表示加载的是一个位于相对路径（跟当前执行脚本的位置相比）的模块文件。比如，require('./circle')将加载当前脚本同一目录的circle.js。
+
+3. 如果参数字符串不以“./“或”/“开头，而且是一个路径，比如require('example-module/path/to/file')，则将先找到example-module的位置，然后再以它为参数，找到后续路径。
+
+4. 如果指定的模块文件没有发现，Node会尝试为文件名添加.js、.json、.node后，再去搜索。.js件会以文本格式的JavaScript脚本文件解析，.json文件会以JSON格式的文本文件解析，.node文件会以编译后的二进制文件解析。
+
+5. 如果想得到require命令加载的确切文件名，使用require.resolve()方法。
+
+6. 如果参数字符串不以“./“或”/“开头，则表示加载的是一个默认提供的核心模块（位于Node的系统安装目录中），或者一个位于各级node_modules目录的已安装模块（全局安装或局部安装）。
+
+举例来说，脚本/home/user/projects/foo.js执行了require('bar.js')命令，Node会依次搜索以下文件。
+
+```
+/usr/local/lib/node/bar.js
+/home/user/projects/node_modules/bar.js
+/home/user/node_modules/bar.js
+/home/node_modules/bar.js
+/node_modules/bar.js
+```
+
+> 引入
+
+```
+// 引用自定义的模块时，参数包含路径，可省略.js
+var math = require('./math');
+math.add(2, 5);
+
+// 引用核心模块时，不需要带路径
+var http = require('http');
+http.createService(...).listen(3000);
+```
+
+> 目录的加载规则
+
+在目录中放置一个package.json文件，并且将入口文件写入main字段。下面是一个例子。
+
+
+```
+// package.json
+{ "name" : "some-library",
+  "main" : "./lib/some-library.js" }
+```
+
+
+### module对象
+
+Node内部提供一个Module构建函数。所有模块都是Module的实例。
+
+* module.id 模块的识别符，通常是带有绝对路径的模块文件名。
+* module.filename 模块的文件名，带有绝对路径。
+* module.loaded 返回一个布尔值，表示模块是否已经完成加载。
+* module.parent 返回一个对象，表示调用该模块的模块。
+* module.children 返回一个数组，表示该模块要用到的其他模块。
+* module.exports 表示模块对外输出的值。
+
+## ES6
+
+
+模块功能主要由两个命令构成：**export**和**import**。**export**命令用于规定模块的对外接口，**import**命令用于输入其他模块提供的功能。
+
+一个模块就是一个独立的文件。该文件内部的所有变量，外部无法获取。如果你希望外部能够读取模块内部的某个变量，就必须使用export关键字输出该变量。
+
+
+```
+<script type="module">
+  import utils from "./utils.js";
+
+  // other code
+</script>
+```
+### ES6 模块与 CommonJS 模块的差异
+
+> 它们有两个重大差异
+
+* CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。
+* CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。
+
+#### ES6 模块加载 CommonJS 模块
+
+CommonJS 模块的输出都定义在module.exports这个属性上面。Node 的import命令加载 CommonJS 模块，Node 会自动将module.exports属性，当作模块的默认输出，即等同于export default xxx。
+
+```
+// a.js
+module.exports = {
+  foo: 'hello',
+  bar: 'world'
+};
+
+// 等同于
+export default {
+  foo: 'hello',
+  bar: 'world'
+};
+```
+
+一共有三种写法，可以拿到 CommonJS 模块的module.exports。
+
+
+```
+// 写法一
+import baz from './a';
+// baz = {foo: 'hello', bar: 'world'};
+
+// 写法二
+import {default as baz} from './a';
+// baz = {foo: 'hello', bar: 'world'};
+
+// 写法三
+import * as baz from './a';
+```
+
+#### CommonJS 模块加载 ES6 模块
+
+CommonJS 模块加载 ES6 模块，不能使用require命令，而要使用import()函数。ES6 模块的所有输出接口，会成为输入对象的属性。
+
+### 导出模块
+
+#### 导出方式
+
+1、多次使用export
+
+```
+// profile.js
+export var firstName = 'Michael';
+export var lastName = 'Jackson';
+export var year = 1958;
+```
+export命令对外部输出了三个变量。
+
+2、导出对象
+
+```
+// profile.js
+var firstName = 'Michael';
+var lastName = 'Jackson';
+var year = 1958;
+
+export {firstName, lastName, year};
+```
+
+3、直接导出单个变量、函数
+
+```
+export function multiply(x, y) {
+  return x * y;
+};
+```
+
+4、导出默认模块
+
+```
+// 正确
+export var a = 1;
+
+// 正确
+var a = 1;
+export default a;
+
+// 错误
+export default var a = 1;
+```
+
+#### 导出注意点
+
+**export命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系。**(简而言之导出的必须是对象的key)
+
+> 必须建议意义对应关系
+
+```
+export var year = 1958;
+//==
+export {
+    year
+}
+```
+
+
+```
+// 报错
+export 1;
+// 报错
+var m = 1;
+export m;
+
+```
+
+> 上面两种写法都会报错，因为没有提供对外的接口。正确写法：
+
+
+```
+// 写法一
+export var m = 1;
+
+// 写法二
+var m = 1;
+export {m};
+
+// 写法三
+var n = 1;
+export {n as m};
+```
+
+> 同样的，function和class的输出，也必须遵守这样的写法。
+
+```
+// 报错
+function f() {}
+export f;
+
+// 正确
+export function f() {};
+
+// 正确
+function f() {}
+export {f};
+```
+
+**另外，export语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值。**
+
+#### 模块别名
+
+
+浏览器加载 **ES6** 模块，也使用**`<script>`**标签，但是要加入**type="module"**属性
+
+浏览器对于带有**type="module"**的**`<script>`**，等同于打开了**`<script>`标签的defer**属性。
+
+> ES6 模块也允许内嵌在网页中
+
+* 代码是在模块作用域之中运行，而不是在全局作用域运行。模块内部的顶层变量，外部不可见。
+* 模块脚本自动采用严格模式，不管有没有声明use strict。
+* 模块之中，可以使用import命令加载其他模块（.js后缀不可省略，需要提供绝对 URL 或相对 URL），也可以使用export命令输出对外接口。
+* 模块之中，顶层的this关键字返回undefined，而不是指向window。也就是说，在模块顶层使用this关键字，是无意义的。
+* 同一个模块如果加载多次，将只执行一次。
+
+> 示例模块
+
+
+```
+import utils from 'https://example.com/js/utils.js';
+
+const x = 1;
+
+console.log(x === window.x); //false
+console.log(this === undefined); // true
+```
+
+### 导入模块
+
+使用export命令定义了模块的对外接口以后，其他 JS 文件就可以通过import命令加载这个模块。
+
+```
+// main.js
+import {firstName, lastName, year} from './profile.js';
+
+function setName(element) {
+  element.textContent = firstName + ' ' + lastName;
+}
+```
+
+**注意，import命令具有提升效果，会提升到整个模块的头部，首先执行。**
+
+
+```
+foo();
+import { foo } from 'my_module';
+
+// ===>
+
+import { foo } from 'my_module';
+foo();
+```
+
+> 导入默认模块
+
+
+
+```
+// export-default.js
+export default function () {
+  console.log('foo');
+}
+```
+
+
+```
+// import-default.js
+import customName from './export-default';
+customName(); // 'foo'
+```
+
+#### 导入别名设置
+
+将surname是lastName的别名
+
+```
+import { lastName as surname } from './profile.js';
+```
+
+将多个方法融合成一个
+
+
+```
+// circle.js
+
+export function area(radius) {
+  return Math.PI * radius * radius;
+}
+
+export function circumference(radius) {
+  return 2 * Math.PI * radius;
+}
+```
+
+
+```
+import * as circle from './circle';
+
+console.log('圆面积：' + circle.area(4));
+console.log('圆周长：' + circle.circumference(14));
+```
+#### 按需加载
+
+```
+import('./utils.js')
+.then(Util => {
+    console.log(Util);
+});
+```
+## CMD
+
+CMD(common module definition), 是sea.js在推广过程中对模块定义的规范化产出，主要用于浏览器端。推崇依赖就近、延迟执行。它的核心思想是：每个文件都是一个模块，在模块中定义的变量、函数、类都是私有的，对外不可见。有一个全局性方法require()，用于加载模块
+
+AMD规范（Asynchronous Module Definition）：是 RequireJS 在推广过程中对模块定义的规范化产出，也是主要用于浏览器端。其特点是：依赖前置，需要在定义时就写好需要的依赖，提前执行依赖，应用有require.js
+
+
+### 参考链接
+
+* [CommonJS规范](http://javascript.ruanyifeng.com/nodejs/module.html#toc0)
+
+
