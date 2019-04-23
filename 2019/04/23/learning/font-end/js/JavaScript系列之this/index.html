@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="zhou shaw">
 <meta property="og:description" content="前言在JavaScript语言中存在一个this关键词，这个关键词指的是函数运行时所在的环境。由于函数可以在不同的运行环境执行，所以需要有一种机制，能够在函数体内部获得当前的运行环境（context）。所以，this就出现了，它的设计目的就是在函数体内部，指代函数当前的运行环境。 前一个系列的作用域讲过,作用域运用的是词法作用域，意味着是编写时确定的，但this与其工作原理完全不同，它的指向并不是">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-23T13:40:32.537Z">
+<meta property="og:updated_time" content="2019-04-23T15:05:41.221Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript系列之this">
 <meta name="twitter:description" content="前言在JavaScript语言中存在一个this关键词，这个关键词指的是函数运行时所在的环境。由于函数可以在不同的运行环境执行，所以需要有一种机制，能够在函数体内部获得当前的运行环境（context）。所以，this就出现了，它的设计目的就是在函数体内部，指代函数当前的运行环境。 前一个系列的作用域讲过,作用域运用的是词法作用域，意味着是编写时确定的，但this与其工作原理完全不同，它的指向并不是">
@@ -207,12 +207,12 @@
        
           <span class="post-count">
             <i class="fa fa-file-word-o"></i>&nbsp
-            <span>字数统计 495字</span>
+            <span>字数统计 706字</span>
           </span>
 
           <span class="post-count">
             <i class="fa fa-columns"></i>&nbsp
-            <span>阅读时长 1分</span>
+            <span>阅读时长 2分</span>
           </span>
       
     </div>
@@ -231,10 +231,21 @@
 <li>通过对象使用点来调用:函数内部this指向调用对象</li>
 <li>触发事件调用函数:函数内部的<code>this</code>指向触发事件的对象</li>
 <li>以<code>new</code>的方式来调用:函数内部<code>this</code>指向本次函数执行时对应的一个匿名对象（以new的方式创建的函数，函数名的首字母一般以大写字母开始）</li>
-<li>构造函数 ，是一种特殊的方法。主要用来在创建对象时初始化对象， 即为对象成员变量赋初始值，总与<code>new运算符</code>一起使用在创建对象的语句中。</li>
 <li>通过<code>call</code>的方法来间接调用方法:函数内部this指向<code>call</code>方法的第一参数对象,我们可以创建结构相同，但内容不同的对象</li>
 </ol>
-<h2 id="不仅仅是“规则”"><a href="#不仅仅是“规则”" class="headerlink" title="不仅仅是“规则”"></a>不仅仅是“规则”</h2><p>参考了上面的规则发现，<code>this</code>的指向无论如何都逃脱不了上面的<strong>6大原则</strong>,那它们之前是否存在一定的规律呢，或者说</p>
+<h2 id="不仅仅是“规则”"><a href="#不仅仅是“规则”" class="headerlink" title="不仅仅是“规则”"></a>不仅仅是“规则”</h2><p>参考了上面的规则发现，<code>this</code>的指向无论如何都逃脱不了上面的<strong>5大原则</strong>,那它们之前是否存在一定的规律呢，或者说是什么来决定<code>this</code>的指向的。</p>
+<p>通常我们会对一下例子的结果没法准确的确定<code>this</code>指向：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var name = &apos;zhou&apos;;</span><br><span class="line">var obj = &#123;</span><br><span class="line">    name: &apos;shaw&apos;,</span><br><span class="line">    say: function () &#123;</span><br><span class="line">        console.log(this.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.say();  </span><br><span class="line"></span><br><span class="line">var say = obj.say;</span><br><span class="line">say();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面的输出结果会是什么呢：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj.say(); // 输出shaw</span><br><span class="line">say();  // 输出zhou</span><br></pre></td></tr></table></figure>
+<p>为什么这里<code>obj.say</code>和<code>say</code>的输出结果会不一致呢？下面我们来一探究竟。</p>
+<p><code>this</code>的指向与数据在内存里的数据结构有关:</p>
+<p>上面案例里的<code>obj</code>对象是如何在内存中存储的呢</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">obj.say-&gt; &#123;</span><br><span class="line">    [[value]]: say函数地址</span><br><span class="line">    [[write]]: true,</span><br><span class="line">    [[readable]]: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上<code>say</code>函数并没有存储在<code>obj</code>对象中，它只存储了<code>say</code>函数的地址。</p>
+<p>我们直接通过<code>obj.say</code>来调用函数，与<code>obj.say</code>赋值给<code>say</code>变量调用完全不同，因为<code>obj</code>中存储的是<code>say函数</code>的地址，我们进行赋值操作时直接将say函数地址直接赋值过去了，而不是我们想象的将<code>obj.say</code>引用赋值过去。</p>
 
     
   </div>
