@@ -24,7 +24,7 @@
 <meta property="og:description" content="一、this关键词this是关键词，表示指向的索引位置  很多人对于this最终指向常见的误解是，this是编写时绑定的，通常会将其认为成一下几种情况： 1、认为this指向，foo函数 1234function foo () &amp;#123;    console.log(this);&amp;#125;foo();">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190408_13k6cb57lifabic37gi0889i67250_253x333.png">
-<meta property="og:updated_time" content="2019-04-20T12:48:43.465Z">
+<meta property="og:updated_time" content="2019-04-23T13:22:02.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="this &amp; 对象原型">
 <meta name="twitter:description" content="一、this关键词this是关键词，表示指向的索引位置  很多人对于this最终指向常见的误解是，this是编写时绑定的，通常会将其认为成一下几种情况： 1、认为this指向，foo函数 1234function foo () &amp;#123;    console.log(this);&amp;#125;foo();">
@@ -233,6 +233,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log( <span class="keyword">this</span>.a );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	a: <span class="number">2</span>,</span><br><span class="line">	foo: foo</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = obj.foo; <span class="comment">// 函数引用！</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">"oops, global"</span>; <span class="comment">// `a` 也是一个全局对象的属性</span></span><br><span class="line"></span><br><span class="line">bar(); <span class="comment">// "oops, global"</span></span><br></pre></td></tr></table></figure>
 <h3 id="可以大致分为以下几种情况："><a href="#可以大致分为以下几种情况：" class="headerlink" title="可以大致分为以下几种情况："></a>可以大致分为以下几种情况：</h3><p>函数调用方式与内部this指针关系<br>1.直接调用:函数内部this指向全局对象window<br>2.通过对象使用点来调用:函数内部this指向调用对象<br>3.触发事件调用函数:函数内部的this指向触发事件的对象<br>4.以new的方式来调用:函数内部this指向本次函数执行时对应的一个匿名对象（以new的方式创建的函数，函数名的首字母一般以大写字母开始）<br>构造函数 ，是一种特殊的方法。主要用来在创建对象时初始化对象， 即为对象成员变量赋初始值，总与new运算符一起使用在创建对象的语句中。</p>
 <p>5.通过call的方法来间接调用方法:函数内部this指向call方法的第一参数对象<br>有点:我们可以创建结构相同，但内容不同的对象</p>
+<p>可参考: <a href="http://www.ruanyifeng.com/blog/2018/06/javascript-this.html" target="_blank" rel="noopener">JavaScript 的this原理</a></p>
 <p>按照本文中的分类将其分为四大块：</p>
 <p>默认绑定、隐含绑定、明确绑定、new 绑定</p>
 <h3 id="仅仅是规则"><a href="#仅仅是规则" class="headerlink" title="仅仅是规则"></a>仅仅是规则</h3><p>this的最终指向可以将其分为大致四种规则</p>

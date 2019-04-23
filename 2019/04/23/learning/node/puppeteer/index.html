@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>puppeteer爬虫实战 | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="node," />
+  
+
+  <meta name="description" content="前言待补充…. centOs7.0无法运行问题centos必须升级到7.0以上否则会遇到依赖版本缺失问题 123456789101112yum install ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic xorg-x11-fonts-Type1">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="puppeteer爬虫实战">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/04/23/learning/node/puppeteer/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="前言待补充…. centOs7.0无法运行问题centos必须升级到7.0以上否则会遇到依赖版本缺失问题 123456789101112yum install ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic xorg-x11-fonts-Type1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-23T13:22:02.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="puppeteer爬虫实战">
+<meta name="twitter:description" content="前言待补充…. centOs7.0无法运行问题centos必须升级到7.0以上否则会遇到依赖版本缺失问题 123456789101112yum install ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic xorg-x11-fonts-Type1">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#centOs7-0无法运行问题"><span class="toc-text">centOs7.0无法运行问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#puppeteer启动配置"><span class="toc-text">puppeteer启动配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#emulate仿真"><span class="toc-text">emulate仿真</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面环境执行脚本"><span class="toc-text">页面环境执行脚本</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/node/puppeteer" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">puppeteer爬虫实战</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.04.23</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/node/">node</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 399字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 1分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>待补充….</p>
+<h2 id="centOs7-0无法运行问题"><a href="#centOs7-0无法运行问题" class="headerlink" title="centOs7.0无法运行问题"></a>centOs7.0无法运行问题</h2><p>centos必须升级到7.0以上否则会遇到依赖版本缺失问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">yum install ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic xorg-x11-fonts-Type1 xorg-x11-fonts-misc -y</span><br><span class="line"></span><br><span class="line">yum install pango.x86_64 libXcomposite.x86_64 libXcursor.x86_64 libXdamage.x86_64 libXext.x86_64 libXi.x86_64 libXtst.x86_64 cups-libs.x86_64 libXScrnSaver.x86_64 libXrandr.x86_64 GConf2.x86_64 alsa-lib.x86_64 atk.x86_64 gtk3.x86_64 -y</span><br><span class="line"></span><br><span class="line"># 再安装NSS的依赖：</span><br><span class="line">yum install nss.x86_64</span><br><span class="line"></span><br><span class="line"># puppeteer的执行文件中去沙箱运行：</span><br><span class="line">browser = await puppeteer.launch(&#123;</span><br><span class="line">  headless: true,</span><br><span class="line">  args: [&apos;--no-sandbox&apos;, &apos;--disable-setuid-sandbox&apos;]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="puppeteer启动配置"><a href="#puppeteer启动配置" class="headerlink" title="puppeteer启动配置"></a>puppeteer启动配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const puppeteer = require(&apos;puppeteer&apos;);</span><br><span class="line">const browser = await puppeteer.launch([options]);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>options<ul>
+<li>headless <code>&lt;boolean&gt;</code> 以界面形式运行</li>
+<li>devtools <code>&lt;boolean&gt;</code> 打开开发者工具栏</li>
+</ul>
+</li>
+</ul>
+<h2 id="emulate仿真"><a href="#emulate仿真" class="headerlink" title="emulate仿真"></a>emulate仿真</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const puppeteer = require(&apos;puppeteer&apos;);</span><br><span class="line">const devices = require(&apos;puppeteer/DeviceDescriptors&apos;)</span><br><span class="line"></span><br><span class="line">const page = await browser.newPage();</span><br><span class="line">await page.emulate(devices[&apos;iPhone X&apos;])</span><br><span class="line">await page.goto(&apos;https://www.baidu.com&apos;&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="页面环境执行脚本"><a href="#页面环境执行脚本" class="headerlink" title="页面环境执行脚本"></a>页面环境执行脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">await page.evaluate(() =&gt; &#123;</span><br><span class="line">    let name = window.name;</span><br><span class="line">    return name;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>page.evaluate(pageFunction[, …args])</p>
+</blockquote>
+<ul>
+<li><code>pageFunction</code>: <code>&lt;Function&gt;</code> 执行脚本，函数在浏览器环境执行，拥有<code>window</code>、<code>document</code>访问权限</li>
+<li><code>...args</code>: <code>&lt;...Serializable|JSHandle&gt;</code>,传入参数，<code>pageFunction</code>无法访问函数外部变量，因为<code>pageFunction</code>内容将会直接当做脚本注入页面</li>
+</ul>
+<p>由于<code>pageFunction</code>函数会直接被注入到页面中，所以无法获取函数外部作用域，只能讲外部参数通过<code>args</code>传入，不能直接将<code>Function</code>传入，只能将函数通过<code>toString</code>后，在通过<code>eval</code>来执行<code>string</code>化后的函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let detect = () =&gt; &#123;</span><br><span class="line">    // ... do some thing</span><br><span class="line">    return &apos;res&apos;;</span><br><span class="line">&#125;;</span><br><span class="line"> const html = await page.evaluate((fn) =&gt; &#123;</span><br><span class="line">        let res = eval(fn)();</span><br><span class="line">        return res;</span><br><span class="line">&#125;, detect.toString());</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/04/21/learning/font-end/js/JavaScript系列之作用域与闭包/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/04/23/learning/font-end/js/JavaScript系列之this/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
