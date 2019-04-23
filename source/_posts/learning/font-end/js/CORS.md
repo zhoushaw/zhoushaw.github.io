@@ -2,7 +2,7 @@
 title: http
 date: 2018-09-30 8:07:12
 tags: http
-categories: learning
+categories: http
 ---
 
 
