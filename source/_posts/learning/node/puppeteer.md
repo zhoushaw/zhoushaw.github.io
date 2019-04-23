@@ -45,6 +45,38 @@ const browser = await puppeteer.launch([options]);
 ```
 const puppeteer = require('puppeteer');
 const devices = require('puppeteer/DeviceDescriptors')
+
+const page = await browser.newPage();
 await page.emulate(devices['iPhone X'])
+await page.goto('https://www.baidu.com'});
 ```
+
+## 页面环境执行脚本
+
+
+```
+await page.evaluate(() => {
+    let name = window.name;
+    return name;
+});
+```
+
+> page.evaluate(pageFunction[, ...args])
+
+* `pageFunction`: `<Function>` 执行脚本，函数在浏览器环境执行，拥有`window`、`document`访问权限
+* `...args`: `<...Serializable|JSHandle>`,传入参数，`pageFunction`无法访问函数外部变量，因为`pageFunction`内容将会直接当做脚本注入页面
+
+由于`pageFunction`函数会直接被注入到页面中，所以无法获取函数外部作用域，只能讲外部参数通过`args`传入，不能直接将`Function`传入，只能将函数通过`toString`后，在通过`eval`来执行`string`化后的函数。
+
+```
+let detect = () => {
+    // ... do some thing
+    return 'res';
+};
+ const html = await page.evaluate((fn) => {
+        let res = eval(fn)();
+        return res;
+}, detect.toString());
+```
+
 
