@@ -55,6 +55,7 @@ bar(); // "oops, global"
 5.通过call的方法来间接调用方法:函数内部this指向call方法的第一参数对象
 有点:我们可以创建结构相同，但内容不同的对象
 
+可参考: [JavaScript 的this原理](http://www.ruanyifeng.com/blog/2018/06/javascript-this.html)
 
 按照本文中的分类将其分为四大块：
 
