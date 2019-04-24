@@ -40,7 +40,11 @@ const browser = await puppeteer.launch([options]);
     * headless `<boolean>` 以界面形式运行
     * devtools `<boolean>` 打开开发者工具栏
 
-## emulate仿真
+## 页面对象附带
+
+> page.emulate
+
+模仿真实手机
 
 ```
 const puppeteer = require('puppeteer');
@@ -50,6 +54,32 @@ const page = await browser.newPage();
 await page.emulate(devices['iPhone X'])
 await page.goto('https://www.baidu.com'});
 ```
+
+> page.waitFor
+
+```
+page.waitFor(selectorOrFunctionOrTimeout[, options[, ...args]])
+```
+
+等待指定dom节点内容渲染完成
+
+```
+let selector = '.price';
+await page.waitFor(selector =>{
+    return (document.querySelector(selector)||{}).innerText;
+}, {}, selector);
+```
+
+> page.goto(`url`[, `options`])
+
+* url `<string>` : 指定跳转地址
+* options `<Object> `:
+    * `networkidle0`: 500毫秒内没有任何一个网络请求
+    * `networkidle2`:  500毫秒内没有超过任何二个网络请求
+    * `domcontentloaded`: dom装载完成
+
+
+
 
 ## 页面环境执行脚本
 
@@ -78,5 +108,12 @@ let detect = () => {
         return res;
 }, detect.toString());
 ```
+
+## jest-puppeteer
+
+使用puppeteer与jest搭配测试：
+
+* 依赖安装`npm install --save-dev jest-puppeteer puppeteer jest`
+* `package.json`添加`"jest": {"preset": "jest-puppeteer"}`依赖
 
 
