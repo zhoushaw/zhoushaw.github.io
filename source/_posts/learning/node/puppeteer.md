@@ -111,6 +111,8 @@ let detect = () => {
 
 ## jest-puppeteer
 
+[官方文档](https://jestjs.io/docs/zh-Hans/puppeteer)
+
 使用puppeteer与jest搭配测试：
 
 * 依赖安装`npm install --save-dev jest-puppeteer puppeteer jest`
