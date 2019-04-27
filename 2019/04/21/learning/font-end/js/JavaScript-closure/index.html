@@ -19,11 +19,11 @@
 <meta name="keywords" content="js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript系列之作用域与闭包">
-<meta property="og:url" content="http://zhoushaw.github.io/2019/04/21/learning/font-end/js/JavaScript‘s series action scope and closure/index.html">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/04/21/learning/font-end/js/JavaScript-closure/index.html">
 <meta property="og:site_name" content="zhou shaw">
 <meta property="og:description" content="作用域在进入作用域的讨论之前先明什么是作用域，通过一句话简单描述就是：一组明确定义的规则，它定义如何在某些位置存储变量，以及如何在稍后找到这些变量 词法作用域作用域的工作方式有两种占统治地位的模型。其中的第一种是最最常见，在绝大多数的编程语言中被使用的。它称为 词法作用域，我们将深入检视它。另一种仍然被一些语言（比如 Bash 脚本，Perl 中的一些模式，等等）使用的模型，称为 动态作用域。 J">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-21T15:17:03.807Z">
+<meta property="og:updated_time" content="2019-04-27T13:21:01.129Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript系列之作用域与闭包">
 <meta name="twitter:description" content="作用域在进入作用域的讨论之前先明什么是作用域，通过一句话简单描述就是：一组明确定义的规则，它定义如何在某些位置存储变量，以及如何在稍后找到这些变量 词法作用域作用域的工作方式有两种占统治地位的模型。其中的第一种是最最常见，在绝大多数的编程语言中被使用的。它称为 词法作用域，我们将深入检视它。另一种仍然被一些语言（比如 Bash 脚本，Perl 中的一些模式，等等）使用的模型，称为 动态作用域。 J">
@@ -169,7 +169,7 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-learning/font-end/js/JavaScript‘s series action scope and closure" class="article article-type-post" itemprop="blogPost">
+   <article id="post-learning/font-end/js/JavaScript-closure" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
     <h1 class="post-title">JavaScript系列之作用域与闭包</h1>
 
@@ -294,7 +294,7 @@
 <p class="tip">我们试图 暗示 在迭代期间，循环的每次迭代都“捕捉”一份对 i 的拷贝。但是，虽然所有这5个函数在每次循环迭代中分离地定义，由于作用域的工作方式，它们 都闭包在同一个共享的全局作用域上，而它事实上只有一个 i</p>
 
 
-<p>如何解决这个问题呢，定义一个新的作用域，在每次迭代时持有值 i 的一个拷贝</p>
+<p>如何解决这个问题呢，定义一个新的作用域，在每次迭代时持有值 i 的一个拷贝。在新的匿名函数内部定义了一个新的局部作用域，i设置为了每次遍历时的值，这样便不会继续往上遍历了。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">1</span>; i&lt;=<span class="number">5</span>; i++) &#123;</span><br><span class="line">	(<span class="function"><span class="keyword">function</span>(<span class="params">j</span>)</span>&#123;</span><br><span class="line">		setTimeout( <span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log( j );</span><br><span class="line">		&#125;, j*<span class="number">1000</span> );</span><br><span class="line">	&#125;)( i );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     
@@ -307,7 +307,7 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/04/20/learning/font-end/js/JavaScript‘s series prototype/">
+    <a class="show pull-left" href="/2019/04/20/learning/font-end/js/JavaScript-prototype/">
         <i class="icon icon-angle-left"></i>
     </a>
     <a class="show pull-right" href="/2019/04/23/learning/node/puppeteer/">

@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://zhoushaw.github.io/2017/10/14/other/tool/charles/</loc>
+    
+    <lastmod>2019-04-27T13:21:01.131Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2019/04/23/learning/node/puppeteer/</loc>
+    
+    <lastmod>2019-04-27T13:21:01.130Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2019/04/23/learning/font-end/js/JavaScript-this/</loc>
+    
+    <lastmod>2019-04-27T13:21:01.130Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2019/04/20/learning/font-end/js/JavaScript-prototype/</loc>
+    
+    <lastmod>2019-04-27T13:21:01.129Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2019/04/21/learning/font-end/js/JavaScript-closure/</loc>
+    
+    <lastmod>2019-04-27T13:21:01.129Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zhoushaw.github.io/2018/09/30/learning/font-end/js/CORS/</loc>
     
     <lastmod>2019-04-23T15:16:14.999Z</lastmod>
@@ -16,23 +51,9 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/2019/04/23/learning/font-end/js/JavaScript%E2%80%98s%20series%20%20this/</loc>
-    
-    <lastmod>2019-04-23T15:05:41.221Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://zhoushaw.github.io/2017/06/12/other/linux-command/</loc>
     
     <lastmod>2019-04-23T13:22:02.324Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zhoushaw.github.io/2019/04/23/learning/node/puppeteer/</loc>
-    
-    <lastmod>2019-04-23T13:22:02.323Z</lastmod>
     
   </url>
   
@@ -44,28 +65,14 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/2019/04/21/learning/font-end/js/JavaScript%E2%80%98s%20series%20action%20scope%20and%20closure/</loc>
-    
-    <lastmod>2019-04-21T15:17:03.807Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zhoushaw.github.io/2019/04/20/learning/font-end/js/JavaScript%E2%80%98s%20series%20prototype/</loc>
-    
-    <lastmod>2019-04-21T13:49:53.766Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zhoushaw.github.io/2019/03/16/other/tool/chrome-extend/</loc>
+    <loc>http://zhoushaw.github.io/2019/04/16/learning/font-end/security/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E4%B8%8E%E9%98%B2%E8%8C%83/</loc>
     
     <lastmod>2019-04-20T12:39:57.663Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/2019/04/16/learning/font-end/security/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E4%B8%8E%E9%98%B2%E8%8C%83/</loc>
+    <loc>http://zhoushaw.github.io/2019/03/16/other/tool/chrome-extend/</loc>
     
     <lastmod>2019-04-20T12:39:57.663Z</lastmod>
     
@@ -86,7 +93,7 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/project/index.html</loc>
+    <loc>http://zhoushaw.github.io/search/index.html</loc>
     
     <lastmod>2019-04-14T13:54:11.957Z</lastmod>
     
@@ -100,7 +107,7 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/search/index.html</loc>
+    <loc>http://zhoushaw.github.io/project/index.html</loc>
     
     <lastmod>2019-04-14T13:54:11.957Z</lastmod>
     
@@ -143,13 +150,6 @@
   
   <url>
     <loc>http://zhoushaw.github.io/2017/05/27/other/tool/photoshop-note/</loc>
-    
-    <lastmod>2019-04-14T13:54:11.955Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zhoushaw.github.io/2017/10/14/other/tool/charles/</loc>
     
     <lastmod>2019-04-14T13:54:11.955Z</lastmod>
     
