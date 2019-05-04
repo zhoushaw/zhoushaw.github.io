@@ -118,4 +118,45 @@ let detect = () => {
 * 依赖安装`npm install --save-dev jest-puppeteer puppeteer jest`
 * `package.json`添加`"jest": {"preset": "jest-puppeteer"}`依赖
 
+### TypeScript
+
+在使用TypeScript中使用`puppeteer`测试需要注意一下几点：
+
+> 由于TypeScript需要进行类型检测所以需要在全局环境注入变量
+
+依赖安装：
+
+`@types/puppeteer`, `@types/jest-environment-puppeteer`
+
+配置文件：
+
+```
+{
+    jest: {
+        "globalSetup": "jest-environment-puppeteer/setup",
+        "globalTeardown": "jest-environment-puppeteer/teardown",
+        "testEnvironment": "jest-environment-puppeteer"
+    }
+}
+```
+> 指定输出版本
+
+若输出目标为`"target": "es5"`，则会报各种依赖无法查找错误
+
+```
+ReferenceError: __awaiter is not defined
+```
+
+解决方案：
+
+```
+// tsconfig.json,文件配置
+{
+  "compilerOptions": {
+    "target": "es2017",
+    // ...
+  }
+}
+```
+
 
