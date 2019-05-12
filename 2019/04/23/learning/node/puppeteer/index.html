@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="zhou shaw">
 <meta property="og:description" content="前言待补充…. centOs7.0无法运行问题centos必须升级到7.0以上否则会遇到依赖版本缺失问题 123456789101112yum install ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic xorg-x11-fonts-Type1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-27T13:21:01.130Z">
+<meta property="og:updated_time" content="2019-05-12T06:26:35.669Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="puppeteer爬虫实战">
 <meta name="twitter:description" content="前言待补充…. centOs7.0无法运行问题centos必须升级到7.0以上否则会遇到依赖版本缺失问题 123456789101112yum install ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic xorg-x11-fonts-Type1">
@@ -163,7 +163,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#centOs7-0无法运行问题"><span class="toc-text">centOs7.0无法运行问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#puppeteer启动配置"><span class="toc-text">puppeteer启动配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面对象附带"><span class="toc-text">页面对象附带</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面环境执行脚本"><span class="toc-text">页面环境执行脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jest-puppeteer"><span class="toc-text">jest-puppeteer</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#centOs7-0无法运行问题"><span class="toc-text">centOs7.0无法运行问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#puppeteer启动配置"><span class="toc-text">puppeteer启动配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面对象附带"><span class="toc-text">页面对象附带</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面环境执行脚本"><span class="toc-text">页面环境执行脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jest-puppeteer"><span class="toc-text">jest-puppeteer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TypeScript"><span class="toc-text">TypeScript</span></a></li></ol></li></ol>
   </div>
 
 
@@ -207,12 +207,12 @@
        
           <span class="post-count">
             <i class="fa fa-file-word-o"></i>&nbsp
-            <span>字数统计 551字</span>
+            <span>字数统计 769字</span>
           </span>
 
           <span class="post-count">
             <i class="fa fa-columns"></i>&nbsp
-            <span>阅读时长 2分</span>
+            <span>阅读时长 3分</span>
           </span>
       
     </div>
@@ -264,12 +264,30 @@
 </ul>
 <p>由于<code>pageFunction</code>函数会直接被注入到页面中，所以无法获取函数外部作用域，只能讲外部参数通过<code>args</code>传入，不能直接将<code>Function</code>传入，只能将函数通过<code>toString</code>后，在通过<code>eval</code>来执行<code>string</code>化后的函数。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let detect = () =&gt; &#123;</span><br><span class="line">    // ... do some thing</span><br><span class="line">    return &apos;res&apos;;</span><br><span class="line">&#125;;</span><br><span class="line"> const html = await page.evaluate((fn) =&gt; &#123;</span><br><span class="line">        let res = eval(fn)();</span><br><span class="line">        return res;</span><br><span class="line">&#125;, detect.toString());</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：</p>
+<p>页面注入脚本，监听事件失效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let renderReady = () =&gt; &#123;</span><br><span class="line">      return new Promise((resolve) =&gt; &#123;</span><br><span class="line">          document.onreadystatechange = () =&gt; &#123;</span><br><span class="line">              if (document.readyState === &apos;complete&apos;) &#123;</span><br><span class="line">                  resolve();</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;;</span><br><span class="line">      &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">(async () =&gt; &#123;</span><br><span class="line">    await renderReady()</span><br><span class="line">    console.log(&apos;complete&apos;) // 永远也不会走到这一块来，进入到renderReady后就失效了</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
 <h2 id="jest-puppeteer"><a href="#jest-puppeteer" class="headerlink" title="jest-puppeteer"></a>jest-puppeteer</h2><p><a href="https://jestjs.io/docs/zh-Hans/puppeteer" target="_blank" rel="noopener">官方文档</a></p>
 <p>使用puppeteer与jest搭配测试：</p>
 <ul>
 <li>依赖安装<code>npm install --save-dev jest-puppeteer puppeteer jest</code></li>
 <li><code>package.json</code>添加<code>&quot;jest&quot;: {&quot;preset&quot;: &quot;jest-puppeteer&quot;}</code>依赖</li>
 </ul>
+<h3 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h3><p>在使用TypeScript中使用<code>puppeteer</code>测试需要注意一下几点：</p>
+<blockquote>
+<p>由于TypeScript需要进行类型检测所以需要在全局环境注入变量</p>
+</blockquote>
+<p>依赖安装：</p>
+<p><code>@types/puppeteer</code>, <code>@types/jest-environment-puppeteer</code></p>
+<p>配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    jest: &#123;</span><br><span class="line">        &quot;globalSetup&quot;: &quot;jest-environment-puppeteer/setup&quot;,</span><br><span class="line">        &quot;globalTeardown&quot;: &quot;jest-environment-puppeteer/teardown&quot;,</span><br><span class="line">        &quot;testEnvironment&quot;: &quot;jest-environment-puppeteer&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>指定输出版本</p>
+</blockquote>
+<p>若输出目标为<code>&quot;target&quot;: &quot;es5&quot;</code>，则会报各种依赖无法查找错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReferenceError: __awaiter is not defined</span><br></pre></td></tr></table></figure>
+<p>解决方案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// tsconfig.json,文件配置</span><br><span class="line">&#123;</span><br><span class="line">  &quot;compilerOptions&quot;: &#123;</span><br><span class="line">    &quot;target&quot;: &quot;es2017&quot;,</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     
   </div>

@@ -2,16 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://zhoushaw.github.io/2017/10/14/other/tool/charles/</loc>
+    <loc>http://zhoushaw.github.io/2019/05/06/learning/game/egret%E5%AE%9E%E6%88%98/</loc>
     
-    <lastmod>2019-04-27T13:21:01.131Z</lastmod>
+    <lastmod>2019-05-12T06:27:38.456Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2018/01/26/learning/game/egret/</loc>
+    
+    <lastmod>2019-05-12T06:27:07.101Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://zhoushaw.github.io/2019/04/23/learning/node/puppeteer/</loc>
     
-    <lastmod>2019-04-27T13:21:01.130Z</lastmod>
+    <lastmod>2019-05-12T06:26:35.669Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2019/05/04/learning/font-end/test/jest/</loc>
+    
+    <lastmod>2019-05-12T06:26:35.668Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2018/10/14/other/tool/mac%E6%95%88%E7%8E%87/</loc>
+    
+    <lastmod>2019-05-09T15:24:30.359Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2017/10/14/other/tool/document-summary/</loc>
+    
+    <lastmod>2019-05-09T15:24:30.358Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2019/04/28/learning/font-end/js/axios/</loc>
+    
+    <lastmod>2019-05-09T15:24:30.357Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://zhoushaw.github.io/2017/10/14/other/tool/charles/</loc>
+    
+    <lastmod>2019-04-27T13:21:01.131Z</lastmod>
     
   </url>
   
@@ -23,14 +65,14 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/2019/04/20/learning/font-end/js/JavaScript-prototype/</loc>
+    <loc>http://zhoushaw.github.io/2019/04/21/learning/font-end/js/JavaScript-closure/</loc>
     
     <lastmod>2019-04-27T13:21:01.129Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/2019/04/21/learning/font-end/js/JavaScript-closure/</loc>
+    <loc>http://zhoushaw.github.io/2019/04/20/learning/font-end/js/JavaScript-prototype/</loc>
     
     <lastmod>2019-04-27T13:21:01.129Z</lastmod>
     
@@ -93,14 +135,14 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/search/index.html</loc>
+    <loc>http://zhoushaw.github.io/tags/index.html</loc>
     
     <lastmod>2019-04-14T13:54:11.957Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/tags/index.html</loc>
+    <loc>http://zhoushaw.github.io/search/index.html</loc>
     
     <lastmod>2019-04-14T13:54:11.957Z</lastmod>
     
@@ -121,7 +163,7 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/2018/01/14/other/tool/vscode-config/</loc>
+    <loc>http://zhoushaw.github.io/categories/index.html</loc>
     
     <lastmod>2019-04-14T13:54:11.956Z</lastmod>
     
@@ -135,16 +177,9 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/categories/index.html</loc>
+    <loc>http://zhoushaw.github.io/2018/01/14/other/tool/vscode-config/</loc>
     
     <lastmod>2019-04-14T13:54:11.956Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zhoushaw.github.io/2017/10/14/other/tool/document-summary/</loc>
-    
-    <lastmod>2019-04-14T13:54:11.955Z</lastmod>
     
   </url>
   
@@ -212,7 +247,7 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/2017/08/06/learning/font-end/webpack/webpack/</loc>
+    <loc>http://zhoushaw.github.io/2018/04/26/learning/font-end/webpack/webpack4.0/</loc>
     
     <lastmod>2019-04-14T13:54:11.951Z</lastmod>
     
@@ -226,14 +261,7 @@
   </url>
   
   <url>
-    <loc>http://zhoushaw.github.io/2018/04/26/learning/font-end/webpack/webpack4.0/</loc>
-    
-    <lastmod>2019-04-14T13:54:11.951Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://zhoushaw.github.io/2018/01/26/learning/game/egret/</loc>
+    <loc>http://zhoushaw.github.io/2017/08/06/learning/font-end/webpack/webpack/</loc>
     
     <lastmod>2019-04-14T13:54:11.951Z</lastmod>
     

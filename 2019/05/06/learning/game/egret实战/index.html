@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Egret实战-母亲节活动 | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="egret," />
+  
+
+  <meta name="description" content="目录结构123456789|—— bin-debug   &amp;lt;-编译后运行代码|—— libs        &amp;lt;-第三方库|—— resource    &amp;lt;-资源文件    |—— default.res.json    &amp;lt;-资源索引目录    └── default.thm.json    &amp;lt;-主题索引目录|—— scripts     &amp;lt;-构建脚本|—— re">
+<meta name="keywords" content="egret">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Egret实战-母亲节活动">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/05/06/learning/game/egret实战/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="目录结构123456789|—— bin-debug   &amp;lt;-编译后运行代码|—— libs        &amp;lt;-第三方库|—— resource    &amp;lt;-资源文件    |—— default.res.json    &amp;lt;-资源索引目录    └── default.thm.json    &amp;lt;-主题索引目录|—— scripts     &amp;lt;-构建脚本|—— re">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png">
+<meta property="og:updated_time" content="2019-05-12T06:27:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Egret实战-母亲节活动">
+<meta name="twitter:description" content="目录结构123456789|—— bin-debug   &amp;lt;-编译后运行代码|—— libs        &amp;lt;-第三方库|—— resource    &amp;lt;-资源文件    |—— default.res.json    &amp;lt;-资源索引目录    └── default.thm.json    &amp;lt;-主题索引目录|—— scripts     &amp;lt;-构建脚本|—— re">
+<meta name="twitter:image" content="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一屏动画设计原则"><span class="toc-text">一屏动画设计原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h5活动构建思路"><span class="toc-text">h5活动构建思路</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/game/egret实战" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Egret实战-母亲节活动</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.05.06</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/game/">game</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 695字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 2分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|—— bin-debug   &lt;-编译后运行代码</span><br><span class="line">|—— libs        &lt;-第三方库</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">    |—— default.res.json    &lt;-资源索引目录</span><br><span class="line">    └── default.thm.json    &lt;-主题索引目录</span><br><span class="line">|—— scripts     &lt;-构建脚本</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">|—— src         &lt;-项目源代码</span><br><span class="line">└── template    &lt;-项目模板</span><br></pre></td></tr></table></figure>
+<h3 id="一屏动画设计原则"><a href="#一屏动画设计原则" class="headerlink" title="一屏动画设计原则"></a>一屏动画设计原则</h3><ul>
+<li>构建一个基本场景骨架，后续骨架放置基本骨架上，方便整体移动</li>
+<li>物件退场需要与背景反方向运动，造成错落感。或顺方向退场，避免导致认为物品或人与背景不分离</li>
+<li>龙骨动画设计时以最小十帧为单位，场景转换预留30~50帧，后续方便调整</li>
+<li>帧动画设计图片以至少三帧不同动画，可以造成连续感</li>
+<li>开始龙骨动画制作前，先确定好场景高度和宽度不会有大的变化，否则后续修改会造成整体调整</li>
+<li>文字动画放置物品后</li>
+<li>动画效果放置980像素内，否则在小屏幕手机上无法展示全面</li>
+<li>帧动画切换中间过度衔接透明度变化</li>
+</ul>
+<h2 id="h5活动构建思路"><a href="#h5活动构建思路" class="headerlink" title="h5活动构建思路"></a>h5活动构建思路</h2><p>如何制作一个类似于中国女子图鉴的项目呢。</p>
+<blockquote>
+<p>扫码访问：</p>
+</blockquote>
+<p><img width="200" src="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png"></p>
+<blockquote>
+<p>主要思路</p>
+</blockquote>
+<p>通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置，具体实现代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">const dragonbonesData = RES.getRes( &quot;dragonbones@listen_mother_ske_json&quot; );  </span><br><span class="line">const textureData = RES.getRes( &quot;dragonbones@listen_mother_tex_json&quot; );  </span><br><span class="line">const texture = RES.getRes( &quot;listen_mother_png&quot; );</span><br><span class="line"></span><br><span class="line">let egretFactory: dragonBones.EgretFactory = dragonBones.EgretFactory.factory;</span><br><span class="line">egretFactory.parseDragonBonesData(dragonbonesData);  </span><br><span class="line">egretFactory.parseTextureAtlasData(textureData, texture);</span><br><span class="line"></span><br><span class="line">let armatureDisplay: dragonBones.EgretArmatureDisplay = egretFactory.buildArmatureDisplay(&quot;listen_mother&quot;);</span><br><span class="line"></span><br><span class="line">this.addChild(armatureDisplay);</span><br><span class="line">armatureDisplay.x = 0;</span><br><span class="line">armatureDisplay.y = 0;</span><br><span class="line"></span><br><span class="line">   	</span><br><span class="line">const myScroller = new eui.Scroller();</span><br><span class="line">//注意位置和尺寸的设置是在Scroller上面，而不是容器上面</span><br><span class="line">   </span><br><span class="line">const group = new eui.Group();</span><br><span class="line">const img = new eui.Image(&quot;bg_png&quot;);</span><br><span class="line">group.addChild(img);</span><br><span class="line">img.height = this.stage.stageHeight * 2;</span><br><span class="line">   </span><br><span class="line">myScroller.width = this.stage.stageWidth;</span><br><span class="line">myScroller.height = this.stage.stageHeight;</span><br><span class="line">myScroller.viewport = group;</span><br><span class="line">myScroller.bounces = false;</span><br><span class="line">this.addChild(myScroller);   </span><br><span class="line">myScroller.addEventListener(</span><br><span class="line">  egret.Event.CHANGE, </span><br><span class="line">  () =&gt; &#123;</span><br><span class="line">      let scrollRate = myScroller.viewport.scrollV/(img.height - this.stage.stageHeight);</span><br><span class="line">     </span><br><span class="line">      console.log(myScroller.viewport.scrollV,scrollRate);</span><br><span class="line">      armatureDisplay.animation.gotoAndStopByFrame (&apos;newAnimation&apos;,scrollRate*80);</span><br><span class="line">  &#125;,</span><br><span class="line">  this</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>功能流程：</p>
+<ul>
+<li>获取龙骨资源、并创建<code>dragonBones</code>实例对象</li>
+<li>将龙骨场景对象添加至画布</li>
+<li>创建<code>Image</code>对象，设置宽度设置为视窗宽度，高度设置为<strong>龙骨场景高度+视窗高度</strong>并添加至场景中</li>
+<li>创建<code>scroll</code>对象，将其设置为视窗大小，设置<code>Image</code>对象为<code>scroll</code>的视域组件组件</li>
+<li>使用<code>scroll</code>监听滚动高度，计算当前滚动条占总可滚动高度的百分比=“已滚动高度/(图片高度-视窗高度)”</li>
+<li>获取<code>dragonBones</code>场景一共拥有多少帧，通过总帧数*当前百分比，得到用户滑动到当前所在帧数</li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/05/04/learning/font-end/test/jest/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
