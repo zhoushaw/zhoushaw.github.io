@@ -83,7 +83,6 @@ await page.waitFor(selector =>{
 
 ## 页面环境执行脚本
 
-
 ```
 await page.evaluate(() => {
     let name = window.name;
@@ -108,6 +107,28 @@ let detect = () => {
         return res;
 }, detect.toString());
 ```
+
+**注意**：
+
+页面注入脚本，监听事件失效
+
+```
+let renderReady = () => {
+      return new Promise((resolve) => {
+          document.onreadystatechange = () => {
+              if (document.readyState === 'complete') {
+                  resolve();
+              }
+          };
+      });
+};
+
+(async () => {
+    await renderReady()
+    console.log('complete') // 永远也不会走到这一块来，进入到renderReady后就失效了
+})()
+```
+
 
 ## jest-puppeteer
 
