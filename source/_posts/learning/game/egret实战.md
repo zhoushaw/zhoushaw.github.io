@@ -94,3 +94,19 @@ myScroller.addEventListener(
 * 获取`dragonBones`场景一共拥有多少帧，通过总帧数*当前百分比，得到用户滑动到当前所在帧数
 
 
+## 制作场景动画
+
+> 创建动画
+
+![](https://s10.mogucdn.com/mlcdn/c45406/190512_10hf0j5b7336jl0l67j6ah6l9953l_1290x884.png)
+
+* 选择创建龙骨动画
+
+> 通过属性面板，
+
+![](https://s10.mogucdn.com/mlcdn/c45406/190512_1h0i16eg0f04lk03h128ih080ei3g_558x888.png)
+
+* 设置750宽、1260高
+* 初始化起点位置，375、630
+
+
