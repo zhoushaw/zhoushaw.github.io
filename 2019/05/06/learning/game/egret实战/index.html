@@ -24,7 +24,9 @@
 <meta property="og:description" content="目录结构123456789|—— bin-debug   &amp;lt;-编译后运行代码|—— libs        &amp;lt;-第三方库|—— resource    &amp;lt;-资源文件    |—— default.res.json    &amp;lt;-资源索引目录    └── default.thm.json    &amp;lt;-主题索引目录|—— scripts     &amp;lt;-构建脚本|—— re">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png">
-<meta property="og:updated_time" content="2019-05-12T06:27:38.456Z">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190512_10hf0j5b7336jl0l67j6ah6l9953l_1290x884.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190512_1h0i16eg0f04lk03h128ih080ei3g_558x888.png">
+<meta property="og:updated_time" content="2019-05-14T13:54:17.820Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Egret实战-母亲节活动">
 <meta name="twitter:description" content="目录结构123456789|—— bin-debug   &amp;lt;-编译后运行代码|—— libs        &amp;lt;-第三方库|—— resource    &amp;lt;-资源文件    |—— default.res.json    &amp;lt;-资源索引目录    └── default.thm.json    &amp;lt;-主题索引目录|—— scripts     &amp;lt;-构建脚本|—— re">
@@ -165,7 +167,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一屏动画设计原则"><span class="toc-text">一屏动画设计原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h5活动构建思路"><span class="toc-text">h5活动构建思路</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一屏动画设计原则"><span class="toc-text">一屏动画设计原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h5活动构建思路"><span class="toc-text">h5活动构建思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作场景动画"><span class="toc-text">制作场景动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画制作"><span class="toc-text">动画制作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作逐帧动画"><span class="toc-text">制作逐帧动画</span></a></li></ol>
   </div>
 
 
@@ -209,12 +211,12 @@
        
           <span class="post-count">
             <i class="fa fa-file-word-o"></i>&nbsp
-            <span>字数统计 695字</span>
+            <span>字数统计 1.1k字</span>
           </span>
 
           <span class="post-count">
             <i class="fa fa-columns"></i>&nbsp
-            <span>阅读时长 2分</span>
+            <span>阅读时长 4分</span>
           </span>
       
     </div>
@@ -252,6 +254,50 @@
 <li>使用<code>scroll</code>监听滚动高度，计算当前滚动条占总可滚动高度的百分比=“已滚动高度/(图片高度-视窗高度)”</li>
 <li>获取<code>dragonBones</code>场景一共拥有多少帧，通过总帧数*当前百分比，得到用户滑动到当前所在帧数</li>
 </ul>
+<h2 id="制作场景动画"><a href="#制作场景动画" class="headerlink" title="制作场景动画"></a>制作场景动画</h2><blockquote>
+<p>创建动画</p>
+</blockquote>
+<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190512_10hf0j5b7336jl0l67j6ah6l9953l_1290x884.png" alt=""></p>
+<ul>
+<li>选择创建龙骨动画</li>
+</ul>
+<blockquote>
+<p>通过属性面板，</p>
+</blockquote>
+<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190512_1h0i16eg0f04lk03h128ih080ei3g_558x888.png" alt=""></p>
+<ul>
+<li>设置750宽、1260高</li>
+<li>初始化起点位置，375、630</li>
+</ul>
+<h2 id="动画制作"><a href="#动画制作" class="headerlink" title="动画制作"></a>动画制作</h2><blockquote>
+<p>逐帧动画和补间动画的差异</p>
+</blockquote>
+<ul>
+<li>逐帧动画<ul>
+<li>逐帧动画是在时间帧上逐帧绘制帧内容，每一帧带有不同的图</li>
+<li>适合于表演很细腻的动画，如3D效果、人物或动物急剧转身等等效果</li>
+<li>优点:有非常大的灵活性,表现任何想表现的内容</li>
+<li>缺点:由于逐帧动画的帧序列内容不一样，不仅增加制作负担而且最终输出的文件量也很大</li>
+</ul>
+</li>
+<li>补间动画<ul>
+<li>只需要为动画的第一个关键帧和最后一个关键帧创建内容，两个关键帧之间帧的内容由龙骨自动生成，不需要人为处理</li>
+<li>逐帧动画是由手工控制，帧与帧之间的过渡很可能会不自然、不连贯</li>
+<li>过渡更为自然连贯。最后，相对于逐帧动画来说，补间动画的文件更小</li>
+</ul>
+</li>
+</ul>
+<h2 id="制作逐帧动画"><a href="#制作逐帧动画" class="headerlink" title="制作逐帧动画"></a>制作逐帧动画</h2><blockquote>
+<p>起步</p>
+</blockquote>
+<ul>
+<li>新建项目=&gt;创建龙骨动画=&gt;逐帧动画模板。</li>
+<li>窗口菜单=&gt;属性面板</li>
+<li>☑️画布=&gt;设定宽高=&gt;设定偏移方向</li>
+<li>窗口菜单=&gt;资源面板</li>
+<li>点击导入资源按钮或点击打开资源目录，将图片放入资源文件中</li>
+<li>在资源面板拖入图片资源，即可</li>
+</ul>
 
     
   </div>
@@ -266,7 +312,7 @@
     <a class="show pull-left" href="/2019/05/04/learning/font-end/test/jest/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2019/05/15/life/迪士尼游玩/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
