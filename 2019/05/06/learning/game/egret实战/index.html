@@ -15,21 +15,29 @@
     <meta name="keywords" content="egret," />
   
 
-  <meta name="description" content="目录结构123456789|—— bin-debug   &amp;lt;-编译后运行代码|—— libs        &amp;lt;-第三方库|—— resource    &amp;lt;-资源文件    |—— default.res.json    &amp;lt;-资源索引目录    └── default.thm.json    &amp;lt;-主题索引目录|—— scripts     &amp;lt;-构建脚本|—— re">
+  <meta name="description" content="h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置，具体实现代码： 1234567891011121314151617181920212223242526272829303132333435363738const dragonbonesData = RES.getRes( &amp;quo">
 <meta name="keywords" content="egret">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Egret实战-母亲节活动">
 <meta property="og:url" content="http://zhoushaw.github.io/2019/05/06/learning/game/egret实战/index.html">
 <meta property="og:site_name" content="zhou shaw">
-<meta property="og:description" content="目录结构123456789|—— bin-debug   &amp;lt;-编译后运行代码|—— libs        &amp;lt;-第三方库|—— resource    &amp;lt;-资源文件    |—— default.res.json    &amp;lt;-资源索引目录    └── default.thm.json    &amp;lt;-主题索引目录|—— scripts     &amp;lt;-构建脚本|—— re">
+<meta property="og:description" content="h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置，具体实现代码： 1234567891011121314151617181920212223242526272829303132333435363738const dragonbonesData = RES.getRes( &amp;quo">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png">
-<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190512_10hf0j5b7336jl0l67j6ah6l9953l_1290x884.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_2ghf8c42a3kji7l7l48e6jbkbafii_1050x672.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190512_1h0i16eg0f04lk03h128ih080ei3g_558x888.png">
-<meta property="og:updated_time" content="2019-05-14T13:54:17.820Z">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_3k31d6j2ijc64j232ke0d4b728c09_1080x70.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_5i77b4889d454d0aek8cif8l8beh6_844x384.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_5e4290dgi2g7c11c9h4061c4cblah_690x980.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_860j48c1g0f347e9jg553k8j6bl7h_1012x598.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_5g58g56ja53eil92eh6h12211ff0f_736x112.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_7jieaa926glfbcc28i85i2hl03e1h_736x110.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_436fehba4a05da0kg6hak2h268fc3_502x1000.png">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_2a4f690dl2caek417cf1ij40049dc_480x592.png">
+<meta property="og:updated_time" content="2019-05-15T14:42:04.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Egret实战-母亲节活动">
-<meta name="twitter:description" content="目录结构123456789|—— bin-debug   &amp;lt;-编译后运行代码|—— libs        &amp;lt;-第三方库|—— resource    &amp;lt;-资源文件    |—— default.res.json    &amp;lt;-资源索引目录    └── default.thm.json    &amp;lt;-主题索引目录|—— scripts     &amp;lt;-构建脚本|—— re">
+<meta name="twitter:description" content="h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置，具体实现代码： 1234567891011121314151617181920212223242526272829303132333435363738const dragonbonesData = RES.getRes( &amp;quo">
 <meta name="twitter:image" content="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png">
 
   
@@ -167,7 +175,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一屏动画设计原则"><span class="toc-text">一屏动画设计原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h5活动构建思路"><span class="toc-text">h5活动构建思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作场景动画"><span class="toc-text">制作场景动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画制作"><span class="toc-text">动画制作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作逐帧动画"><span class="toc-text">制作逐帧动画</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#h5活动构建思路"><span class="toc-text">h5活动构建思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作场景动画"><span class="toc-text">制作场景动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画制作"><span class="toc-text">动画制作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#制作逐帧动画"><span class="toc-text">制作逐帧动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作补间动画"><span class="toc-text">制作补间动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作龙骨动画"><span class="toc-text">制作龙骨动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一屏动画设计原则"><span class="toc-text">一屏动画设计原则</span></a></li></ol></li></ol>
   </div>
 
 
@@ -211,12 +219,12 @@
        
           <span class="post-count">
             <i class="fa fa-file-word-o"></i>&nbsp
-            <span>字数统计 1.1k字</span>
+            <span>字数统计 1.6k字</span>
           </span>
 
           <span class="post-count">
             <i class="fa fa-columns"></i>&nbsp
-            <span>阅读时长 4分</span>
+            <span>阅读时长 5分</span>
           </span>
       
     </div>
@@ -224,18 +232,7 @@
 
   <div class="article-content">
     
-      <h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|—— bin-debug   &lt;-编译后运行代码</span><br><span class="line">|—— libs        &lt;-第三方库</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">    |—— default.res.json    &lt;-资源索引目录</span><br><span class="line">    └── default.thm.json    &lt;-主题索引目录</span><br><span class="line">|—— scripts     &lt;-构建脚本</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">|—— src         &lt;-项目源代码</span><br><span class="line">└── template    &lt;-项目模板</span><br></pre></td></tr></table></figure>
-<h3 id="一屏动画设计原则"><a href="#一屏动画设计原则" class="headerlink" title="一屏动画设计原则"></a>一屏动画设计原则</h3><ul>
-<li>构建一个基本场景骨架，后续骨架放置基本骨架上，方便整体移动</li>
-<li>物件退场需要与背景反方向运动，造成错落感。或顺方向退场，避免导致认为物品或人与背景不分离</li>
-<li>龙骨动画设计时以最小十帧为单位，场景转换预留30~50帧，后续方便调整</li>
-<li>帧动画设计图片以至少三帧不同动画，可以造成连续感</li>
-<li>开始龙骨动画制作前，先确定好场景高度和宽度不会有大的变化，否则后续修改会造成整体调整</li>
-<li>文字动画放置物品后</li>
-<li>动画效果放置980像素内，否则在小屏幕手机上无法展示全面</li>
-<li>帧动画切换中间过度衔接透明度变化</li>
-</ul>
-<h2 id="h5活动构建思路"><a href="#h5活动构建思路" class="headerlink" title="h5活动构建思路"></a>h5活动构建思路</h2><p>如何制作一个类似于中国女子图鉴的项目呢。</p>
+      <h2 id="h5活动构建思路"><a href="#h5活动构建思路" class="headerlink" title="h5活动构建思路"></a>h5活动构建思路</h2><p>如何制作一个类似于中国女子图鉴的项目呢。</p>
 <blockquote>
 <p>扫码访问：</p>
 </blockquote>
@@ -254,17 +251,18 @@
 <li>使用<code>scroll</code>监听滚动高度，计算当前滚动条占总可滚动高度的百分比=“已滚动高度/(图片高度-视窗高度)”</li>
 <li>获取<code>dragonBones</code>场景一共拥有多少帧，通过总帧数*当前百分比，得到用户滑动到当前所在帧数</li>
 </ul>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|—— bin-debug   &lt;-编译后运行代码</span><br><span class="line">|—— libs        &lt;-第三方库</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">    |—— default.res.json    &lt;-资源索引目录</span><br><span class="line">    └── default.thm.json    &lt;-主题索引目录</span><br><span class="line">|—— scripts     &lt;-构建脚本</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">|—— src         &lt;-项目源代码</span><br><span class="line">└── template    &lt;-项目模板</span><br></pre></td></tr></table></figure>
 <h2 id="制作场景动画"><a href="#制作场景动画" class="headerlink" title="制作场景动画"></a>制作场景动画</h2><blockquote>
 <p>创建动画</p>
 </blockquote>
-<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190512_10hf0j5b7336jl0l67j6ah6l9953l_1290x884.png" alt=""></p>
+<p><img width="300" src="https://s10.mogucdn.com/mlcdn/c45406/190515_2ghf8c42a3kji7l7l48e6jbkbafii_1050x672.png"></p>
 <ul>
 <li>选择创建龙骨动画</li>
 </ul>
 <blockquote>
-<p>通过属性面板，</p>
+<p>通过属性面板</p>
 </blockquote>
-<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190512_1h0i16eg0f04lk03h128ih080ei3g_558x888.png" alt=""></p>
+<p><img width="200" src="https://s10.mogucdn.com/mlcdn/c45406/190512_1h0i16eg0f04lk03h128ih080ei3g_558x888.png"></p>
 <ul>
 <li>设置750宽、1260高</li>
 <li>初始化起点位置，375、630</li>
@@ -287,16 +285,81 @@
 </ul>
 </li>
 </ul>
-<h2 id="制作逐帧动画"><a href="#制作逐帧动画" class="headerlink" title="制作逐帧动画"></a>制作逐帧动画</h2><blockquote>
+<h3 id="制作逐帧动画"><a href="#制作逐帧动画" class="headerlink" title="制作逐帧动画"></a>制作逐帧动画</h3><blockquote>
 <p>起步</p>
 </blockquote>
 <ul>
 <li>新建项目=&gt;创建龙骨动画=&gt;逐帧动画模板。</li>
 <li>窗口菜单=&gt;属性面板</li>
-<li>☑️画布=&gt;设定宽高=&gt;设定偏移方向</li>
+<li>勾选画布=&gt;设定宽高=&gt;设定偏移方向</li>
 <li>窗口菜单=&gt;资源面板</li>
 <li>点击导入资源按钮或点击打开资源目录，将图片放入资源文件中</li>
 <li>在资源面板拖入图片资源，即可</li>
+</ul>
+<blockquote>
+<p>导出</p>
+</blockquote>
+<p>顶部栏导出按钮，按照默认“纹理集”即可</p>
+<p><img width="400" src="https://s10.mogucdn.com/mlcdn/c45406/190515_3k31d6j2ijc64j232ke0d4b728c09_1080x70.png"></p>
+<h3 id="制作补间动画"><a href="#制作补间动画" class="headerlink" title="制作补间动画"></a>制作补间动画</h3><p>补间动画思想：<strong>只需要为动画的第一个关键帧和最后一个关键帧创建内容，两个关键帧之间帧的内容自动生成，不需要人为处理</strong></p>
+<blockquote>
+<p>下面以龙骨动画的补间动画制作为例：</p>
+</blockquote>
+<p>在龙骨动画制作过程中，动画的对象必须以骨骼为单位</p>
+<ul>
+<li><p>切换至动画制作tab</p>
+<ul>
+<li><img width="400" src="https://s10.mogucdn.com/mlcdn/c45406/190515_5i77b4889d454d0aek8cif8l8beh6_844x384.png"></li>
+</ul>
+</li>
+<li><p>进入场景后通过场景树选择需要制作动画的骨骼</p>
+<ul>
+<li><img width="200" src="https://s10.mogucdn.com/mlcdn/c45406/190515_5e4290dgi2g7c11c9h4061c4cblah_690x980.png"></li>
+</ul>
+</li>
+<li><p>选中骨骼可进行：<strong>位移</strong>、<strong>旋转</strong>、<strong>缩放</strong>动画制作</p>
+<ul>
+<li>在时间轴上选中第0帧，在操作面板点击对应改变属性的旗子</li>
+<li><img width="200" src="https://s10.mogucdn.com/mlcdn/c45406/190515_860j48c1g0f347e9jg553k8j6bl7h_1012x598.png"></li>
+<li><img width="200" src="https://s10.mogucdn.com/mlcdn/c45406/190515_5g58g56ja53eil92eh6h12211ff0f_736x112.png"></li>
+<li>选中第10帧，并通过操作面板或直接对骨骼记性属性更改</li>
+<li><img width="200" src="https://s10.mogucdn.com/mlcdn/c45406/190515_7jieaa926glfbcc28i85i2hl03e1h_736x110.png"></li>
+<li>点击黄色旗子，将会自动补充补间动画</li>
+</ul>
+</li>
+<li><p>选中图片可进行：<strong>透明度</strong>、<strong>是否展示</strong></p>
+<ul>
+<li>打开属性面板</li>
+<li><img width="100" src="https://s10.mogucdn.com/mlcdn/c45406/190515_436fehba4a05da0kg6hak2h268fc3_502x1000.png"></li>
+<li>是否展示图片需要通过，自动关键</li>
+<li><img width="100" src="https://s10.mogucdn.com/mlcdn/c45406/190515_2a4f690dl2caek417cf1ij40049dc_480x592.png"></li>
+<li>自动关键帧开启后，会自动在当前关键帧记录所有的属性修改</li>
+</ul>
+</li>
+</ul>
+<h2 id="制作龙骨动画"><a href="#制作龙骨动画" class="headerlink" title="制作龙骨动画"></a>制作龙骨动画</h2><p><strong>龙骨动画一般用来制作人物行动，将人物整体作为骨架各部分作为骨骼，例如：手臂、大腿、小腿都是骨骼，其中大腿和小腿都是腿的子集</strong></p>
+<blockquote>
+<p>起步</p>
+</blockquote>
+<ul>
+<li>新建项目=&gt;创建龙骨动画=&gt;龙骨动画末班</li>
+<li>窗口菜单=&gt;属性面板</li>
+<li>勾选画布=&gt;设定宽高=&gt;设定偏移方向</li>
+<li>窗口菜单=&gt;资源面板</li>
+<li>点击导入资源按钮或点击打开资源目录，将图片放入资源文件中</li>
+<li>在资源面板拖入图片资源，即可</li>
+<li>创建骨骼：在骨架装配tab栏=&gt;场景树中右击=&gt;插入=&gt;骨骼</li>
+<li>将图片资源拖入骨骼中</li>
+</ul>
+<h3 id="一屏动画设计原则"><a href="#一屏动画设计原则" class="headerlink" title="一屏动画设计原则"></a>一屏动画设计原则</h3><ul>
+<li>构建一个基本场景骨架，后续骨架放置基本骨架上，方便整体移动</li>
+<li>物件退场需要与背景反方向运动，造成错落感。或顺方向退场，避免导致认为物品或人与背景不分离</li>
+<li>龙骨动画设计时以最小十帧为单位，场景转换预留30~50帧，后续方便调整</li>
+<li>帧动画设计图片以至少三帧不同动画，可以造成连续感</li>
+<li>开始龙骨动画制作前，先确定好场景高度和宽度不会有大的变化，否则后续修改会造成整体调整</li>
+<li>文字动画放置物品后</li>
+<li>动画效果放置980像素内，否则在小屏幕手机上无法展示全面</li>
+<li>帧动画切换中间过度衔接透明度变化</li>
 </ul>
 
     
