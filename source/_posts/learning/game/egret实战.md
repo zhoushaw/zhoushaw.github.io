@@ -4,6 +4,16 @@ date: 2019-5-6 7:42
 tags: egret
 categories: game
 ---
+## 脚手架相关
+
+* [玩法平台](http://wxgame.mogu-inc.com/#/?_k=1aw7nm)
+* [玩法平台开发文档](http://wiki.mogujie.org/display/frontend/Megret)
+* [玩法平台后端代码](http://wiki.mogujie.org/display/frontend/Megret)
+* [玩法平台前端代码](http://gitlab.mogujie.org/xiuhong/megret-frontend)
+* [egret白鹭脚手架](http://gitlab.mogujie.org/Aveng/meili-mgj-megret)
+* [npm仓库](http://webnpm.f2e.mogujie.org/package/@meili/mgj-megret)
+
+
 ## h5活动构建思路
 
 如何制作一个类似于中国女子图鉴的项目呢。
@@ -14,57 +24,84 @@ categories: game
 
 > 主要思路
 
-通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置，具体实现代码：
+通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置
 
-```
-const dragonbonesData = RES.getRes( "dragonbones@listen_mother_ske_json" );  
-const textureData = RES.getRes( "dragonbones@listen_mother_tex_json" );  
-const texture = RES.getRes( "listen_mother_png" );
+> 核心实现思想：
 
-let egretFactory: dragonBones.EgretFactory = dragonBones.EgretFactory.factory;
-egretFactory.parseDragonBonesData(dragonbonesData);  
-egretFactory.parseTextureAtlasData(textureData, texture);
-
-let armatureDisplay: dragonBones.EgretArmatureDisplay = egretFactory.buildArmatureDisplay("listen_mother");
-
-this.addChild(armatureDisplay);
-armatureDisplay.x = 0;
-armatureDisplay.y = 0;
-
-   	
-const myScroller = new eui.Scroller();
-//注意位置和尺寸的设置是在Scroller上面，而不是容器上面
-   
-const group = new eui.Group();
-const img = new eui.Image("bg_png");
-group.addChild(img);
-img.height = this.stage.stageHeight * 2;
-   
-myScroller.width = this.stage.stageWidth;
-myScroller.height = this.stage.stageHeight;
-myScroller.viewport = group;
-myScroller.bounces = false;
-this.addChild(myScroller);   
-myScroller.addEventListener(
-  egret.Event.CHANGE, 
-  () => {
-      let scrollRate = myScroller.viewport.scrollV/(img.height - this.stage.stageHeight);
-     
-      console.log(myScroller.viewport.scrollV,scrollRate);
-      armatureDisplay.animation.gotoAndStopByFrame ('newAnimation',scrollRate*80);
-  },
-  this
-)
-```
-
-功能流程：
-
-* 获取龙骨资源、并创建`dragonBones`实例对象
-* 将龙骨场景对象添加至画布
-* 创建`Image`对象，设置宽度设置为视窗宽度，高度设置为**龙骨场景高度+视窗高度**并添加至场景中
-* 创建`scroll`对象，将其设置为视窗大小，设置`Image`对象为`scroll`的视域组件组件
+* 获取龙骨资源、并创建`dragonBones`实例对象。将龙骨场景对象添加至画布
+* 构建一个滚动容器，容器的高度为视窗大小，设置宽度设置为视窗宽度，在滚动容器中内增加填充块,填充块的高度=**(总的帧数* 滚动距离切换一帧 * 时间缩放) + 视窗高度**
+* 创建`scroll`对象，将其设置为视窗大小，设置`滚动容器`对象为`scroll`的视域组件组件
 * 使用`scroll`监听滚动高度，计算当前滚动条占总可滚动高度的百分比=“已滚动高度/(图片高度-视窗高度)”
 * 获取`dragonBones`场景一共拥有多少帧，通过总帧数*当前百分比，得到用户滑动到当前所在帧数
+
+> 对应知识点
+
+* 滚动容器组件：[eui.scroller](http://developer.egret.com/cn/apidoc/index/name/eui.Scroller)
+* 龙骨动画控制：[dragonBones.animation](http://developer.egret.com/cn/apidoc/index/name/dragonBones.Animation)
+
+> 具体实现代码：
+
+```
+private timeScale: number = 2;  // 时间缩放倍数，为2时表明帧数切换放慢两倍
+private frameFactor: number = 26; // 滚动一帧需要耗费的距离
+private totalFrames: number = 1672; // 总得帧数
+private totalPrgress: number = this.timeScale * this.frameFactor * this.totalFrames; // 总的滚动长度
+private dragonBones: Common.DragonParse;
+
+constructor () {
+    // 龙骨脚手架中已添加COMMON公共方法，用来解析龙骨资源
+    this.dragonBones = Common.DragonParse.getDragonParseInstance();
+    this.egretFactory = this.dragonBones.getEgretFactory();
+    
+    // 获取龙骨资源
+    this.armatureDisplay = this.egretFactory.buildArmatureDisplay('listen_mother');
+    this.addView();
+}
+
+private addView () :void {
+   // 获取视窗宽、高
+   const { stageWidth, stageHeight } = this.stage;
+   
+   // 创建滚动容器和填充块
+   const group = new eui.Group();
+   const placeHolder = new eui.Group();
+
+   placeHolder.width = stageWidth;
+   placeHolder.height = this.totalPrgress + stageHeight;
+   group.addChild(placeHolder);
+
+   //创建一个Scroller
+   this.scroller = new eui.Scroller();
+   this.scroller.bounces = false;
+   this.scroller.width = stageWidth;
+   this.scroller.height = stageHeight;
+   // 将group作为滚动的视域组件
+   this.scroller.viewport = group;
+   this.addChild(this.scroller);
+   
+   // 监听滚动变化
+    this.scroller.addEventListener(egret.Event.CHANGE, this.onScroll, this);
+    
+}
+
+private onScroll () :void {
+   // 获取滚动距离，并计算滚动百分比
+   const scrollV: number = this.scroller.viewport.scrollV;
+   const progress: number = scrollV / this.totalPrgress;
+   let curRateValue = ~~(this.totalFrames * progress);
+
+   this.setSwipeAndButton(curRateValue);
+   this.prevFrames = curRateValue;
+   
+   // 将设置龙骨动画播放到指定帧数
+   this.setProgress(progress);
+}
+
+private setProgress (progress: number) :void {
+   this.armatureDisplay.animation.gotoAndStopByProgress(this.animationName, progress)
+}
+```
+
 
 ## 目录结构
 
@@ -76,7 +113,13 @@ myScroller.addEventListener(
     └── default.thm.json    <-主题索引目录
 |—— scripts     <-构建脚本
 |—— resource    <-资源文件
+    |—— dragonbones    <-龙骨资源目录
+        └── listen_mother    <-母亲节活动龙骨资源
 |—— src         <-项目源代码
+    |—— common          <-公用方法库
+    |—— pages           <-主要页面
+    |—— LoadingUI.ts    <-loading组件
+    └── Main.ts         <-入口文件
 └── template    <-项目模板
 ```
 
@@ -160,7 +203,7 @@ myScroller.addEventListener(
 
 > 起步
 
-* 新建项目=>创建龙骨动画=>龙骨动画末班
+* 新建项目=>创建龙骨动画=>龙骨动画模板
 * 窗口菜单=>属性面板
 * 勾选画布=>设定宽高=>设定偏移方向
 * 窗口菜单=>资源面板
@@ -181,5 +224,11 @@ myScroller.addEventListener(
 * 动画效果放置980像素内，否则在小屏幕手机上无法展示全面
 * 帧动画切换中间过度衔接透明度变化
 
+
+## 对应资源
+
+* [白鹭魔方页基础模板](http://gitlab.mogujie.org/module/meili-module-h5-game-egret/tree/master)
+* [玩法平台-所有玩法聚合页](http://wxgame.mogu-inc.com/#/playground?_k=hwilxd)
+* [母亲节项目地址](http://gitlab.mogujie.org/zhangzhe/listen_mother)
 
 
