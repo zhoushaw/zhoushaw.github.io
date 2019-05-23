@@ -82,3 +82,11 @@ end alfred_script
 
 https://github.com/kaiye/workflows-youdao/
 
+## 修复alfred工作流错误
+
+
+* [fixum修复工具下载](https://github.com/deanishe/alfred-fixum/releases/tag/v0.8)
+
+* 导入`Fixum-0.8.alfredworkflow`修复工具
+* 打开alfred快捷搜索，输入`fixum`,选择`fix workflows`
+
