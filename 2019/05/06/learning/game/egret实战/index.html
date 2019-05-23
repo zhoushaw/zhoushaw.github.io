@@ -15,13 +15,13 @@
     <meta name="keywords" content="egret," />
   
 
-  <meta name="description" content="h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置，具体实现代码： 1234567891011121314151617181920212223242526272829303132333435363738const dragonbonesData = RES.getRes( &amp;quo">
+  <meta name="description" content="脚手架相关 玩法平台 玩法平台开发文档 玩法平台后端代码 玩法平台前端代码 egret白鹭脚手架 npm仓库  h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置  核心实现思想：   获取龙骨资源、并创建dragonBones实例对象。将龙骨场景对象添加至画布 构建一个滚动容器，">
 <meta name="keywords" content="egret">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Egret实战-母亲节活动">
 <meta property="og:url" content="http://zhoushaw.github.io/2019/05/06/learning/game/egret实战/index.html">
 <meta property="og:site_name" content="zhou shaw">
-<meta property="og:description" content="h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置，具体实现代码： 1234567891011121314151617181920212223242526272829303132333435363738const dragonbonesData = RES.getRes( &amp;quo">
+<meta property="og:description" content="脚手架相关 玩法平台 玩法平台开发文档 玩法平台后端代码 玩法平台前端代码 egret白鹭脚手架 npm仓库  h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置  核心实现思想：   获取龙骨资源、并创建dragonBones实例对象。将龙骨场景对象添加至画布 构建一个滚动容器，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_2ghf8c42a3kji7l7l48e6jbkbafii_1050x672.png">
@@ -34,10 +34,10 @@
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_7jieaa926glfbcc28i85i2hl03e1h_736x110.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_436fehba4a05da0kg6hak2h268fc3_502x1000.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_2a4f690dl2caek417cf1ij40049dc_480x592.png">
-<meta property="og:updated_time" content="2019-05-15T14:42:04.303Z">
+<meta property="og:updated_time" content="2019-05-16T14:29:15.018Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Egret实战-母亲节活动">
-<meta name="twitter:description" content="h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置，具体实现代码： 1234567891011121314151617181920212223242526272829303132333435363738const dragonbonesData = RES.getRes( &amp;quo">
+<meta name="twitter:description" content="脚手架相关 玩法平台 玩法平台开发文档 玩法平台后端代码 玩法平台前端代码 egret白鹭脚手架 npm仓库  h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置  核心实现思想：   获取龙骨资源、并创建dragonBones实例对象。将龙骨场景对象添加至画布 构建一个滚动容器，">
 <meta name="twitter:image" content="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png">
 
   
@@ -175,7 +175,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#h5活动构建思路"><span class="toc-text">h5活动构建思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作场景动画"><span class="toc-text">制作场景动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画制作"><span class="toc-text">动画制作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#制作逐帧动画"><span class="toc-text">制作逐帧动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作补间动画"><span class="toc-text">制作补间动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作龙骨动画"><span class="toc-text">制作龙骨动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一屏动画设计原则"><span class="toc-text">一屏动画设计原则</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#脚手架相关"><span class="toc-text">脚手架相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h5活动构建思路"><span class="toc-text">h5活动构建思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作场景动画"><span class="toc-text">制作场景动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画制作"><span class="toc-text">动画制作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#制作逐帧动画"><span class="toc-text">制作逐帧动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作补间动画"><span class="toc-text">制作补间动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作龙骨动画"><span class="toc-text">制作龙骨动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一屏动画设计原则"><span class="toc-text">一屏动画设计原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对应资源"><span class="toc-text">对应资源</span></a></li></ol>
   </div>
 
 
@@ -219,12 +219,12 @@
        
           <span class="post-count">
             <i class="fa fa-file-word-o"></i>&nbsp
-            <span>字数统计 1.6k字</span>
+            <span>字数统计 1.9k字</span>
           </span>
 
           <span class="post-count">
             <i class="fa fa-columns"></i>&nbsp
-            <span>阅读时长 5分</span>
+            <span>阅读时长 6分</span>
           </span>
       
     </div>
@@ -232,7 +232,15 @@
 
   <div class="article-content">
     
-      <h2 id="h5活动构建思路"><a href="#h5活动构建思路" class="headerlink" title="h5活动构建思路"></a>h5活动构建思路</h2><p>如何制作一个类似于中国女子图鉴的项目呢。</p>
+      <h2 id="脚手架相关"><a href="#脚手架相关" class="headerlink" title="脚手架相关"></a>脚手架相关</h2><ul>
+<li><a href="http://wxgame.mogu-inc.com/#/?_k=1aw7nm" target="_blank" rel="noopener">玩法平台</a></li>
+<li><a href="http://wiki.mogujie.org/display/frontend/Megret" target="_blank" rel="noopener">玩法平台开发文档</a></li>
+<li><a href="http://wiki.mogujie.org/display/frontend/Megret" target="_blank" rel="noopener">玩法平台后端代码</a></li>
+<li><a href="http://gitlab.mogujie.org/xiuhong/megret-frontend" target="_blank" rel="noopener">玩法平台前端代码</a></li>
+<li><a href="http://gitlab.mogujie.org/Aveng/meili-mgj-megret" target="_blank" rel="noopener">egret白鹭脚手架</a></li>
+<li><a href="http://webnpm.f2e.mogujie.org/package/@meili/mgj-megret" target="_blank" rel="noopener">npm仓库</a></li>
+</ul>
+<h2 id="h5活动构建思路"><a href="#h5活动构建思路" class="headerlink" title="h5活动构建思路"></a>h5活动构建思路</h2><p>如何制作一个类似于中国女子图鉴的项目呢。</p>
 <blockquote>
 <p>扫码访问：</p>
 </blockquote>
@@ -240,18 +248,29 @@
 <blockquote>
 <p>主要思路</p>
 </blockquote>
-<p>通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置，具体实现代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">const dragonbonesData = RES.getRes( &quot;dragonbones@listen_mother_ske_json&quot; );  </span><br><span class="line">const textureData = RES.getRes( &quot;dragonbones@listen_mother_tex_json&quot; );  </span><br><span class="line">const texture = RES.getRes( &quot;listen_mother_png&quot; );</span><br><span class="line"></span><br><span class="line">let egretFactory: dragonBones.EgretFactory = dragonBones.EgretFactory.factory;</span><br><span class="line">egretFactory.parseDragonBonesData(dragonbonesData);  </span><br><span class="line">egretFactory.parseTextureAtlasData(textureData, texture);</span><br><span class="line"></span><br><span class="line">let armatureDisplay: dragonBones.EgretArmatureDisplay = egretFactory.buildArmatureDisplay(&quot;listen_mother&quot;);</span><br><span class="line"></span><br><span class="line">this.addChild(armatureDisplay);</span><br><span class="line">armatureDisplay.x = 0;</span><br><span class="line">armatureDisplay.y = 0;</span><br><span class="line"></span><br><span class="line">   	</span><br><span class="line">const myScroller = new eui.Scroller();</span><br><span class="line">//注意位置和尺寸的设置是在Scroller上面，而不是容器上面</span><br><span class="line">   </span><br><span class="line">const group = new eui.Group();</span><br><span class="line">const img = new eui.Image(&quot;bg_png&quot;);</span><br><span class="line">group.addChild(img);</span><br><span class="line">img.height = this.stage.stageHeight * 2;</span><br><span class="line">   </span><br><span class="line">myScroller.width = this.stage.stageWidth;</span><br><span class="line">myScroller.height = this.stage.stageHeight;</span><br><span class="line">myScroller.viewport = group;</span><br><span class="line">myScroller.bounces = false;</span><br><span class="line">this.addChild(myScroller);   </span><br><span class="line">myScroller.addEventListener(</span><br><span class="line">  egret.Event.CHANGE, </span><br><span class="line">  () =&gt; &#123;</span><br><span class="line">      let scrollRate = myScroller.viewport.scrollV/(img.height - this.stage.stageHeight);</span><br><span class="line">     </span><br><span class="line">      console.log(myScroller.viewport.scrollV,scrollRate);</span><br><span class="line">      armatureDisplay.animation.gotoAndStopByFrame (&apos;newAnimation&apos;,scrollRate*80);</span><br><span class="line">  &#125;,</span><br><span class="line">  this</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>功能流程：</p>
+<p>通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置</p>
+<blockquote>
+<p>核心实现思想：</p>
+</blockquote>
 <ul>
-<li>获取龙骨资源、并创建<code>dragonBones</code>实例对象</li>
-<li>将龙骨场景对象添加至画布</li>
-<li>创建<code>Image</code>对象，设置宽度设置为视窗宽度，高度设置为<strong>龙骨场景高度+视窗高度</strong>并添加至场景中</li>
-<li>创建<code>scroll</code>对象，将其设置为视窗大小，设置<code>Image</code>对象为<code>scroll</code>的视域组件组件</li>
+<li>获取龙骨资源、并创建<code>dragonBones</code>实例对象。将龙骨场景对象添加至画布</li>
+<li>构建一个滚动容器，容器的高度为视窗大小，设置宽度设置为视窗宽度，在滚动容器中内增加填充块,填充块的高度=<strong>(总的帧数<em> 滚动距离切换一帧 </em> 时间缩放) + 视窗高度</strong></li>
+<li>创建<code>scroll</code>对象，将其设置为视窗大小，设置<code>滚动容器</code>对象为<code>scroll</code>的视域组件组件</li>
 <li>使用<code>scroll</code>监听滚动高度，计算当前滚动条占总可滚动高度的百分比=“已滚动高度/(图片高度-视窗高度)”</li>
 <li>获取<code>dragonBones</code>场景一共拥有多少帧，通过总帧数*当前百分比，得到用户滑动到当前所在帧数</li>
 </ul>
-<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|—— bin-debug   &lt;-编译后运行代码</span><br><span class="line">|—— libs        &lt;-第三方库</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">    |—— default.res.json    &lt;-资源索引目录</span><br><span class="line">    └── default.thm.json    &lt;-主题索引目录</span><br><span class="line">|—— scripts     &lt;-构建脚本</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">|—— src         &lt;-项目源代码</span><br><span class="line">└── template    &lt;-项目模板</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对应知识点</p>
+</blockquote>
+<ul>
+<li>滚动容器组件：<a href="http://developer.egret.com/cn/apidoc/index/name/eui.Scroller" target="_blank" rel="noopener">eui.scroller</a></li>
+<li>龙骨动画控制：<a href="http://developer.egret.com/cn/apidoc/index/name/dragonBones.Animation" target="_blank" rel="noopener">dragonBones.animation</a></li>
+</ul>
+<blockquote>
+<p>具体实现代码：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">private timeScale: number = 2;  // 时间缩放倍数，为2时表明帧数切换放慢两倍</span><br><span class="line">private frameFactor: number = 26; // 滚动一帧需要耗费的距离</span><br><span class="line">private totalFrames: number = 1672; // 总得帧数</span><br><span class="line">private totalPrgress: number = this.timeScale * this.frameFactor * this.totalFrames; // 总的滚动长度</span><br><span class="line">private dragonBones: Common.DragonParse;</span><br><span class="line"></span><br><span class="line">constructor () &#123;</span><br><span class="line">    // 龙骨脚手架中已添加COMMON公共方法，用来解析龙骨资源</span><br><span class="line">    this.dragonBones = Common.DragonParse.getDragonParseInstance();</span><br><span class="line">    this.egretFactory = this.dragonBones.getEgretFactory();</span><br><span class="line">    </span><br><span class="line">    // 获取龙骨资源</span><br><span class="line">    this.armatureDisplay = this.egretFactory.buildArmatureDisplay(&apos;listen_mother&apos;);</span><br><span class="line">    this.addView();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private addView () :void &#123;</span><br><span class="line">   // 获取视窗宽、高</span><br><span class="line">   const &#123; stageWidth, stageHeight &#125; = this.stage;</span><br><span class="line">   </span><br><span class="line">   // 创建滚动容器和填充块</span><br><span class="line">   const group = new eui.Group();</span><br><span class="line">   const placeHolder = new eui.Group();</span><br><span class="line"></span><br><span class="line">   placeHolder.width = stageWidth;</span><br><span class="line">   placeHolder.height = this.totalPrgress + stageHeight;</span><br><span class="line">   group.addChild(placeHolder);</span><br><span class="line"></span><br><span class="line">   //创建一个Scroller</span><br><span class="line">   this.scroller = new eui.Scroller();</span><br><span class="line">   this.scroller.bounces = false;</span><br><span class="line">   this.scroller.width = stageWidth;</span><br><span class="line">   this.scroller.height = stageHeight;</span><br><span class="line">   // 将group作为滚动的视域组件</span><br><span class="line">   this.scroller.viewport = group;</span><br><span class="line">   this.addChild(this.scroller);</span><br><span class="line">   </span><br><span class="line">   // 监听滚动变化</span><br><span class="line">    this.scroller.addEventListener(egret.Event.CHANGE, this.onScroll, this);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private onScroll () :void &#123;</span><br><span class="line">   // 获取滚动距离，并计算滚动百分比</span><br><span class="line">   const scrollV: number = this.scroller.viewport.scrollV;</span><br><span class="line">   const progress: number = scrollV / this.totalPrgress;</span><br><span class="line">   let curRateValue = ~~(this.totalFrames * progress);</span><br><span class="line"></span><br><span class="line">   this.setSwipeAndButton(curRateValue);</span><br><span class="line">   this.prevFrames = curRateValue;</span><br><span class="line">   </span><br><span class="line">   // 将设置龙骨动画播放到指定帧数</span><br><span class="line">   this.setProgress(progress);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private setProgress (progress: number) :void &#123;</span><br><span class="line">   this.armatureDisplay.animation.gotoAndStopByProgress(this.animationName, progress)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">|—— bin-debug   &lt;-编译后运行代码</span><br><span class="line">|—— libs        &lt;-第三方库</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">    |—— default.res.json    &lt;-资源索引目录</span><br><span class="line">    └── default.thm.json    &lt;-主题索引目录</span><br><span class="line">|—— scripts     &lt;-构建脚本</span><br><span class="line">|—— resource    &lt;-资源文件</span><br><span class="line">    |—— dragonbones    &lt;-龙骨资源目录</span><br><span class="line">        └── listen_mother    &lt;-母亲节活动龙骨资源</span><br><span class="line">|—— src         &lt;-项目源代码</span><br><span class="line">    |—— common          &lt;-公用方法库</span><br><span class="line">    |—— pages           &lt;-主要页面</span><br><span class="line">    |—— LoadingUI.ts    &lt;-loading组件</span><br><span class="line">    └── Main.ts         &lt;-入口文件</span><br><span class="line">└── template    &lt;-项目模板</span><br></pre></td></tr></table></figure>
 <h2 id="制作场景动画"><a href="#制作场景动画" class="headerlink" title="制作场景动画"></a>制作场景动画</h2><blockquote>
 <p>创建动画</p>
 </blockquote>
@@ -342,7 +361,7 @@
 <p>起步</p>
 </blockquote>
 <ul>
-<li>新建项目=&gt;创建龙骨动画=&gt;龙骨动画末班</li>
+<li>新建项目=&gt;创建龙骨动画=&gt;龙骨动画模板</li>
 <li>窗口菜单=&gt;属性面板</li>
 <li>勾选画布=&gt;设定宽高=&gt;设定偏移方向</li>
 <li>窗口菜单=&gt;资源面板</li>
@@ -360,6 +379,11 @@
 <li>文字动画放置物品后</li>
 <li>动画效果放置980像素内，否则在小屏幕手机上无法展示全面</li>
 <li>帧动画切换中间过度衔接透明度变化</li>
+</ul>
+<h2 id="对应资源"><a href="#对应资源" class="headerlink" title="对应资源"></a>对应资源</h2><ul>
+<li><a href="http://gitlab.mogujie.org/module/meili-module-h5-game-egret/tree/master" target="_blank" rel="noopener">白鹭魔方页基础模板</a></li>
+<li><a href="http://wxgame.mogu-inc.com/#/playground?_k=hwilxd" target="_blank" rel="noopener">玩法平台-所有玩法聚合页</a></li>
+<li><a href="http://gitlab.mogujie.org/zhangzhe/listen_mother" target="_blank" rel="noopener">母亲节项目地址</a></li>
 </ul>
 
     
