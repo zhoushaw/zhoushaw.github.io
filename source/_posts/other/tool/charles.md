@@ -92,3 +92,7 @@ categories: tool
 10. 安装完成后，charles可以截取mobile网络请求
 
 
+## localhost无法抓取
+
+使用`localhost.charlesproxy.com`代替
+
