@@ -1,18 +1,9 @@
 ---
-title: Egret实战-母亲节活动
+title: Egret实战-动态条漫
 date: 2019-5-6 7:42
 tags: egret
 categories: game
 ---
-## 脚手架相关
-
-* [玩法平台](http://wxgame.mogu-inc.com/#/?_k=1aw7nm)
-* [玩法平台开发文档](http://wiki.mogujie.org/display/frontend/Megret)
-* [玩法平台后端代码](http://wiki.mogujie.org/display/frontend/Megret)
-* [玩法平台前端代码](http://gitlab.mogujie.org/xiuhong/megret-frontend)
-* [egret白鹭脚手架](http://gitlab.mogujie.org/Aveng/meili-mgj-megret)
-* [npm仓库](http://webnpm.f2e.mogujie.org/package/@meili/mgj-megret)
-
 
 ## h5活动构建思路
 
