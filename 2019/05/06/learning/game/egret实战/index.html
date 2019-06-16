@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Egret实战-母亲节活动 | zhou shaw</title>
+  <title>Egret实战-动态条漫 | zhou shaw</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,13 +15,13 @@
     <meta name="keywords" content="egret," />
   
 
-  <meta name="description" content="脚手架相关 玩法平台 玩法平台开发文档 玩法平台后端代码 玩法平台前端代码 egret白鹭脚手架 npm仓库  h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置  核心实现思想：   获取龙骨资源、并创建dragonBones实例对象。将龙骨场景对象添加至画布 构建一个滚动容器，">
+  <meta name="description" content="h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置  核心实现思想：   获取龙骨资源、并创建dragonBones实例对象。将龙骨场景对象添加至画布 构建一个滚动容器，容器的高度为视窗大小，设置宽度设置为视窗宽度，在滚动容器中内增加填充块,填充块的高度=(总的帧数 滚动距离切换一">
 <meta name="keywords" content="egret">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Egret实战-母亲节活动">
+<meta property="og:title" content="Egret实战-动态条漫">
 <meta property="og:url" content="http://zhoushaw.github.io/2019/05/06/learning/game/egret实战/index.html">
 <meta property="og:site_name" content="zhou shaw">
-<meta property="og:description" content="脚手架相关 玩法平台 玩法平台开发文档 玩法平台后端代码 玩法平台前端代码 egret白鹭脚手架 npm仓库  h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置  核心实现思想：   获取龙骨资源、并创建dragonBones实例对象。将龙骨场景对象添加至画布 构建一个滚动容器，">
+<meta property="og:description" content="h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置  核心实现思想：   获取龙骨资源、并创建dragonBones实例对象。将龙骨场景对象添加至画布 构建一个滚动容器，容器的高度为视窗大小，设置宽度设置为视窗宽度，在滚动容器中内增加填充块,填充块的高度=(总的帧数 滚动距离切换一">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_2ghf8c42a3kji7l7l48e6jbkbafii_1050x672.png">
@@ -34,10 +34,10 @@
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_7jieaa926glfbcc28i85i2hl03e1h_736x110.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_436fehba4a05da0kg6hak2h268fc3_502x1000.png">
 <meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190515_2a4f690dl2caek417cf1ij40049dc_480x592.png">
-<meta property="og:updated_time" content="2019-05-16T14:29:15.018Z">
+<meta property="og:updated_time" content="2019-06-14T15:31:02.020Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Egret实战-母亲节活动">
-<meta name="twitter:description" content="脚手架相关 玩法平台 玩法平台开发文档 玩法平台后端代码 玩法平台前端代码 egret白鹭脚手架 npm仓库  h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置  核心实现思想：   获取龙骨资源、并创建dragonBones实例对象。将龙骨场景对象添加至画布 构建一个滚动容器，">
+<meta name="twitter:title" content="Egret实战-动态条漫">
+<meta name="twitter:description" content="h5活动构建思路如何制作一个类似于中国女子图鉴的项目呢。  扫码访问：    主要思路  通过龙骨场景动画将将所有动画做成帧动画到龙骨中，通过滑动事件来控制帧切换的位置  核心实现思想：   获取龙骨资源、并创建dragonBones实例对象。将龙骨场景对象添加至画布 构建一个滚动容器，容器的高度为视窗大小，设置宽度设置为视窗宽度，在滚动容器中内增加填充块,填充块的高度=(总的帧数 滚动距离切换一">
 <meta name="twitter:image" content="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png">
 
   
@@ -175,7 +175,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#脚手架相关"><span class="toc-text">脚手架相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h5活动构建思路"><span class="toc-text">h5活动构建思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作场景动画"><span class="toc-text">制作场景动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画制作"><span class="toc-text">动画制作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#制作逐帧动画"><span class="toc-text">制作逐帧动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作补间动画"><span class="toc-text">制作补间动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作龙骨动画"><span class="toc-text">制作龙骨动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一屏动画设计原则"><span class="toc-text">一屏动画设计原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对应资源"><span class="toc-text">对应资源</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#h5活动构建思路"><span class="toc-text">h5活动构建思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作场景动画"><span class="toc-text">制作场景动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画制作"><span class="toc-text">动画制作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#制作逐帧动画"><span class="toc-text">制作逐帧动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作补间动画"><span class="toc-text">制作补间动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作龙骨动画"><span class="toc-text">制作龙骨动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一屏动画设计原则"><span class="toc-text">一屏动画设计原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对应资源"><span class="toc-text">对应资源</span></a></li></ol>
   </div>
 
 
@@ -183,7 +183,7 @@
 <div class="content content-post CENTER">
    <article id="post-learning/game/egret实战" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">Egret实战-母亲节活动</h1>
+    <h1 class="post-title">Egret实战-动态条漫</h1>
 
     <div class="article-meta">
       <span>
@@ -219,7 +219,7 @@
        
           <span class="post-count">
             <i class="fa fa-file-word-o"></i>&nbsp
-            <span>字数统计 1.9k字</span>
+            <span>字数统计 1.8k字</span>
           </span>
 
           <span class="post-count">
@@ -232,15 +232,7 @@
 
   <div class="article-content">
     
-      <h2 id="脚手架相关"><a href="#脚手架相关" class="headerlink" title="脚手架相关"></a>脚手架相关</h2><ul>
-<li><a href="http://wxgame.mogu-inc.com/#/?_k=1aw7nm" target="_blank" rel="noopener">玩法平台</a></li>
-<li><a href="http://wiki.mogujie.org/display/frontend/Megret" target="_blank" rel="noopener">玩法平台开发文档</a></li>
-<li><a href="http://wiki.mogujie.org/display/frontend/Megret" target="_blank" rel="noopener">玩法平台后端代码</a></li>
-<li><a href="http://gitlab.mogujie.org/xiuhong/megret-frontend" target="_blank" rel="noopener">玩法平台前端代码</a></li>
-<li><a href="http://gitlab.mogujie.org/Aveng/meili-mgj-megret" target="_blank" rel="noopener">egret白鹭脚手架</a></li>
-<li><a href="http://webnpm.f2e.mogujie.org/package/@meili/mgj-megret" target="_blank" rel="noopener">npm仓库</a></li>
-</ul>
-<h2 id="h5活动构建思路"><a href="#h5活动构建思路" class="headerlink" title="h5活动构建思路"></a>h5活动构建思路</h2><p>如何制作一个类似于中国女子图鉴的项目呢。</p>
+      <h2 id="h5活动构建思路"><a href="#h5活动构建思路" class="headerlink" title="h5活动构建思路"></a>h5活动构建思路</h2><p>如何制作一个类似于中国女子图鉴的项目呢。</p>
 <blockquote>
 <p>扫码访问：</p>
 </blockquote>
@@ -399,7 +391,7 @@
     <a class="show pull-left" href="/2019/05/04/learning/font-end/test/jest/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/05/15/life/迪士尼游玩/">
+    <a class="show pull-right" href="/2019/05/25/other/feature/keynote/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
