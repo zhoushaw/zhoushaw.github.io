@@ -1,6 +1,6 @@
 ---
 title: vue技术内幕-数据响应系统
-date: 2019-06-17 9:21:35
+date: 2019-06-17 21:21:35
 tags: vue
 categories: vue
 ---
@@ -34,7 +34,7 @@ const data = {
 
 ```
 
-> 函数$watch,接收两个参数，要观测的key，和回调函数
+> 函数$watch,接收两个参数(要观测的key，回调函数)
 
 ```
 $watch(key,()=>{...})
@@ -66,7 +66,6 @@ const data = {
 };
 Object.defineProperty(data,'name', {
     set (newValue) {
-        data.value = newValue;
         console.log('name 值发生更改');
     },
     get () {
@@ -75,5 +74,182 @@ Object.defineProperty(data,'name', {
 });
 ```
 
-通过`defineProperty`定义name的设置和获取操作，我们不妨大胆的想象一下，我们可以通过`get`操作添加
+通过`defineProperty`定义我们劫持了data对象的name属性操作，我们可以将劫持的方法封装至`watch`方法中，如下：
+
+
+```
+const data = {
+    name: 'shaw'
+};
+$watch = function (key, fn) {
+    Object.defineProperty(data,'name', {
+        set (newValue) {
+            fn();
+        },
+        get () {
+            console.log('读取了属性name');
+        }
+    });
+}
+```
+
+上面的代码已经简单实现了对数据的观测，但是大家不难发现其中存在的问题，上面例子中`set`函数并未设置属性新的赋值，并且`get`函数并未返回获取的值会导致属性的设置和获取失效。并且上面的例子，我们我无法对一个对象的属性收集多个依赖，并且我们每次调用`watch`都对属性重新定义了`set`和`get`,当属性还存在其他依赖时这样会覆盖原有的依赖，我们不妨展开🤔，`set`函数可以用于触发数据数据发生变化，我们可不可以通过`get`函数来进行依赖收集呢
+
+```
+var data = {
+    name: 'shaw',
+    age: 23
+};
+
+let Target;
+
+let dep = [];
+
+let val = data['name'];
+Object.defineProperty(data, 'name', {
+    set(newValue) {
+        // 设置新值与旧值相等，不进行依赖
+        if (val === newValue) return;
+        // 执行依赖
+        dep.forEach(fn => fn());
+        val = newValue
+    },
+    get() {
+        // 有依赖进行收集
+        if (Target) dep.push(Target);
+        return val;
+    }
+});
+
+$watch = function (key,fn) {
+    Target = fn;
+    data[key];
+}
+
+$watch('name', () => {
+    console.log('设置了name');
+})
+
+$watch('name', () => {
+    console.log('多重依赖，啦啦啦');
+})
+
+data.name = 'zhou shaw';
+```
+
+上述代码并未对其`data`属性进行数据响应，我们可以通过遍历添加依赖关系。并且我们会发现若我们通过访问数据便收集了依赖，那么会触发大量的重复依赖收集后面我们会讲解如何解决：
+
+```
+var data = {
+    name: 'shaw',
+    age: 23
+};
+
+let Target; // 用于缓存依赖函数
+
+for (let key in data) {
+    let dep = [];
+    let val = data[key];
+    Object.defineProperty(data, key, {
+        set(newValue) {
+            if (val === newValue) return; // 设置新值与旧值相等，不进行依赖
+            dep.forEach(fn => fn()); // 执行依赖
+            val = newValue
+        },
+        get() {
+            if (Target) dep.push(Target); // 有依赖进行收集
+            return val;
+        }
+    });
+}
+
+let $watch = function (key,fn) {
+    Target = fn;
+    data[key];
+}
+```
+
+但如果数据结构是这样呢：
+
+```
+var data = {
+    name: 'shaw',
+    infos: {
+        phone: '17xxx',
+        wechat: 'xxx'
+    }
+};
+```
+
+我们会发现我们并没有对深层次对象监听，如果数据结构更为复杂呢，我们可以将数据拦截方法封装成一个函数，对数据对象进行递归遍历，将所有属性都添加依赖，
+
+```
+
+let Target; // 用于缓存依赖函数
+
+function walk(data) {
+    for (let key in data) {
+        let dep = [];
+        let val = data[key];
+        // 当数据为对象类型时递归遍历
+        if (Object.prototype.toString.call(val) === '[object Object]') { 
+            walk(val);
+        }
+
+        Object.defineProperty(data, key, {
+            set(newValue) {
+                if (val === newValue) return; // 设置新值与旧值相等，不进行依赖
+                dep.forEach(fn => fn()); // 执行依赖
+                val = newValue
+            },
+            get() {
+                if (Target) dep.push(Target); // 有依赖进行收集
+                return val;
+            }
+        });
+    }
+}
+
+walk(data);
+
+let $watch = function (key,fn) {
+    Target = fn;
+    data[key];
+}
+```
+
+尽管对数据进行深度观察了，但我们会发现，我们的`watch`函数并不会对`infos.wechat`进行观察，所以我们需要对`$watch`函数进行改造，让其支持`infos.wechat`依赖收集，所以我们想实现的效果是：
+
+```
+$watch('infos.wechat', () => {
+    console.log('修改了wechat');
+})
+```
+
+由于我们已经实现了数据进行访问即可收集依赖，但我们无法直接通过`infos.wechat`收集，我们需要将其转换成`data['infos']['wechat']`
+
+```
+var data = {
+    name: 'shaw',
+    infos: {
+        wechat: '466'
+    }
+};
+
+let $watch = function (key,fn) {
+
+    Target = fn;
+
+    if (/\./.test(key)) {
+        let paths = key.split('.');
+        let obj = data;
+        paths.forEach((path) => {
+            obj = obj[path];
+        });
+        return;
+    }
+
+    data[key];
+}
+```
 
