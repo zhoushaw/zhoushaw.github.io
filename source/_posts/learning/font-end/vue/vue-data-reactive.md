@@ -69,7 +69,7 @@ Object.defineProperty(data,'name', {
         console.log('name 值发生更改');
     },
     get () {
-        console.log('读取了属性name')
+        console.log('读取了属性name');
     }
 });
 ```
@@ -110,9 +110,9 @@ Object.defineProperty(data, 'name', {
     set(newValue) {
         // 设置新值与旧值相等，不进行依赖
         if (val === newValue) return;
+        val = newValue
         // 执行依赖
         dep.forEach(fn => fn());
-        val = newValue
     },
     get() {
         // 有依赖进行收集
@@ -153,8 +153,8 @@ for (let key in data) {
     Object.defineProperty(data, key, {
         set(newValue) {
             if (val === newValue) return; // 设置新值与旧值相等，不进行依赖
-            dep.forEach(fn => fn()); // 执行依赖
             val = newValue
+            dep.forEach(fn => fn()); // 执行依赖
         },
         get() {
             if (Target) dep.push(Target); // 有依赖进行收集
@@ -199,8 +199,8 @@ function walk(data) {
         Object.defineProperty(data, key, {
             set(newValue) {
                 if (val === newValue) return; // 设置新值与旧值相等，不进行依赖
-                dep.forEach(fn => fn()); // 执行依赖
                 val = newValue
+                dep.forEach(fn => fn()); // 执行依赖
             },
             get() {
                 if (Target) dep.push(Target); // 有依赖进行收集
@@ -252,4 +252,40 @@ let $watch = function (key,fn) {
     data[key];
 }
 ```
+
+到这里为止我们已经实现了一个简单的数据依赖收集系统，我们如何实现dom节点和数据绑定式渲染呢，在vue中模板最终都会生成一个render函数，通过这个函数来实现最终的渲染。若`render`函数中访问了`data`数据，我们可以观察`render`函数中的data数据，若`render`函数中访问的数据发生变化，则执行`render`函数进行重新渲染，那么如何收集`render`函数中访问的依赖，并将`render`函数与数据建立联系呢，很简单我们将`watch`函数进行改造一下就行了
+
+```
+let $watch = function (exp,fn) {
+
+    Target = fn;
+    if (typeof exp==="function") {
+        exp();
+        return;
+    }
+
+    if (/\./.test(exp)) {
+        let paths = exp.split('.');
+        let obj = data;
+        paths.forEach((path) => {
+            obj = obj[path];
+        });
+        return;
+    }
+
+    data[exp];
+}
+
+function render() {
+    return document.write(`姓名：${data.name}; 年龄：${data.age}<br/>`)
+}
+
+$watch(render, render)
+```
+
+在这里我们将`$watch`函数进行了改造，我们将第一个参数的表达是进行了类型判断，如果是函数类型进行执行。因为我们是通过`get`拦截进行依赖收集的，执行函数后可以收集`render`函数中数据的依赖，依赖的执行函数就是`render`，若我们对`render`函数中依赖的data数据进行修改，就会触发`render`函数从而实现数据响应视图。当然这里的实现只是vue的基本原理，从这里我们不难看出我们实现的这个简陋的响应系统中存在的问题，当修改数据触发`render`函数时，又进行了重复的依赖收集，并且这里也没有针对`Object.defineProperty`属性无法对数组进行观察进行处理。接下来会针对这一系列问题进行处理
+
+
+
+
 
