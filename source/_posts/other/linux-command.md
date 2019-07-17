@@ -50,3 +50,10 @@ ifconfig ip地址查询
 ```
 cat  /etc/redhat-release
 ```
+
+## 显示当前cenos系统版本
+
+```
+cat /etc/redhat-release
+```
+
