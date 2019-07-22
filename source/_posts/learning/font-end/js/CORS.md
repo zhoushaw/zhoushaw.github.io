@@ -95,6 +95,7 @@ categories: http
         * 如果origin在服务端白名单内，会返回
             * Access-Control-Allow-Origin: http://api.bob.com
             * Access-Control-Allow-Credentials: true
+            * Access-Control-Request-Method: POST,GET,OPTIONS,PUT
             * Access-Control-Expose-Headers: FooBar
 * 非简单请求
     * 对于非简单请求，浏览器在进行交互前会发送options方法，进行预检测
@@ -105,4 +106,40 @@ categories: http
 用来决定，进行CORS共享是，是否发送cookie
 
 **CORS跨域请求比JSONP请求方法更多，传输内容类型更多，但兼容性没有JSONP强**
+
+### 同域/跨域ajax请求到底会不会带上cookie?
+
+这个问题与你发起`ajax`请求的方式有关
+`fetch`在默认情况下, 不管是同域还是跨域ajax请求都不会带上cookie, **只有当设置了 credentials 时才会带上该ajax请求所在域的cookie**, 服务端需要设置响应头 `Access-Control-Allow-Credentials: true`, 否则浏览器会因为安全限制而报错, 拿不到响应
+axios和jQuery在同域ajax请求时会带上cookie, 跨域请求不会, 跨域请求需要设置 `withCredentials` 和服务端响应头
+
+> 使fetch带上cookie
+
+```
+fetch(url, {
+    credentials: "include", // include, same-origin, omit
+})
+```
+
+* include: 跨域ajax带上cookie
+* same-origin: 仅同域ajax带上cookie
+* omit: 任何情况都不带cookie
+
+> 使axios带上cookie
+
+```
+axios.get('http://server.com', {withCredentials: true})
+```
+
+> jQuery 携带cookie
+
+```
+$.ajax({
+    method: 'get',
+    url: 'http://server.com',
+    xhrFields: {
+        withCredentials: true
+    }
+})
+```
 
