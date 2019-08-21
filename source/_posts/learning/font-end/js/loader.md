@@ -24,6 +24,11 @@ module.exports = function(source) {
 };
 ```
 
+## 关于学习AST转换的一些文档
+
+* [babel-handbook](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/user-handbook.md)
+* 
+
 ## 从零开发一个loader
 
 ###利用 loader-runner 调试 Loaders
