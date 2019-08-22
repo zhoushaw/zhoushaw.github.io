@@ -27,7 +27,61 @@ module.exports = function(source) {
 ## 关于学习AST转换的一些文档
 
 * [babel-handbook](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/user-handbook.md)
-* 
+* [babel-types](https://babeljs.io/docs/en/babel-types#functionexpression)
+* [ast-explorer](https://astexplorer.net/)
+
+
+
+## Babel 的处理步骤
+
+Babel 的三个主要处理步骤分别是：
+ 
+* `解析（parse）`
+* `转换（transform）`
+* `生成（generate）`
+
+> 解析
+
+解析步骤接收代码并输出 AST。 这个步骤分为两个阶段：**词法分析（Lexical Analysis） **和 语法分析（Syntactic Analysis）。
+
+> 转换
+
+转换步骤接收 AST 并对其进行遍历，在此过程中对节点进行添加、更新及移除等操作
+
+> 生成
+
+代码生成步骤把最终（经过一系列转换之后）的 AST 转换成字符串形式的代码，同时还会创建源码映射（source maps）
+
+### 解析
+
+在进行代码转换前，需要将代码转换成AST语法，可以通过`babel`提供的`parser`工具进行转换，具体转换成ast代码如下：
+
+
+```
+// 安装依赖 npm install @babel/parser
+const parser = require("@babel/parser");
+// 其中code为提供的源码
+let code = `
+    function testFn() {
+    
+    }
+`;
+const ast = parser.parse(code);
+```
+
+## 转换
+
+> 遍历
+
+要进行代码转换必须对AST进行遍历，它遍历的顺序是按照**树的深度遍历**进行
+
+![](https://s10.mogucdn.com/mlcdn/c45406/190821_1736cgd1g5khfa8a4dfj11k7cebf7_440x376.png)
+
+详细遍历过程可参考：[traverse遍历规则](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md#%E9%81%8D%E5%8E%86)
+
+> 如何通过babel访问并修改ast节点
+
+我们可以通过`@babel/parser`npm包对ast进行访问，具体实现代码如下:
 
 ## 从零开发一个loader
 
@@ -35,6 +89,7 @@ module.exports = function(source) {
 
 
 [loader-runner](https://www.npmjs.com/package/loader-runner) 允许你不依靠 webpack 单独运行 loader
+
 
 ```
 mkdir loader-example && cd $_
