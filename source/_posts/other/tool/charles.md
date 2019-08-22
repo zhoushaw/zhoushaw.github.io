@@ -65,11 +65,21 @@ categories: tool
 
 * step1
 
+自动代理设置为：
+
+`http://127.0.0.1:8888/proxy.pac`
+
 ![](https://s10.mogucdn.com/mlcdn/c45406/190316_288g40j79j72lfbgf1akk55khf3bf_640x488.png)
+
+
 
 * step2
 
 ![](https://s10.mogucdn.com/mlcdn/c45406/190316_5i9b93b8aek34lfe4jcj0g892ejc7_592x505.png)
+
+* step3
+
+![](https://s10.mogucdn.com/mlcdn/c45406/190719_1lb012c5ijc73kafkjg8502i61h6a_708x806.png)
 
 
 ## ios安装后开启证书信任
