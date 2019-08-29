@@ -29,8 +29,7 @@ module.exports = function(source) {
 * [babel-handbook](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/user-handbook.md)
 * [babel-types](https://babeljs.io/docs/en/babel-types#functionexpression)
 * [ast-explorer](https://astexplorer.net/)
-
-
+* [Babylon-AST初探-代码生成](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md)
 
 ## Babel 的处理步骤
 
@@ -55,7 +54,6 @@ Babel 的三个主要处理步骤分别是：
 ### 解析
 
 在进行代码转换前，需要将代码转换成AST语法，可以通过`babel`提供的`parser`工具进行转换，具体转换成ast代码如下：
-
 
 ```
 // 安装依赖 npm install @babel/parser
