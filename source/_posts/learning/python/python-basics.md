@@ -1,7 +1,7 @@
 ---
-title: python基础
+title: python知识
 date: 2019-9-11 13:14
-tags: ptyhon
+tags: python
 categories: python
 ---
 
