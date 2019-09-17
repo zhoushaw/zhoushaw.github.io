@@ -106,3 +106,6 @@ categories: tool
 
 使用`localhost.charlesproxy.com`代替
 
+若各项配置正常，charles任然不能正常抓取请求，将网络代理中的配置文件删除
+![](https://s10.mogucdn.com/mlcdn/c45406/190904_47251g7iicbc3598ihdib8j8ch2k8_1304x1012.png)
+
