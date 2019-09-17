@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="zhou shaw">
 <meta property="og:description" content="同源策略在了解跨域问题前，先对同源策略进行一个回顾  同源策略   同源策略是网景公司提出的著名的安全策略 现代浏览器构建都基于同源策略 web构建在同源策略基础之上，对非同源的脚本限制就是同源策略的实现 同源指的是，协议、域名、端口三者相同称之为同源，任一不相同，则不同源">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-23T15:16:14.999Z">
+<meta property="og:updated_time" content="2019-08-08T12:02:30.111Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http">
 <meta name="twitter:description" content="同源策略在了解跨域问题前，先对同源策略进行一个回顾  同源策略   同源策略是网景公司提出的著名的安全策略 现代浏览器构建都基于同源策略 web构建在同源策略基础之上，对非同源的脚本限制就是同源策略的实现 同源指的是，协议、域名、端口三者相同称之为同源，任一不相同，则不同源">
@@ -163,7 +163,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#同源策略"><span class="toc-text">同源策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域方法"><span class="toc-text">跨域方法</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#同源策略"><span class="toc-text">同源策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域方法"><span class="toc-text">跨域方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#同域-跨域ajax请求到底会不会带上cookie"><span class="toc-text">同域/跨域ajax请求到底会不会带上cookie?</span></a></li></ol></li></ol>
   </div>
 
 
@@ -207,12 +207,12 @@
        
           <span class="post-count">
             <i class="fa fa-file-word-o"></i>&nbsp
-            <span>字数统计 1.6k字</span>
+            <span>字数统计 1.8k字</span>
           </span>
 
           <span class="post-count">
             <i class="fa fa-columns"></i>&nbsp
-            <span>阅读时长 5分</span>
+            <span>阅读时长 6分</span>
           </span>
       
     </div>
@@ -337,6 +337,7 @@
 <li>如果origin在服务端白名单内，会返回<ul>
 <li>Access-Control-Allow-Origin: <a href="http://api.bob.com" target="_blank" rel="noopener">http://api.bob.com</a></li>
 <li>Access-Control-Allow-Credentials: true</li>
+<li>Access-Control-Request-Method: POST,GET,OPTIONS,PUT</li>
 <li>Access-Control-Expose-Headers: FooBar</li>
 </ul>
 </li>
@@ -355,6 +356,24 @@
 </blockquote>
 <p>用来决定，进行CORS共享是，是否发送cookie</p>
 <p><strong>CORS跨域请求比JSONP请求方法更多，传输内容类型更多，但兼容性没有JSONP强</strong></p>
+<h3 id="同域-跨域ajax请求到底会不会带上cookie"><a href="#同域-跨域ajax请求到底会不会带上cookie" class="headerlink" title="同域/跨域ajax请求到底会不会带上cookie?"></a>同域/跨域ajax请求到底会不会带上cookie?</h3><p>这个问题与你发起<code>ajax</code>请求的方式有关<br><code>fetch</code>在默认情况下, 不管是同域还是跨域ajax请求都不会带上cookie, <strong>只有当设置了 credentials 时才会带上该ajax请求所在域的cookie</strong>, 服务端需要设置响应头 <code>Access-Control-Allow-Credentials: true</code>, 否则浏览器会因为安全限制而报错, 拿不到响应<br>axios和jQuery在同域ajax请求时会带上cookie, 跨域请求不会, 跨域请求需要设置 <code>withCredentials</code> 和服务端响应头</p>
+<blockquote>
+<p>使fetch带上cookie</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fetch(url, &#123;</span><br><span class="line">    credentials: &quot;include&quot;, // include, same-origin, omit</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>include: 跨域ajax带上cookie</li>
+<li>same-origin: 仅同域ajax带上cookie</li>
+<li>omit: 任何情况都不带cookie</li>
+</ul>
+<blockquote>
+<p>使axios带上cookie</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axios.get(&apos;http://server.com&apos;, &#123;withCredentials: true&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>jQuery 携带cookie</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    method: &apos;get&apos;,</span><br><span class="line">    url: &apos;http://server.com&apos;,</span><br><span class="line">    xhrFields: &#123;</span><br><span class="line">        withCredentials: true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
     
   </div>

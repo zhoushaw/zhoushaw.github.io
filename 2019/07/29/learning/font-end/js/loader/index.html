@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>loader入门 | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="js," />
+  
+
+  <meta name="description" content="前言Loader 就像是一个翻译员，能把源文件经过转化后输出新的结果，并且一个文件还可以链式的经过多个翻译员翻译。 可以通过loader对源码进行解析编译，生成新的代码，例如babel-loader，就是对源码进行编译解析将es6转换成es5代码  Loader 基础  由于 Webpack 是运行在 Node.js 之上的，一个 Loader 其实就是一个 Node.js 模块，这个模块需要导出">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="loader入门">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/07/29/learning/font-end/js/loader/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="前言Loader 就像是一个翻译员，能把源文件经过转化后输出新的结果，并且一个文件还可以链式的经过多个翻译员翻译。 可以通过loader对源码进行解析编译，生成新的代码，例如babel-loader，就是对源码进行编译解析将es6转换成es5代码  Loader 基础  由于 Webpack 是运行在 Node.js 之上的，一个 Loader 其实就是一个 Node.js 模块，这个模块需要导出">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s10.mogucdn.com/mlcdn/c45406/190821_1736cgd1g5khfa8a4dfj11k7cebf7_440x376.png">
+<meta property="og:updated_time" content="2019-09-05T13:11:36.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="loader入门">
+<meta name="twitter:description" content="前言Loader 就像是一个翻译员，能把源文件经过转化后输出新的结果，并且一个文件还可以链式的经过多个翻译员翻译。 可以通过loader对源码进行解析编译，生成新的代码，例如babel-loader，就是对源码进行编译解析将es6转换成es5代码  Loader 基础  由于 Webpack 是运行在 Node.js 之上的，一个 Loader 其实就是一个 Node.js 模块，这个模块需要导出">
+<meta name="twitter:image" content="https://s10.mogucdn.com/mlcdn/c45406/190821_1736cgd1g5khfa8a4dfj11k7cebf7_440x376.png">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于学习AST转换的一些文档"><span class="toc-text">关于学习AST转换的一些文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Babel-的处理步骤"><span class="toc-text">Babel 的处理步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解析"><span class="toc-text">解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#转换"><span class="toc-text">转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从零开发一个loader"><span class="toc-text">从零开发一个loader</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过AST对代码进行改造"><span class="toc-text">通过AST对代码进行改造</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/font-end/js/loader" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">loader入门</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.07.29</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 945字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 3分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Loader 就像是一个翻译员，能把源文件经过转化后输出新的结果，并且一个文件还可以链式的经过多个翻译员翻译。</p>
+<p>可以通过loader对源码进行解析编译，生成新的代码，例如babel-loader，就是对源码进行编译解析将es6转换成es5代码</p>
+<blockquote>
+<p>Loader 基础</p>
+</blockquote>
+<p>由于 Webpack 是运行在 Node.js 之上的，一个 Loader 其实就是一个 Node.js 模块，这个模块需要导出一个函数。 这个导出的函数的工作就是获得处理前的原内容，对原内容执行处理后，返回处理后的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function(source) &#123;</span><br><span class="line">  // source 为 compiler 传递给 Loader 的一个文件的原内容</span><br><span class="line">  // 该函数需要返回处理后的内容，这里简单起见，直接把原内容返回了，相当于该 Loader 没有做任何转换</span><br><span class="line">  return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="关于学习AST转换的一些文档"><a href="#关于学习AST转换的一些文档" class="headerlink" title="关于学习AST转换的一些文档"></a>关于学习AST转换的一些文档</h2><ul>
+<li><a href="https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/user-handbook.md" target="_blank" rel="noopener">babel-handbook</a></li>
+<li><a href="https://babeljs.io/docs/en/babel-types#functionexpression" target="_blank" rel="noopener">babel-types</a></li>
+<li><a href="https://astexplorer.net/" target="_blank" rel="noopener">ast-explorer</a></li>
+<li><a href="https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md" target="_blank" rel="noopener">Babylon-AST初探-代码生成</a></li>
+</ul>
+<h2 id="Babel-的处理步骤"><a href="#Babel-的处理步骤" class="headerlink" title="Babel 的处理步骤"></a>Babel 的处理步骤</h2><p>Babel 的三个主要处理步骤分别是：</p>
+<ul>
+<li><code>解析（parse）</code></li>
+<li><code>转换（transform）</code></li>
+<li><code>生成（generate）</code></li>
+</ul>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<p>解析步骤接收代码并输出 AST。 这个步骤分为两个阶段：<strong>词法分析（Lexical Analysis） </strong>和 语法分析（Syntactic Analysis）。</p>
+<blockquote>
+<p>转换</p>
+</blockquote>
+<p>转换步骤接收 AST 并对其进行遍历，在此过程中对节点进行添加、更新及移除等操作</p>
+<blockquote>
+<p>生成</p>
+</blockquote>
+<p>代码生成步骤把最终（经过一系列转换之后）的 AST 转换成字符串形式的代码，同时还会创建源码映射（source maps）</p>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>在进行代码转换前，需要将代码转换成AST语法，可以通过<code>babel</code>提供的<code>parser</code>工具进行转换，具体转换成ast代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 安装依赖 npm install @babel/parser</span><br><span class="line">const parser = require(&quot;@babel/parser&quot;);</span><br><span class="line">// 其中code为提供的源码</span><br><span class="line">let code = `</span><br><span class="line">    function testFn() &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">`;</span><br><span class="line">const ast = parser.parse(code);</span><br></pre></td></tr></table></figure>
+<h2 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h2><blockquote>
+<p>遍历</p>
+</blockquote>
+<p>要进行代码转换必须对AST进行遍历，它遍历的顺序是按照<strong>树的深度遍历</strong>进行</p>
+<p><img src="https://s10.mogucdn.com/mlcdn/c45406/190821_1736cgd1g5khfa8a4dfj11k7cebf7_440x376.png" alt=""></p>
+<p>详细遍历过程可参考：<a href="https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md#%E9%81%8D%E5%8E%86" target="_blank" rel="noopener">traverse遍历规则</a></p>
+<blockquote>
+<p>如何通过babel访问并修改ast节点</p>
+</blockquote>
+<p>我们可以通过<code>@babel/parser</code>npm包对ast进行访问，具体实现代码如下:</p>
+<h2 id="从零开发一个loader"><a href="#从零开发一个loader" class="headerlink" title="从零开发一个loader"></a>从零开发一个loader</h2><p>###利用 loader-runner 调试 Loaders</p>
+<p><a href="https://www.npmjs.com/package/loader-runner" target="_blank" rel="noopener">loader-runner</a> 允许你不依靠 webpack 单独运行 loader</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir loader-example &amp;&amp; cd $_</span><br><span class="line">touch index.js  // 创建需要转换的数据源</span><br><span class="line">npm init</span><br><span class="line">npm install loader-runner --save-dev</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>创建运行loader文件</p>
+</blockquote>
+<ul>
+<li>step1</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch run-loader.js</span><br></pre></td></tr></table></figure>
+<ul>
+<li>step2</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//run-loader.js</span><br><span class="line">const fs = require(&quot;fs&quot;);</span><br><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">const &#123; runLoaders &#125; = require(&quot;loader-runner&quot;);</span><br><span class="line"></span><br><span class="line">runLoaders(</span><br><span class="line">  &#123;</span><br><span class="line">    resource: &quot;./index.js&quot;, // 转换源</span><br><span class="line">    loaders: [path.resolve(__dirname, &quot;./loader-demo.js&quot;)], // loader地址</span><br><span class="line">    readResource: fs.readFile.bind(fs),</span><br><span class="line">  &#125;,</span><br><span class="line">  // 第二个参数，是一个函数形参是错误、转换结果</span><br><span class="line">  (err, result) =&gt; &#123;</span><br><span class="line">    if (err) &#123;</span><br><span class="line">        console.error(err)</span><br><span class="line">        return;</span><br><span class="line">    &#125; </span><br><span class="line">    //输出转换结果到output.js中</span><br><span class="line">    fs.writeFileSync(&quot;./output.js&quot;, result.result)</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>创建loader</p>
+</blockquote>
+<ul>
+<li>step1</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch loader-demo.js</span><br></pre></td></tr></table></figure>
+<ul>
+<li>step2</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function(source) &#123;</span><br><span class="line">  // ... 对source进行转换</span><br><span class="line">  return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="通过AST对代码进行改造"><a href="#通过AST对代码进行改造" class="headerlink" title="通过AST对代码进行改造"></a>通过AST对代码进行改造</h2><p><code>抽象语法树是源代码语法结构的一种抽象表示。它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构</code></p>
+<blockquote>
+<p>功能</p>
+</blockquote>
+<p>通过 AST 可以实现很多非常有用的功能，例如将 ES6 以后的代码转为 ES5，eslint 的检查，代码美化，甚至 js 引擎都是依赖 AST 实现的，同时因为代码本质只是单纯的字符串，所以并不仅限于 js 之间的转换，scss，less 等 css 预处理器也是通过 AST 转为浏览器认识的 css 代码</p>
+<blockquote>
+<p>起步</p>
+</blockquote>
+<ul>
+<li>step1</li>
+</ul>
+<p><code>npm install @babel/parser @babel/traverse @babel/types @babel/core --save-dev</code></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/07/18/other/life/人性的弱点/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/09/11/learning/python/python-basics/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
