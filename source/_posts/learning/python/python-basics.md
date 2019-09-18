@@ -7,6 +7,9 @@ categories: python
 
 
 # 基础
+
+本文是Python的笔记，[教程文档](https://www.liaoxuefeng.com/wiki/1016959663602400)
+
 ## 输入
 
 ```
@@ -45,7 +48,7 @@ hello, Michael
 * 多行'''.....''',类似js``模板字符串
 
 ```
->>> print('''line1
+print('''line1
 ... line2
 ... line3''')
 line1
@@ -88,9 +91,9 @@ UTF-8：对Unicode进行了优化
 ## 字符串拼接
 
 ```
->>> 'Hello, %s' % 'world'
+'Hello, %s' % 'world'
 'Hello, world'
->>> 'Hi, %s, you have $%d.' % ('Michael', 1000000)
+'Hi, %s, you have $%d.' % ('Michael', 1000000)
 'Hi, Michael, you have $1000000.'
 ```
 
@@ -108,8 +111,8 @@ UTF-8：对Unicode进行了优化
 Python内置的一种数据类型是列表：list。list是一种有序的集合，可以随时添加和删除其中的元素。
 
 ```
->>> classmates = ['Michael', 'Bob', 'Tracy']
->>> classmates
+classmates = ['Michael', 'Bob', 'Tracy']
+classmates
 ['Michael', 'Bob', 'Tracy']
 ```
 
@@ -135,7 +138,7 @@ Python内置的一种数据类型是列表：list。list是一种有序的集合
 > 生成list
 
 ```
->>> list(range(1, 11))
+list(range(1, 11))
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
 
@@ -143,22 +146,22 @@ Python内置的一种数据类型是列表：list。list是一种有序的集合
 
 
 ```
->>> [x * x for x in range(1, 11)]
+[x * x for x in range(1, 11)]
 [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 ```
 
 > 迭代元素筛选，仅留下偶数
 
 ```
->>> [x * x for x in range(1, 11) if x % 2 == 0]
+[x * x for x in range(1, 11) if x % 2 == 0]
 [4, 16, 36, 64, 100]
 ```
 
 > 两层循环
 
 ```
->>> [m + n for m in 'ABC' for n in 'XYZ']
-['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']
+[m + n for m in 'ABC' for n in 'XYZ']
+#['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']
 ```
 
 #### 生成器
@@ -172,7 +175,7 @@ Python内置的一种数据类型是列表：list。list是一种有序的集合
 tuple与list类似，都是但是tuple初始化完成后，不可添加删除
 
 ```
->>> classmates = ('Michael', 'Bob', 'Tracy')
+classmates = ('Michael', 'Bob', 'Tracy')
 ```
 
 也可以通过下标`0`、`1`访问tuple内的元素
@@ -180,7 +183,7 @@ tuple与list类似，都是但是tuple初始化完成后，不可添加删除
 定义一个元组时,需要增加`,`号，因为()一般也用于计算，为了区分所以要增加`,`
 
 ```
->>> a = ('few',)
+a = ('few',)
 ```
 
 
@@ -243,7 +246,7 @@ for in 就是按顺序迭代
 `range()`函数可以生成一个整数序列，再通过list()函数可以转换为list
 
 ```
->>> list(range(5))
+list(range(5))
 [0, 1, 2, 3, 4]
 ```
 
@@ -293,8 +296,8 @@ dict全称dictionary，在其他语言中也称为map，使用键-值（key-valu
 dict的key必须是不可以变的所以，key不可以是list或另一个dict，字符、整数这些就是不可变的
 
 ```
->>> d = {'Michael': 95, 'Bob': 75, 'Tracy': 85}
->>> d['Michael']
+d = {'Michael': 95, 'Bob': 75, 'Tracy': 85}
+d['Michael']
 95
 ```
 
@@ -305,6 +308,13 @@ dict的key必须是不可以变的所以，key不可以是list或另一个dict�
     * 如果key不存在，返回None
     * `d.get('shaw',-1)`，不存在指定返回-1
 * 删除指定key`d.pop('Bob')`
+* 迭代`dict`的`key`和`value`
+
+```
+d = {'x': 'A', 'y': 'B', 'z': 'C' }
+for k, v in d.items():
+...     print(k, '=', v)
+```
 
 
 ## set
@@ -314,9 +324,9 @@ set和dict类似，也是一组key的集合，但不存储value。由于key不�
 要创建一个set，需要提供一个list作为输入集合：
 
 ```
->>> s = set([1, 2, 3])
->>> s
-{1, 2, 3}
+s = set([1, 2, 3])
+s
+#{1, 2, 3}
 ```
 
 * 重复的将自动过滤掉
@@ -326,11 +336,11 @@ set和dict类似，也是一组key的集合，但不存储value。由于key不�
 > set可以看成数学意义上的无序和无重复元素的集合，因此，两个set可以做数学意义上的交集、并集等操作：
 
 ```
->>> s1 = set([1, 2, 3])
->>> s2 = set([2, 3, 4])
->>> s1 & s2
+s1 = set([1, 2, 3])
+s2 = set([2, 3, 4])
+s1 & s2
 {2, 3}
->>> s1 | s2
+s1 | s2
 {1, 2, 3, 4}
 ```
 
@@ -398,7 +408,7 @@ def calc(*numbers):
     print(numbers)
 calc(1,2,3,4)
 # 运行输出
->>> calc(1,2,3,4)
+calc(1,2,3,4)
 (1,2,3,4)
 
 # calc(*numbers) === calc((1,2,3,4))
@@ -407,8 +417,8 @@ calc(1,2,3,4)
 > 可以将list或tuple的元素变成可变参数传进去，相当于数组解构展开
 
 ```
->>> nums = [1, 2, 3]
->>> calc(*nums)
+nums = [1, 2, 3]
+calc(*nums)
 (1,2,3)
 
 # calc(*nums) === calc(1,2,3)
@@ -419,15 +429,15 @@ calc(1,2,3,4)
 ```
 def person(name, age, **kw):
     print('name:', name, 'age:', age, 'other:', kw)
->>> person('Bob', 35, city='Beijing',job='Engineer')
+person('Bob', 35, city='Beijing',job='Engineer')
 ('name:', 'Bob', 'age:', 35, 'other:', {'city': 'Beijing', 'job': 'Engineer'})
 ```
 
 简化的写法
 
 ```
->>> extra = {'city': 'Beijing', 'job': 'Engineer'}
->>> person('Jack', 24, **extra)
+extra = {'city': 'Beijing', 'job': 'Engineer'}
+person('Jack', 24, **extra)
 name: Jack age: 24 other: {'city': 'Beijing', 'job': 'Engineer'}
 ```
 
@@ -437,7 +447,7 @@ name: Jack age: 24 other: {'city': 'Beijing', 'job': 'Engineer'}
 ```
 def person(name, age, *, city='Beijing', job):
     print(name, age, city, job)
->>> person('Jack', 24, job='Engineer')
+person('Jack', 24, job='Engineer')
 Jack 24 Beijing Engineer
 ```
 
@@ -501,6 +511,87 @@ list(filter(is_odd, [1, 2, 4, 5, 6, 9, 10, 15]))
     * `sorted(['bob', 'about', 'Zoo', 'Credit'], key=str.lower)`
 * 反向排序，传入`reverse=True`
 
+### 装饰器
+
+> 假设我们要增强一个函数的功能，比如，在函数调用前后自动打印日志，但又不希望修改这个函数的定义，这种在代码运行期间动态增加功能的方式，称之为“装饰器”（`Decorator`）
+
+decorator就是一个返回函数的高阶函数。所以，我们要定义一个能打印日志的decorator，可以定义如下：
+
+```
+def log(func):
+    def wrapper(*args, **kw):
+        print('call %s():' % func.__name__)
+        return func(*args, **kw)
+    return wrapper
+```
+
+> 使用装饰器
+
+```
+@log
+def now():
+    print('2015-3-25')
+```
+
+把@log放到now()函数的定义处，相当于执行了语句：
+
+```
+now = log(now)
+```
+
+* 函数拥有`__name__`属性，通过这个属性可以查看到函数的名称
+
+> decorator本身需要传入参数，那就需要编写一个返回decorator的高阶函数
+
+```
+def log(text):
+    def decorator(func):
+        def wrapper(*args, **kw):
+            print('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorator
+```
+
+decorator用法如下：
+
+```
+@log('execute')
+def now():
+    print('2015-3-25')
+```
+
+携带参数的装饰器是这样的:
+
+```
+now = log('execute')(now)
+```
+
+但是通过自定义装饰器的包装，`__name__`属性的值已经变成了`wrapper`,Python内置的`functools.wraps`就是用来解决这个问题的。
+
+参数的decorator:
+
+```
+import functools
+
+def log(text):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            tprint('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorator
+```
+### 偏函数
+
+偏函数在Python中的定义是：把一个函数的某些参数给固定住（也就是设置默认值），返回一个新的函数，调用这个新函数会更简单
+
+可以通过`functools.partial`创建偏函数
+
+```
+int2 = functools.partial(int, base=2)
+```
 
 ## 迭代
 
@@ -518,8 +609,304 @@ d = {'a': 1, 'b': 2, 'c': 3}
 > 判断对象是否是可迭代项目
 
 ```
->>> from collections import Iterable
->>> isinstance('abc', Iterable) # str是否可迭代
+from collections import Iterable
+isinstance('abc', Iterable) # str是否可迭代
 True
 ```
+
+## 模块
+
+模块内容组成，以下面代码为例:
+
+
+```
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+' a test module '
+
+__author__ = 'Michael Liao'
+
+import sys
+
+def test():
+    print('hello!')
+
+if __name__=='__main__':
+    test()
+```
+
+* 第1行注释可以让这个`*.py`文件直接在`Unix/Linux/Mac`上运行
+* 第2行注释表示`.py`文件本身使用标准UTF-8编码
+* 第4行是一个字符串，表示模块的文档注释，任何模块代码的第一个字符串都被视为模块的文档注释
+* 第6行使用`__author__`变量把作者写进去
+
+> 导入模块
+
+
+```
+import sys
+```
+
+导入`sys`模块后，我们就有了变量`sys`指向该模块，利用`sys`这个变量，就可以访问`sys`模块的所有功能
+
+
+* `sys`模块有一个`argv`变量，用`list`存储了命令行的所有参数
+    * 运行`python3 hello.py Michael`获得的`sys.argv`就是`['hello.py', 'Michael]`
+
+
+### 作用域
+
+模块内的私有变量和函数我们通过`_`来实现，类似`_xxx`和`__xxx`这样的函数或变量就是非公开的（`private`），不应该被直接引用，比如`_abc`，`__abc`等
+
+private函数和变量“不应该”被直接引用，而不是“不能”被直接引用，是因为Python并没有一种方法可以完全限制访问private函数或变量，但是，从编程习惯上不应该引用private函数或变量。
+
+### 安装python包
+
+一般来说，第三方库都会在Python官方的pypi.python.org网站注册，要安装一个第三方库，必须先知道该库的名称，可以在官网或者pypi上搜索，比如Pillow的名称叫Pillow，因此，安装Pillow的命令就是：
+
+```
+pip install Pillow
+```
+
+> 模块搜索路径
+
+当我们试图加载一个模块时，Python会在指定的路径下搜索对应的.py文件，如果找不到，就会报错
+
+默认情况下，Python解释器会搜索当前目录、所有已安装的内置模块和第三方模块，搜索路径存放在sys模块的path变量中:
+
+
+```
+import sys
+sys.path
+['', '/Library/Frameworks/Python.framework/Versions/3.6/lib/python36.zip', '/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6', ..., '/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages']
+```
+
+> 添加自己的搜索目录
+
+```
+import sys
+sys.path.append('/Users/michael/my_py_scripts')
+```
+
+# 面向对象编程
+
+## 类和实例
+
+> 定义类
+
+以Student类为例，在Python中，定义类是通过`class`关键字：
+
+```
+class Student(object):
+    pass
+```
+
+class后面紧接着是类名，即Student，类名通常是大写开头的单词，紧接着是(object)，表示该类是从哪个类继承下来的，继承的概念我们后面再讲，通常，如果没有合适的继承类，就使用object类，这是所有类最终都会继承的类(object可省略)
+
+根据类创造实例
+
+
+```
+bart = Student()
+bart
+```
+
+> 类初始化
+
+在Python中构造函数是`__int__`，第一个参数是`self`自身，后续的参数根据调用类时创建
+
+```
+class Student(object):
+
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+```
+
+实例的变量名如果以__开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问:
+
+```
+class Student(object):
+
+    def __init__(self, name, score):
+        self.__name = name
+        self.__score = score
+
+    def print_score(self):
+        print('%s: %s' % (self.__name, self.__score))
+```
+
+**在Python中，变量名类似__xxx__的，也就是以双下划线开头，并且以双下划线结尾的，是特殊变量，特殊变量是可以直接访问的，不是private变量，所以，不能用__name__、__score__这样的变量名**
+
+## 继承和多态
+
+> 继承
+
+基类：
+
+```
+class Animal(object):
+    def run(self):
+        print('Animal is running...')
+```
+
+当我们需要编写Dog和Cat类时，就可以直接从Animal类继承：
+
+```
+class Dog(Animal):
+    pass
+dog = Dog()
+dog.run()
+```
+
+> 多态
+
+可以在子类上覆盖父类的方法
+
+```
+class Dog(Animal):
+    def run(self):
+        print('Dog is running...')
+```
+
+> 判断变量类型
+
+判断一个变量是否是某个类型可以用isinstance()判断：
+
+```
+isinstance(a, list)
+True
+isinstance(b, Animal)
+True
+isinstance(c, Dog)
+True
+```
+
+但是通过`isinstance`，检测出来的结果不仅仅包含父类还包含超类(父类的基类)
+
+```
+c = Dog()
+isinstance(c, Animal)
+True
+```
+
+## 获取对象信息
+
+> type()
+
+我们来判断对象类型，使用type()函数：
+
+```
+type(123)
+#<class 'int'>
+
+type('str')
+#<class 'str'>
+
+type(None)
+#<type(None) 'NoneType'>
+```
+
+判断对象类型
+
+
+```
+type(123)==int
+True
+type('abc')==str
+True
+
+import types
+def fn():
+    pass
+
+type(fn)==types.FunctionType
+True
+```
+
+> dir()
+
+`dir()`函数会返回对象上所有的属性和方法
+
+```
+dir('ABC')
+['__add__', '__class__',..., '__subclasshook__', 'capitalize', 'casefold',..., 'zfill']
+```
+
+> getattr()、setattr()以及hasattr()，我们可以直接操作一个对象的状态
+
+
+```
+hasattr(obj, 'x') # 有属性'x'吗？
+setattr(obj, 'y', 19) # 设置一个属性'y'
+getattr(obj, 'y') # 获取属性'y'
+```
+
+## 类属性
+
+可通过简单的声明生成类属性，当实例属性与类属性名称相同时，将会获取实例属性的值
+
+```
+class Student(object):
+    name = 'Student'
+    
+    def __init__(self):
+        pass
+        self.name = 'shaw'
+        
+d = Student()
+print(d.name) # shaw
+```
+
+只有当实例中不存在属性时返回类属性
+
+```
+class Student(object):
+    name = 'Student'
+d = Student()
+print(d.name) # Student
+```
+
+### `__slots__`
+
+
+> 限制类添加属性范围
+
+
+```
+class Student():
+    __slots__ = ('age')
+stud1 = Student()
+stud1.name = 'shaw'
+```
+
+限制了`Student`类只能添加`age`属性，若添加其他属性将会报错，上述例子运行时将会报错
+
+**使用__slots__要注意，__slots__定义的属性仅对当前类实例起作用，对继承的子类是不起作用的。除非子类添加与父类一样的__slots__**
+
+###@property
+
+拦截类属性的`setter`和`getter`操作
+
+定义一个学生类，对学生类的`score`属性的读写进行校验：
+
+```
+class Student(object):
+
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, value):
+        if not isinstance(value, int):
+            raise ValueError('score must be an integer!')
+        if value < 0 or value > 100:
+            raise ValueError('score must between 0 ~ 100!')
+        self._score = value
+```
+
+若只定义`getter`不定义`setter`时，
+该类只有读操作，无法进行写入
 
