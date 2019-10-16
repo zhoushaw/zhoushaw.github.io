@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>python面向对象编程 | zhou shaw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="python," />
+  
+
+  <meta name="description" content="面向对象编程类和实例 定义类  以Student类为例，在Python中，定义类是通过class关键字： 12class Student(object):    pass class后面紧接着是类名，即Student，类名通常是大写开头的单词，紧接着是(object)，表示该类是从哪个类继承下来的，继承的概念我们后面再讲，通常，如果没有合适的继承类，就使用object类，这是所有类最终都会继承的类">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python面向对象编程">
+<meta property="og:url" content="http://zhoushaw.github.io/2019/09/18/learning/python/python面向对象编程/index.html">
+<meta property="og:site_name" content="zhou shaw">
+<meta property="og:description" content="面向对象编程类和实例 定义类  以Student类为例，在Python中，定义类是通过class关键字： 12class Student(object):    pass class后面紧接着是类名，即Student，类名通常是大写开头的单词，紧接着是(object)，表示该类是从哪个类继承下来的，继承的概念我们后面再讲，通常，如果没有合适的继承类，就使用object类，这是所有类最终都会继承的类">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-16T12:35:18.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python面向对象编程">
+<meta name="twitter:description" content="面向对象编程类和实例 定义类  以Student类为例，在Python中，定义类是通过class关键字： 12class Student(object):    pass class后面紧接着是类名，即Student，类名通常是大写开头的单词，紧接着是(object)，表示该类是从哪个类继承下来的，继承的概念我们后面再讲，通常，如果没有合适的继承类，就使用object类，这是所有类最终都会继承的类">
+
+  
+
+  
+    <link rel="icon" href="https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3abaa_386x394.png">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+<link href="/css/other.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  <!-- 聊天系统 -->
+  
+    <script>
+     (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+     daovoice('init', {
+         app_id: 'b89c9b48'
+       });
+     daovoice('update');
+   </script>
+   
+   <style>
+      #modal {
+        position: static !important;
+      }
+   </style>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">导航</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">导航</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tags/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#面向对象编程"><span class="toc-text">面向对象编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#类和实例"><span class="toc-text">类和实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承和多态"><span class="toc-text">继承和多态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取对象信息"><span class="toc-text">获取对象信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类属性"><span class="toc-text">类属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#slots"><span class="toc-text">__slots__</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多重继承"><span class="toc-text">多重继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定制类"><span class="toc-text">定制类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#str"><span class="toc-text">__str__</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iter"><span class="toc-text">__iter__</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getitem"><span class="toc-text">__getitem__</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getattr"><span class="toc-text">__getattr__</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call"><span class="toc-text">__call__</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举类"><span class="toc-text">枚举类</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-learning/python/python面向对象编程" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">python面向对象编程</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.09.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zhou shaw</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+       
+          <span class="post-count">
+            <i class="fa fa-file-word-o"></i>&nbsp
+            <span>字数统计 1.5k字</span>
+          </span>
+
+          <span class="post-count">
+            <i class="fa fa-columns"></i>&nbsp
+            <span>阅读时长 6分</span>
+          </span>
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a>面向对象编程</h1><h2 id="类和实例"><a href="#类和实例" class="headerlink" title="类和实例"></a>类和实例</h2><blockquote>
+<p>定义类</p>
+</blockquote>
+<p>以Student类为例，在Python中，定义类是通过<code>class</code>关键字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<p>class后面紧接着是类名，即Student，类名通常是大写开头的单词，紧接着是(object)，表示该类是从哪个类继承下来的，继承的概念我们后面再讲，通常，如果没有合适的继承类，就使用object类，这是所有类最终都会继承的类(object可省略)</p>
+<p>根据类创造实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bart = Student()</span><br><span class="line">bart</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>类初始化</p>
+</blockquote>
+<p>在Python中构造函数是<code>__int__</code>，第一个参数是<code>self</code>自身，后续的参数根据调用类时创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line"></span><br><span class="line">    def __init__(self, name, score):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.score = score</span><br></pre></td></tr></table></figure>
+<p>实例的变量名如果以__开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line"></span><br><span class="line">    def __init__(self, name, score):</span><br><span class="line">        self.__name = name</span><br><span class="line">        self.__score = score</span><br><span class="line"></span><br><span class="line">    def print_score(self):</span><br><span class="line">        print(&apos;%s: %s&apos; % (self.__name, self.__score))</span><br></pre></td></tr></table></figure>
+<p><strong>在Python中，变量名类似<strong>xxx</strong>的，也就是以双下划线开头，并且以双下划线结尾的，是特殊变量，特殊变量是可以直接访问的，不是private变量，所以，不能用<strong>name</strong>、<strong>score</strong>这样的变量名</strong></p>
+<h2 id="继承和多态"><a href="#继承和多态" class="headerlink" title="继承和多态"></a>继承和多态</h2><blockquote>
+<p>继承</p>
+</blockquote>
+<p>基类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Animal(object):</span><br><span class="line">    def run(self):</span><br><span class="line">        print(&apos;Animal is running...&apos;)</span><br></pre></td></tr></table></figure>
+<p>当我们需要编写Dog和Cat类时，就可以直接从Animal类继承：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Dog(Animal):</span><br><span class="line">    pass</span><br><span class="line">dog = Dog()</span><br><span class="line">dog.run()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>多态</p>
+</blockquote>
+<p>可以在子类上覆盖父类的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Dog(Animal):</span><br><span class="line">    def run(self):</span><br><span class="line">        print(&apos;Dog is running...&apos;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>判断变量类型</p>
+</blockquote>
+<p>判断一个变量是否是某个类型可以用isinstance()判断：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">isinstance(a, list)</span><br><span class="line">True</span><br><span class="line">isinstance(b, Animal)</span><br><span class="line">True</span><br><span class="line">isinstance(c, Dog)</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<p>但是通过<code>isinstance</code>，检测出来的结果不仅仅包含父类还包含超类(父类的基类)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">c = Dog()</span><br><span class="line">isinstance(c, Animal)</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<h2 id="获取对象信息"><a href="#获取对象信息" class="headerlink" title="获取对象信息"></a>获取对象信息</h2><blockquote>
+<p>type()</p>
+</blockquote>
+<p>我们来判断对象类型，使用type()函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type(123)</span><br><span class="line">#&lt;class &apos;int&apos;&gt;</span><br><span class="line"></span><br><span class="line">type(&apos;str&apos;)</span><br><span class="line">#&lt;class &apos;str&apos;&gt;</span><br><span class="line"></span><br><span class="line">type(None)</span><br><span class="line">#&lt;type(None) &apos;NoneType&apos;&gt;</span><br></pre></td></tr></table></figure>
+<p>判断对象类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">type(123)==int</span><br><span class="line">True</span><br><span class="line">type(&apos;abc&apos;)==str</span><br><span class="line">True</span><br><span class="line"></span><br><span class="line">import types</span><br><span class="line">def fn():</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">type(fn)==types.FunctionType</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>dir()</p>
+</blockquote>
+<p><code>dir()</code>函数会返回对象上所有的属性和方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dir(&apos;ABC&apos;)</span><br><span class="line">[&apos;__add__&apos;, &apos;__class__&apos;,..., &apos;__subclasshook__&apos;, &apos;capitalize&apos;, &apos;casefold&apos;,..., &apos;zfill&apos;]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>getattr()、setattr()以及hasattr()，我们可以直接操作一个对象的状态</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hasattr(obj, &apos;x&apos;) # 有属性&apos;x&apos;吗？</span><br><span class="line">setattr(obj, &apos;y&apos;, 19) # 设置一个属性&apos;y&apos;</span><br><span class="line">getattr(obj, &apos;y&apos;) # 获取属性&apos;y&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="类属性"><a href="#类属性" class="headerlink" title="类属性"></a>类属性</h2><p>可通过简单的声明生成类属性，当实例属性与类属性名称相同时，将会获取实例属性的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    name = &apos;Student&apos;</span><br><span class="line">    </span><br><span class="line">    def __init__(self):</span><br><span class="line">        pass</span><br><span class="line">        self.name = &apos;shaw&apos;</span><br><span class="line">        </span><br><span class="line">d = Student()</span><br><span class="line">print(d.name) # shaw</span><br></pre></td></tr></table></figure>
+<p>只有当实例中不存在属性时返回类属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    name = &apos;Student&apos;</span><br><span class="line">d = Student()</span><br><span class="line">print(d.name) # Student</span><br></pre></td></tr></table></figure>
+<h3 id="slots"><a href="#slots" class="headerlink" title="__slots__"></a><code>__slots__</code></h3><blockquote>
+<p>限制类添加属性范围</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Student():</span><br><span class="line">    __slots__ = (&apos;age&apos;)</span><br><span class="line">stud1 = Student()</span><br><span class="line">stud1.name = &apos;shaw&apos;</span><br></pre></td></tr></table></figure>
+<p>限制了<code>Student</code>类只能添加<code>age</code>属性，若添加其他属性将会报错，上述例子运行时将会报错</p>
+<p><strong>使用<strong>slots</strong>要注意，<strong>slots</strong>定义的属性仅对当前类实例起作用，对继承的子类是不起作用的。除非子类添加与父类一样的<strong>slots</strong></strong></p>
+<p>###@property</p>
+<p>拦截类属性的<code>setter</code>和<code>getter</code>操作</p>
+<p>定义一个学生类，对学生类的<code>score</code>属性的读写进行校验：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def score(self):</span><br><span class="line">        return self._score</span><br><span class="line"></span><br><span class="line">    @score.setter</span><br><span class="line">    def score(self, value):</span><br><span class="line">        if not isinstance(value, int):</span><br><span class="line">            raise ValueError(&apos;score must be an integer!&apos;)</span><br><span class="line">        if value &lt; 0 or value &gt; 100:</span><br><span class="line">            raise ValueError(&apos;score must between 0 ~ 100!&apos;)</span><br><span class="line">        self._score = value</span><br></pre></td></tr></table></figure>
+<p>若只定义<code>getter</code>不定义<code>setter</code>时，<br>该类只有读操作，无法进行写入</p>
+<h2 id="多重继承"><a href="#多重继承" class="headerlink" title="多重继承"></a>多重继承</h2><p>Python可以同时继承多个类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Mammal()</span><br><span class="line">    pass</span><br><span class="line">class RunnableMixIn()</span><br><span class="line">    pass</span><br><span class="line">class Dog(Mammal, RunnableMixIn):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<h2 id="定制类"><a href="#定制类" class="headerlink" title="定制类"></a>定制类</h2><p>可以通过给类添加一些特殊属性来完善类的功能</p>
+<h3 id="str"><a href="#str" class="headerlink" title="__str__"></a><code>__str__</code></h3><p>我们队类进行<code>print</code>打印时，打印出来的并不能让你了解类的属性和方法的细节，我们可以通过<code>__str__</code>方法来处理打印后的展示的情况，例如下面<code>Student</code>打印实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">print(Student(&apos;Michael&apos;))</span><br><span class="line">#&lt;__main__.Student object at 0x109afb190&gt;</span><br></pre></td></tr></table></figure>
+<p>从上面的例子可以看到，无法通过过打印类来了解类具体的细节。我们可以通过<code>__str__</code>来定义类<code>str</code>化时，展示的内容</p>
+<blockquote>
+<p>定义str化后的内容</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        self.name = name</span><br><span class="line">    def __str__(self):</span><br><span class="line">        return &apos;Student object (name: %s)&apos; % self.name</span><br><span class="line">    __repr__ = __str__</span><br><span class="line"></span><br><span class="line">print(Student(&apos;Michael&apos;))</span><br><span class="line">#Student object (name: Michael)</span><br></pre></td></tr></table></figure>
+<h3 id="iter"><a href="#iter" class="headerlink" title="__iter__"></a><code>__iter__</code></h3><p>如果类需要被迭代可以通过<code>__iter__</code>和<code>__next__()</code>，iter是用来返回迭代对象，next是用来计算下一个迭代值的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Fib(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.a, self.b = 0, 1 # 初始化两个计数器a，b</span><br><span class="line"></span><br><span class="line">    def __iter__(self):</span><br><span class="line">        return self # 实例本身就是迭代对象，故返回自己</span><br><span class="line"></span><br><span class="line">    def __next__(self):</span><br><span class="line">        self.a, self.b = self.b, self.a + self.b # 计算下一个值</span><br><span class="line">        if self.a &gt; 100000: # 退出循环的条件</span><br><span class="line">            raise StopIteration()</span><br><span class="line">        return self.a # 返回下一个值</span><br></pre></td></tr></table></figure>
+<h3 id="getitem"><a href="#getitem" class="headerlink" title="__getitem__"></a><code>__getitem__</code></h3><p>定义使用下标访问类时，定义返回的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Fib(object):</span><br><span class="line">    def __getitem__(self, n):</span><br><span class="line">        a, b = 1, 1</span><br><span class="line">        for x in range(n):</span><br><span class="line">            a, b = b, a + b</span><br><span class="line">        return a</span><br><span class="line"># f = Fib()</span><br><span class="line"># f[0]</span><br><span class="line">#1</span><br></pre></td></tr></table></figure>
+<h3 id="getattr"><a href="#getattr" class="headerlink" title="__getattr__"></a><code>__getattr__</code></h3><p>当访问不存在属性、或者方法时可以通过在<code>__getattr__</code>中定义返回内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.name = &apos;Michael&apos;</span><br><span class="line">    def __getattr__(self, attr):</span><br><span class="line">        if attr==&apos;age&apos;:</span><br><span class="line">            return 22</span><br><span class="line"># st = Student()</span><br><span class="line"># st.age </span><br><span class="line"># 22</span><br></pre></td></tr></table></figure>
+<p>可以用在动态接口的情况下，做一些异常处理</p>
+<h3 id="call"><a href="#call" class="headerlink" title="__call__"></a><code>__call__</code></h3><p>定义实例被调用时执行的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    def __call__(self):</span><br><span class="line">        print(&apos;My name is %s.&apos; % self.name)</span><br><span class="line"></span><br><span class="line">s = Student(&apos;Michael&apos;)</span><br><span class="line">s() # self参数不要传入</span><br><span class="line"># My name is Michael.</span><br></pre></td></tr></table></figure>
+<p>通过<code>callable()</code>函数，我们就可以判断一个对象是否是“可调用”对象。</p>
+<h2 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h2><p>在Python中可以将类做成枚举类，可以更形象的使用枚举</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from enum import Enum, unique</span><br><span class="line"></span><br><span class="line">@unique # 用于检测是否有重复</span><br><span class="line">class Weekday(Enum): # 继承枚举类</span><br><span class="line">    Sun = 0 # Sun的value被设定为0</span><br><span class="line">    Mon = 1</span><br><span class="line">    Tue = 2</span><br><span class="line">    Wed = 3</span><br><span class="line">    Thu = 4</span><br><span class="line">    Fri = 5</span><br><span class="line">    Sat = 6</span><br><span class="line"></span><br><span class="line"># day1 = Weekday.Mon</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/09/18/learning/python/python调试/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/10/16/learning/flutter/flutter遇到的问题/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tags/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '50e2fd922f20a22ea2b4',
+  clientSecret: '22a5d41a6a2065f383bdb78cb2191b6c82fe54a1',
+  repo: 'zhoushaw.github.io',
+  owner: 'zhoushaw',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: location.pathname,
+  admin: ['zhoushaw'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
