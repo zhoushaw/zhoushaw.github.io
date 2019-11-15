@@ -14,8 +14,8 @@ keywords: forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,fr
 
 home_nav:
   - name: Blog
-    url: /archives
-    target_blank: false #不在新页面打开
+    url: https://www.yuque.com/u140434/kopkze
+    target_blank: true #不在新页面打开
   - name: Github
     url: https://github.com/zhoushaw
     target_blank: true
