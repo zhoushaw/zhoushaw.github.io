@@ -11,7 +11,7 @@ categories: game
 
 > 扫码访问：
 
-<img width="200" src="https://s10.mogucdn.com/mlcdn/c45406/190506_2dl50cg7c5b79kf58a050fgch92ib_400x400.png" />
+<img width="200" src="https://s10.mogucdn.com/mlcdn/c45406/191016_80d41jjj95ekblche4hh9f2l4lgb6_600x600.png" />
 
 > 主要思路
 
@@ -215,11 +215,5 @@ private setProgress (progress: number) :void {
 * 动画效果放置980像素内，否则在小屏幕手机上无法展示全面
 * 帧动画切换中间过度衔接透明度变化
 
-
-## 对应资源
-
-* [白鹭魔方页基础模板](http://gitlab.mogujie.org/module/meili-module-h5-game-egret/tree/master)
-* [玩法平台-所有玩法聚合页](http://wxgame.mogu-inc.com/#/playground?_k=hwilxd)
-* [母亲节项目地址](http://gitlab.mogujie.org/zhangzhe/listen_mother)
 
 
