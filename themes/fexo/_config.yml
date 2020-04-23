@@ -13,9 +13,9 @@ favicon: https://s10.mogucdn.com/mlcdn/c45406/190317_10046af208g71l99jkg2cd2h3ab
 keywords: forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript
 
 home_nav:
-  - name: Blog
-    url: https://www.yuque.com/u140434/kopkze
-    target_blank: true #不在新页面打开
+  - name: Juejin
+    url: https://juejin.im/user/5a91537df265da4e8700e73b
+    target_blank: true
   - name: Github
     url: https://github.com/zhoushaw
     target_blank: true
@@ -25,9 +25,6 @@ home_nav:
   - name: Project
     url: /project/
     target_blank: true #在新页面打开
-  - name: Juejin
-    url: https://juejin.im/user/5a91537df265da4e8700e73b
-    target_blank: true
 
 # config page nav
 page_nav:
@@ -242,9 +239,9 @@ about:
 
 project:
   - type: personal
-    name: fexo
-    url: https://github.com/forsigner/fexo
-    intro: A minimalist design theme for hexo
+    name: ihost
+    url: https://github.com/zhoushaw/iHost
+    intro: The host tools
   # - type: company
   #   name: Fexo
   #   url: https://github.com/forsigner/fexo
