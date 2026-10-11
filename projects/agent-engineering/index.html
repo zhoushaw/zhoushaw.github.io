@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VeBench · Xiao Zhou</title>
+<meta name="description" content="Cloud evaluation infrastructure for agents, combining isolated sandboxes, versioned tasks, independent scoring and execution evidence.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="VeBench">
+<meta property="og:description" content="Cloud evaluation infrastructure for agents, combining isolated sandboxes, versioned tasks, independent scoring and execution evidence.">
+<link rel="icon" href="/images/monogram.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/editorial.css">
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <a class="skip-link" href="#main"> Skip to content</a>
+  <div class="site-shell">
+    <header class="site-header">
+  <div class="site-name">
+    <a href="/">晓</a>
+  </div>
+  <nav aria-label="Main navigation">
+    
+      <a href="/projects/" aria-current="page">Projects</a>
+    
+      <a href="/archives/" >Writing</a>
+    
+      <a href="/about/" >About</a>
+    
+    <span aria-hidden="true">|</span>
+    <a class="github-link" href="https://github.com/zhoushaw" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.14.68-3.8-1.34-3.8-1.34-.51-1.31-1.25-1.66-1.25-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.74.4-1.23.72-1.51-2.51-.29-5.15-1.26-5.15-5.57 0-1.23.44-2.23 1.17-3.02-.12-.29-.51-1.43.11-2.99 0 0 .95-.31 3.1 1.15a10.7 10.7 0 0 1 5.64 0c2.15-1.46 3.1-1.15 3.1-1.15.62 1.56.23 2.7.11 2.99.73.79 1.17 1.79 1.17 3.02 0 4.32-2.64 5.28-5.16 5.56.41.36.77 1.05.77 2.12v3.1c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+    </a>
+  </nav>
+</header>
+
+    <main id="main"><article class="prose">
+  <h1>VeBench</h1>
+  <p class="project-detail-meta">Agent Infra · ByteDance · Active development</p>
+
+<p><strong>VeBench is an agent evaluation framework built on Volcengine infrastructure.</strong> It brings task preparation, cloud execution, scoring, failure recovery and result analysis into one workflow, so developers can spend more time improving agents and less time keeping benchmarks running.</p>
+<p>I lead its evaluation engineering work in the Volcengine Ark · Doubao LLM team. My architectural work connects task contracts, versioned environments, cloud execution, independent verification and trace analysis into an evaluation system that can be operated and improved as a whole.</p>
+<h2 id="VeBench-in-action"><a href="#VeBench-in-action" class="headerlink" title="VeBench in action"></a>VeBench in action</h2><p>An introduction to the evaluation workflow, from starting an experiment to cloud execution and result analysis.</p>
+<figure class="project-video">
+  <video controls playsinline preload="none" poster="/assets/vebench/vebench-intro-poster.jpg" width="1920" height="1080" aria-label="VeBench project introduction, in Chinese">
+    <source src="/assets/vebench/vebench-intro.mp4" type="video/mp4">
+    <a href="/assets/vebench/vebench-intro.mp4">Watch the VeBench introduction</a>.
+  </video>
+  <figcaption>VeBench overview · 1:41 · In Chinese · <a href="/assets/vebench/vebench-intro.mp4" target="_blank" rel="noopener">Open video ↗</a></figcaption>
+</figure>
+
+<h2 id="Removing-infrastructure-noise-from-evaluation"><a href="#Removing-infrastructure-noise-from-evaluation" class="headerlink" title="Removing infrastructure noise from evaluation"></a>Removing infrastructure noise from evaluation</h2><p>Running an agent benchmark involves much more than calling a model. Tasks need the right datasets, dependencies, images and runtimes. Local machines limit parallelism, while slow downloads and unreliable external services can introduce failures unrelated to the agent’s capabilities.</p>
+<p>VeBench moves each case into an isolated cloud sandbox and prepares its assets ahead of execution. Images, benchmark data, runtime bundles and evaluation artifacts are managed centrally, making it easier to repeat an experiment under consistent conditions.</p>
+<figure class="architecture-embed">
+  <div class="architecture-embed-heading"><span>Architecture &amp; execution</span><a href="/assets/vebench/architecture.html" target="_blank" rel="noopener">Open full view ↗</a></div>
+  <iframe src="/assets/vebench/architecture.html" title="Interactive VeBench evaluation architecture" width="1680" height="1070" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
+  <figcaption>Explore the task preparation, scheduling, sandbox and scoring boundaries. The lower control loop adjusts admission for new trials.</figcaption>
+</figure>
+
+<h2 id="Architecture-decisions-and-their-trade-offs"><a href="#Architecture-decisions-and-their-trade-offs" class="headerlink" title="Architecture decisions and their trade-offs"></a>Architecture decisions and their trade-offs</h2><h3 id="A-task-contract-that-survives-runtime-changes"><a href="#A-task-contract-that-survives-runtime-changes" class="headerlink" title="A task contract that survives runtime changes"></a>A task contract that survives runtime changes</h3><p>A Harbor Task defines instructions, environment requirements and tests. The manifest binds that task version to prepared assets; the agent bundle is delivered separately. This makes a harness update possible without rebuilding every task image, while keeping the experiment’s task and environment identity explicit. It shifts setup work into a deliberate asset-publication and prewarming stage.</p>
+<h3 id="A-control-plane-with-replaceable-execution-infrastructure"><a href="#A-control-plane-with-replaceable-execution-infrastructure" class="headerlink" title="A control plane with replaceable execution infrastructure"></a>A control plane with replaceable execution infrastructure</h3><p>The CLI and scheduler own task resolution, trial admission, concurrency and retries. The environment adapter connects these decisions to sandbox provisioning and runtime operations. The boundary keeps benchmark logic out of infrastructure-specific code and lets orchestration remain accessible to both people and agents.</p>
+<h3 id="Isolation-at-the-execution-model-access-and-scoring-boundaries"><a href="#Isolation-at-the-execution-model-access-and-scoring-boundaries" class="headerlink" title="Isolation at the execution, model-access and scoring boundaries"></a>Isolation at the execution, model-access and scoring boundaries</h3><p>The agent runtime and model gateway have distinct responsibilities. The runtime executes the task; the gateway mediates model access and records traces. In separate-scoring mode, only the task’s declared outputs are handed to an independent verifier. These boundaries clarify what each component may observe or change. Separate scoring adds an environment and an artifact handoff, in exchange for a clearer verification boundary.</p>
+<h3 id="Capacity-control-that-protects-experiments-already-in-flight"><a href="#Capacity-control-that-protects-experiments-already-in-flight" class="headerlink" title="Capacity control that protects experiments already in flight"></a>Capacity control that protects experiments already in flight</h3><p>The adaptive control loop observes usage and rate-limit feedback, estimates available headroom, and adjusts permits for new trials. Keeping running trials intact avoids turning a capacity adjustment into an uncontrolled change to the experiment itself.</p>
+<h3 id="Evidence-that-connects-a-score-to-its-cause"><a href="#Evidence-that-connects-a-score-to-its-cause" class="headerlink" title="Evidence that connects a score to its cause"></a>Evidence that connects a score to its cause</h3><p>Reward, task artifacts, harness logs and model-call traces are collected as related outputs of a trial. This makes it possible to investigate whether a failure came from the model, the harness, the verifier or the infrastructure, and use that evidence in regression checks and release decisions. Keeping raw traces alongside normalized results preserves the detail needed for that investigation.</p>
+<h2 id="What-happens-during-one-trial"><a href="#What-happens-during-one-trial" class="headerlink" title="What happens during one trial"></a>What happens during one trial</h2><p>VeBench separates sandbox provisioning from runtime control. <strong>veFaaS creates the sandbox; the E2B integration handles connection, command execution and file transfer.</strong> A trial then moves through a defined lifecycle, from a fixed task version to a recorded result and resource cleanup.</p>
+<figure class="architecture-embed">
+  <div class="architecture-embed-heading"><span>One trial, end to end</span><a href="/assets/vebench/trial.html" target="_blank" rel="noopener">Open full view ↗</a></div>
+  <iframe src="/assets/vebench/trial.html" title="Interactive VeBench trial lifecycle" width="1680" height="1070" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
+  <figcaption>The full lifecycle: resolve a task, provision and connect, run the agent, hand off artifacts, score independently, then collect results and release resources.</figcaption>
+</figure>
+
+<p>Execution produces more than a final reward. Logs, declared artifacts and model-call traces are collected alongside the score, so a failure can be investigated through the evidence behind it.</p>
+<h2 id="Built-for-repeatable-experiments"><a href="#Built-for-repeatable-experiments" class="headerlink" title="Built for repeatable experiments"></a>Built for repeatable experiments</h2><p>CLI, TUI and Evaluation Job interfaces give users consistent control over starting runs, observing progress, stopping tasks, recovering failures and collecting results. A command-oriented workflow also makes evaluation easier to incorporate into agent-driven iteration and ablation studies.</p>
+<p>The task adapters cover public benchmarks including SWE-bench Verified, Terminal-Bench, WideSearch and SkillsBench. Multiple harness adapters allow model and harness changes to be compared through the same execution workflow.</p>
+<p>Concurrency control accounts for model capacity and rate-limit feedback. The aim is to use available resources effectively while keeping running trials intact.</p>
+<h2 id="My-engineering-contribution"><a href="#My-engineering-contribution" class="headerlink" title="My engineering contribution"></a>My engineering contribution</h2><ul>
+<li><strong>Evaluation framework and environment delivery:</strong> integrate benchmark tasks, manage versioned assets, and automate image preparation, prewarming and validation.</li>
+<li><strong>Execution and capacity control:</strong> connect task orchestration with cloud sandboxes, independent runtimes, retry handling and resource management.</li>
+<li><strong>Observability:</strong> build a Rust model gateway and unified trace pipeline that connect model requests, tool calls and harness logs.</li>
+<li><strong>Experiment analysis:</strong> distinguish model failures, harness defects, scoring issues and infrastructure faults, and use that evidence for regression checks and release decisions.</li>
+</ul>
+<p>Alongside VeBench, I contribute to Agent Harness development and optimization. The evaluation system provides a way to assess changes to context handling, tools and execution behavior against repeatable tasks.</p>
+<p><em>VeBench is under active development and currently used through a managed evaluation workflow.</em></p>
+
+</article>
+</main>
+    <footer><a href="/">Xiao Zhou</a><span>© 2026</span></footer>
+  </div>
+</body>
+</html>

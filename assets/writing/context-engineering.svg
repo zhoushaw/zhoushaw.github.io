@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+<title id="title">Better context for coding agents</title>
+<desc id="desc">Stable instructions, working state and tool feedback inform each model call. Tool execution and validation return evidence to the next iteration.</desc>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7" fill="none" stroke="#8996ab"/></marker></defs>
+<rect width="960" height="560" fill="#fafbfc"/>
+<g font-family="Arial, sans-serif">
+<text x="56" y="67" fill="#68758a" font-size="13" letter-spacing="2">CONTEXT ENGINEERING</text>
+<text x="56" y="112" fill="#263247" font-size="32" font-weight="600">Give the agent the right context.</text>
+<text x="56" y="149" fill="#6b7688" font-size="17">Keep useful state. Expose clear tools. Close the feedback loop.</text>
+<rect x="56" y="199" width="450" height="74" rx="6" fill="#edf2fa" stroke="#cfdae9"/>
+<text x="78" y="229" fill="#314969" font-size="18" font-weight="600">Stable instructions</text><text x="78" y="252" fill="#61748c" font-size="14">Project rules · tool contracts · persistent constraints</text>
+<rect x="56" y="286" width="450" height="74" rx="6" fill="#fff" stroke="#d8dfe8"/>
+<text x="78" y="316" fill="#263247" font-size="18" font-weight="600">Working state</text><text x="78" y="339" fill="#68758a" font-size="14">Current task · relevant code · compacted progress</text>
+<rect x="56" y="373" width="450" height="74" rx="6" fill="#fff" stroke="#d8dfe8"/>
+<text x="78" y="403" fill="#263247" font-size="18" font-weight="600">Tool feedback</text><text x="78" y="426" fill="#68758a" font-size="14">Observations · diagnostics · test evidence</text>
+<path d="M509 323 H580" stroke="#8996ab" fill="none" marker-end="url(#arrow)"/>
+<rect x="600" y="230" width="302" height="168" rx="7" fill="#fff" stroke="#cbd5e3"/>
+<text x="751" y="270" text-anchor="middle" fill="#263247" font-size="22" font-weight="600">Agent loop</text>
+<text x="751" y="307" text-anchor="middle" fill="#68758a" font-size="16">Reason → Act → Observe</text>
+<path d="M623 327 H879" stroke="#e3e7ee"/>
+<text x="751" y="360" text-anchor="middle" fill="#314969" font-size="16">Execute · Validate · Clarify</text>
+<path d="M751 405 V474 H284 V453" stroke="#8996ab" stroke-dasharray="4 5" fill="none" marker-end="url(#arrow)"/>
+<text x="56" y="527" fill="#8a94a3" font-size="12">CONCEPTUAL MODEL · XIAO ZHOU</text>
+</g></svg>

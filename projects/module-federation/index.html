@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module Federation 2.0 · Xiao Zhou</title>
+<meta name="description" content="Micro-frontend architecture for large web applications, spanning development frameworks, debugging, module management, and independent delivery.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Module Federation 2.0">
+<meta property="og:description" content="Micro-frontend architecture for large web applications, spanning development frameworks, debugging, module management, and independent delivery.">
+<link rel="icon" href="/images/monogram.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/editorial.css">
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <a class="skip-link" href="#main"> Skip to content</a>
+  <div class="site-shell">
+    <header class="site-header">
+  <div class="site-name">
+    <a href="/">晓</a>
+  </div>
+  <nav aria-label="Main navigation">
+    
+      <a href="/projects/" aria-current="page">Projects</a>
+    
+      <a href="/archives/" >Writing</a>
+    
+      <a href="/about/" >About</a>
+    
+    <span aria-hidden="true">|</span>
+    <a class="github-link" href="https://github.com/zhoushaw" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.14.68-3.8-1.34-3.8-1.34-.51-1.31-1.25-1.66-1.25-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.74.4-1.23.72-1.51-2.51-.29-5.15-1.26-5.15-5.57 0-1.23.44-2.23 1.17-3.02-.12-.29-.51-1.43.11-2.99 0 0 .95-.31 3.1 1.15a10.7 10.7 0 0 1 5.64 0c2.15-1.46 3.1-1.15 3.1-1.15.62 1.56.23 2.7.11 2.99.73.79 1.17 1.79 1.17 3.02 0 4.32-2.64 5.28-5.16 5.56.41.36.77 1.05.77 2.12v3.1c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+    </a>
+  </nav>
+</header>
+
+    <main id="main"><article class="prose">
+  <h1>Module Federation 2.0</h1>
+  <p class="project-detail-meta">Project lead · Open source · Released April 2024</p>
+
+<p>I led architecture and adoption work on <strong>Module Federation 2.0</strong> at ByteDance, connecting the open-source foundation with a complete engineering system for large web applications: development frameworks, debugging tools, module management, and deployment infrastructure.</p>
+<p>This architecture supports products including <strong>Doubao Work, TikTok Web, Lark Docs, and Volcengine</strong>. It applies the principles of microservices to the web: teams own modules with explicit interfaces, develop and release them independently, and compose them into a coherent product.</p>
+<p>The work grew out of my focus on micro-frontends and application modularization from 2020 to 2024. We released Module Federation 2.0 with Zack Jackson and the community in <a target="_blank" rel="noopener" href="https://module-federation.io/blog/announcement">April 2024</a>.</p>
+<h2 id="Making-teams-and-releases-independent"><a href="#Making-teams-and-releases-independent" class="headerlink" title="Making teams and releases independent"></a>Making teams and releases independent</h2><p>In a large application, unrelated features often share a build, a deployment, and a rollback. Moving shared code into npm packages still requires every consumer to upgrade and rebuild. A micro-frontend shell can become another bottleneck if it also owns business modules and distributes all shared dependencies.</p>
+<p>The architectural change was to make a business module an independently delivered unit. Teams could validate a feature in the assembled product, choose its release audience, and roll it back without reverting unrelated features. The application shell could focus on composition while module ownership and release cadence stayed with the teams building them.</p>
+<h2 id="A-system-from-development-to-delivery"><a href="#A-system-from-development-to-delivery" class="headerlink" title="A system from development to delivery"></a>A system from development to delivery</h2><p>The architecture connects five areas: runtime, build tools, development frameworks, debugging, and deployment. A module platform ties together discovery, versions, documentation, and dependency information.</p>
+<figure class="federation-map" aria-labelledby="federation-map-caption">
+  <div class="federation-map-intro">
+    <span class="federation-map-label">Large web applications</span>
+    <strong>Independent teams. One product.</strong>
+    <span>Doubao Work · TikTok Web · Lark Docs · Volcengine</span>
+  </div>
+  <div class="federation-map-stage">
+    <span class="federation-map-label">01 / Develop &amp; debug</span>
+    <div class="federation-map-grid">
+      <div class="federation-map-card"><strong>Frameworks &amp; build tools</strong><span>Application integration, remote types, hot updates, npm-compatible outputs</span></div>
+      <div class="federation-map-card"><strong>Developer tools</strong><span>Local module overrides, dependency graphs, in-product debugging</span></div>
+    </div>
+  </div>
+  <div class="federation-map-contract"><strong>Manifest &amp; module contracts</strong><span>Exports · dependencies · assets · types</span></div>
+  <div class="federation-map-stage">
+    <span class="federation-map-label">02 / Manage &amp; release</span>
+    <div class="federation-map-grid">
+      <div class="federation-map-card"><strong>Module platform</strong><span>Discovery, versioned documentation, playgrounds, dependency analysis</span></div>
+      <div class="federation-map-card"><strong>Deployment platform</strong><span>CI/CD integration, version selection, staged rollout, module rollback</span></div>
+    </div>
+  </div>
+  <div class="federation-map-stage">
+    <span class="federation-map-label">03 / Compose &amp; run</span>
+    <div class="federation-map-card"><strong>Federation Runtime</strong><span>Resolved module snapshots, dynamic composition, shared dependencies, preloading, runtime plugins</span></div>
+  </div>
+  <figcaption id="federation-map-caption">The engineering system around Module Federation 2.0: open-source protocols and tools integrated with ByteDance's application frameworks and delivery platforms.</figcaption>
+</figure>
+
+<h3 id="A-shared-contract-across-tools"><a href="#A-shared-contract-across-tools" class="headerlink" title="A shared contract across tools"></a>A shared contract across tools</h3><p>The manifest gives build tools, runtime, DevTools, and deployment integrations a common description of a module’s exports, assets, types, and dependencies. Decoupling the Federation Runtime from the bundler allows Webpack and Rspack projects to participate in the same composition model. These are part of the <a target="_blank" rel="noopener" href="https://module-federation.io/guide/start/features">open-source 2.0 foundation</a>.</p>
+<p>At ByteDance, we connected that foundation to application frameworks and engineering platforms. Framework integrations handle application development; the module platform manages discoverability and versions; deployment integrations turn a versioned module into a controlled release.</p>
+<h3 id="Local-development-inside-the-real-product"><a href="#Local-development-inside-the-real-product" class="headerlink" title="Local development inside the real product"></a>Local development inside the real product</h3><p>A developer should be able to work on one module while using published versions of the rest of the application. Dynamic TypeScript declarations preserve feedback across repository boundaries. Hot updates and local module overrides shorten the edit–validate cycle without requiring every participating application to run locally.</p>
+<p>I worked on Chrome DevTools that expose module dependencies and configuration, and replace a remote module with a local implementation for debugging. This lets developers validate a change in its actual product context. The <a target="_blank" rel="noopener" href="https://module-federation.io/guide/debug/chrome-devtool">DevTools documentation</a> covers module inspection and proxying.</p>
+<figure class="project-figure">
+  <a href="/assets/projects/module-federation-devtools.png" target="_blank" rel="noopener" aria-label="Open full-size image: Local module editing in the DevTools demonstration"><img width="852" height="480" src="/assets/projects/module-federation-devtools.png" alt="Local module editing in the DevTools demonstration" loading="lazy" decoding="async"></a>
+  <figcaption>Frame captured from the <a target="_blank" rel="noopener" href="https://module-federation-assest.netlify.app/document/announcement/blog/announcement/chrome-devtool-display.gif">official DevTools demonstration</a>, published with the 2.0 announcement.</figcaption>
+</figure>
+
+<h3 id="Deployment-as-part-of-the-architecture"><a href="#Deployment-as-part-of-the-architecture" class="headerlink" title="Deployment as part of the architecture"></a>Deployment as part of the architecture</h3><p>The delivery system manages module versions, release audiences, and rollback through the existing deployment pipeline. It resolves the module information needed by a page and delivers a snapshot alongside it. The runtime can use that information for composition and resource preloading, avoiding a separate module-catalog lookup on the critical loading path.</p>
+<p>This also changes shared-module upgrades: where the integration permits, a consumer can adopt a new module version through deployment configuration without rebuilding its application bundle. Compatibility validation and staged rollout remain part of that release.</p>
+<h3 id="Reuse-that-teams-can-maintain"><a href="#Reuse-that-teams-can-maintain" class="headerlink" title="Reuse that teams can maintain"></a>Reuse that teams can maintain</h3><p>A reusable module needs a discoverable owner, version history, API documentation, and a place to try it. The module platform brings search, dependency analysis, versioned documentation, and playgrounds into the same workflow. Dual npm and federated outputs support gradual migration; low-code blocks can also join the composition through the same module contract.</p>
+<h2 id="Applied-to-complex-products"><a href="#Applied-to-complex-products" class="headerlink" title="Applied to complex products"></a>Applied to complex products</h2><p>In <strong>Lark Docs</strong>, decomposition and deployment integration allow features such as comments to have their own development, rollout, and rollback lifecycle. In <strong>Doubao Work</strong>, document, spreadsheet, slide, and canvas applications can be maintained independently and assembled into a shared workspace.</p>
+<p><strong>TikTok Web</strong> and <strong>Volcengine</strong> bring the same architectural requirement: many teams must deliver parts of a large product without turning every change into an application-wide release. The infrastructure supports that model through shared contracts, tooling, and delivery controls.</p>
+<h2 id="Architecture-decisions-I-focused-on"><a href="#Architecture-decisions-I-focused-on" class="headerlink" title="Architecture decisions I focused on"></a>Architecture decisions I focused on</h2><ul>
+<li><strong>Choose boundaries around ownership and change.</strong> A module becomes useful as a release unit when a team can develop, validate, and operate it independently.</li>
+<li><strong>Connect development and production through the same contract.</strong> Types, debugging, dependency analysis, and deployment all need to understand the same module relationships.</li>
+<li><strong>Keep release decisions explicit.</strong> Version selection and rollout belong in delivery infrastructure; the runtime composes the modules selected for that page.</li>
+<li><strong>Preserve product performance.</strong> Dependency sharing and preloading address the extra downloads and request waterfalls introduced by decomposition.</li>
+<li><strong>Make migration incremental.</strong> Build-tool interoperability and npm-compatible outputs let teams adopt the architecture without replacing every application at once.</li>
+</ul>
+<h2 id="My-contribution"><a href="#My-contribution" class="headerlink" title="My contribution"></a>My contribution</h2><p>I led the architecture and adoption work connecting these layers, and helped bring the reusable foundation to the open-source community as Module Federation 2.0. My scope covered runtime and protocol design, dynamic types, developer tools, and integration with development and delivery workflows. The engineering goal was to make independent ownership work throughout a module’s lifecycle—from the first local edit to a production rollback.</p>
+<figure class="project-figure">
+  <a href="/assets/projects/module-federation-cover.jpg" target="_blank" rel="noopener" aria-label="Open full-size cover: Module Federation 2.0"><img width="1586" height="992" src="/assets/projects/module-federation-cover.jpg" alt="Module Federation 2.0: independent application panels composed into one product." loading="lazy" decoding="async"></a>
+  <figcaption>Independent modules, composed into one product. An original illustration for this project.</figcaption>
+</figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/module-federation/core">GitHub</a> · <a target="_blank" rel="noopener" href="https://module-federation.io/">Documentation</a> · <a target="_blank" rel="noopener" href="https://module-federation.io/blog/announcement">2.0 release announcement</a></p>
+
+</article>
+</main>
+    <footer><a href="/">Xiao Zhou</a><span>© 2026</span></footer>
+  </div>
+</body>
+</html>

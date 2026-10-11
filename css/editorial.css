@@ -1,0 +1,168 @@
+/* Visual proportions measured from yadongxie.com, implemented for Hexo. */
+:root { color-scheme: light; color: #27272a; background: #fff; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Charter, 'Bitstream Charter', Georgia, 'Songti SC', 'Songti TC', serif; font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+h1, h2, h3, p, ol, ul { margin: 0; }
+a { color: inherit; text-decoration: none; text-underline-offset: 3px; }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid #71717a; outline-offset: 4px; }
+.site-shell { width: 100%; max-width: 768px; padding: 48px 32px; margin: 0 auto; }
+.site-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+.site-name { font-size: 20px; line-height: 28px; font-weight: 700; letter-spacing: -.5px; }
+.site-name span { font-weight: 400; }
+.site-name a:hover { text-decoration: none; }
+.site-header nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; font-size: 14px; line-height: 20px; }
+.site-header nav [aria-current] { text-decoration: underline; }
+.github-link { display: inline-flex; align-items: center; }
+main { margin-top: 40px; }
+.home-intro, .career-list { font-size: 16px; line-height: 26px; }
+.home-intro { max-width: 576px; }
+.intro-lines { margin-top: 24px; border-left: 2px solid #e4e4e7; padding-left: 16px; }
+.intro-lines p + p { margin-top: 8px; }
+.home-intro a, .career-list a { font-weight: 700; }
+.career-list { margin-top: 56px; padding: 0; list-style: none; }
+.career-list li { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 8px 24px; }
+.career-list li + li { margin-top: 32px; }
+.career-date { font-variant-numeric: tabular-nums; }
+.career-list h2 { font-size: inherit; line-height: inherit; font-weight: 700; }
+.company-name { display: flex; align-items: center; gap: 6px; }
+.company-icon { display: block; width: 16px; height: 16px; flex: 0 0 16px; object-fit: contain; }
+.career-description { margin-top: 8px; }
+.career-focus { margin-top: 14px; }
+.career-focus + .career-focus { margin-top: 24px; }
+.career-focus h3 { font-size: inherit; line-height: inherit; font-weight: 700; }
+.career-team { color: #71717a; font-size: .875em; line-height: 1.6; margin-top: 2px; }
+.page-title, .prose h1 { font-size: 24px; line-height: 1.4; letter-spacing: -.4px; font-weight: 700; margin-bottom: 28px; }
+.writing-list { list-style: none; padding: 0; }
+.writing-list li { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 8px 24px; margin-bottom: 20px; }
+.writing-list a { font-weight: 700; }
+.writing-list time, .muted { color: #71717a; font-size: 14px; }
+.prose { line-height: 1.75; overflow-wrap: anywhere; }
+.prose p { margin: 20px 0; }
+.prose h2 { font-size: 20px; line-height: 1.6; font-weight: 700; margin: 36px 0 12px; }
+.prose h3 { font-size: 18px; font-weight: 700; margin: 28px 0 12px; }
+.prose a { font-weight: 700; }
+.prose ol, .prose ul { padding-left: 26px; margin: 20px 0; }
+.prose li { margin: 8px 0; }
+.prose blockquote { margin: 24px 0; border-left: 2px solid #e4e4e7; padding-left: 16px; }
+.prose figure:not(.frame) { margin: 20px 0; overflow: auto; }
+.prose table { display: block; max-width: 100%; overflow: auto; border-collapse: collapse; }
+.prose th, .prose td { padding: 8px 12px; border-bottom: 1px solid #e4e4e7; }
+.prose img { max-width: 100%; height: auto; }
+.tag-list, .pagination { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px; font-size: 14px; }
+footer { display: flex; justify-content: space-between; margin-top: 64px; font-size: 13px; color: #71717a; }
+.skip-link { position: absolute; top: -100px; left: 24px; background: #fff; padding: 8px; }
+.skip-link:focus { top: 8px; }
+@media (max-width: 767px) {
+  .site-shell { padding: 48px 24px; }
+  .home-intro, .career-list { font-size: 14px; line-height: 22.75px; }
+  .career-list { margin-top: 48px; }
+  .career-list li { grid-template-columns: 1fr; }
+  .prose { font-size: 14px; }
+  .writing-list li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* One image/text layout for Projects and Writing. */
+.listing-heading { margin-bottom: 36px; }
+.listing-heading .page-title { margin-bottom: 10px; }
+.listing-heading > p { font-size: 15px; line-height: 1.6; color: #52525b; }
+.content-list { display: grid; gap: 32px; }
+.content-row { display: grid; grid-template-columns: 176px minmax(0, 1fr); column-gap: 24px; align-items: start; }
+.content-cover { display: block; width: 100%; aspect-ratio: 8 / 5; border: 1px solid #e4e4e7; border-radius: 5px; overflow: hidden; background: #fafafa; }
+.content-cover img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.content-copy { min-width: 0; grid-column: 2; }
+.content-title { margin: 0; font-size: 18px; line-height: 1.4; font-weight: 700; text-wrap: pretty; }
+.content-meta { margin-top: 5px; font-size: 12px; line-height: 1.65; color: #71717a; }
+.content-meta a { white-space: nowrap; }
+.content-summary { margin-top: 8px; font-size: 15px; line-height: 1.6; color: #3f3f46; }
+@media (max-width: 560px) {
+  .listing-heading { margin-bottom: 28px; }
+  .content-list { gap: 36px; }
+  .content-row { grid-template-columns: 1fr; row-gap: 15px; }
+  .content-copy { grid-column: 1; }
+  .content-title { font-size: 18px; line-height: 1.45; }
+  .content-summary { font-size: 14px; }
+}
+
+.prose .project-figure { margin: 28px 0 36px; overflow: visible; }
+.project-figure > a { display: block; }
+.prose .project-figure img { display: block; width: 100%; border: 1px solid #e4e4e7; border-radius: 5px; }
+.project-figure figcaption { margin-top: 9px; font-size: 13px; color: #71717a; line-height: 1.6; }
+.prose .project-figure figcaption a { font-weight: 400; text-decoration: underline; }
+.project-detail-meta { color: #71717a; font-size: 14px; }
+
+/* A responsive architecture overview; native text stays readable on small screens. */
+.prose .federation-map { margin: 28px 0 36px; border: 1px solid #e4e4e7; border-radius: 6px; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; line-height: 1.6; }
+.federation-map-intro { display: grid; gap: 6px; padding: 24px; background: #fafafa; border-bottom: 1px solid #e4e4e7; }
+.federation-map-intro > strong { font-size: 20px; letter-spacing: -.35px; line-height: 1.4; }
+.federation-map-intro > span:last-child { color: #52525b; }
+.federation-map-label { display: block; color: #71717a; font-size: 10px; font-weight: 600; letter-spacing: 1.1px; text-transform: uppercase; }
+.federation-map-stage { padding: 18px 24px; }
+.federation-map-stage > .federation-map-label { margin-bottom: 10px; }
+.federation-map-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.federation-map-card { display: grid; align-content: start; gap: 5px; padding: 14px 16px; border: 1px solid #e4e4e7; border-radius: 4px; }
+.federation-map-card > span { color: #52525b; font-size: 12px; }
+.federation-map-contract { display: grid; gap: 3px; margin: 0 24px; padding: 13px 16px; border-left: 2px solid #6c87a3; background: #f4f7fa; color: #344b63; }
+.federation-map-contract > span { font-size: 12px; }
+.federation-map figcaption { padding: 14px 24px; border-top: 1px solid #e4e4e7; color: #71717a; font-size: 12px; }
+@media (max-width: 560px) {
+  .federation-map-grid { grid-template-columns: 1fr; }
+  .federation-map-intro, .federation-map-stage, .federation-map figcaption { padding: 16px; }
+  .federation-map-contract { margin-inline: 16px; }
+}
+
+/* Complete talk resources and slide-by-slide transcript. */
+.talk-meta { color: #71717a; font-size: 14px; }
+.talk-resources { display: flex; flex-wrap: wrap; gap: 10px 20px; margin: 24px 0 32px; font-size: 14px; }
+.prose .talk-resources a { font-weight: 400; text-decoration: underline; }
+.prose .talk-recording, .prose .talk-slide, .prose .project-video { margin: 24px 0 32px; overflow: visible; }
+.talk-recording video, .project-video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #161616; border-radius: 5px; }
+.talk-slide > a { display: block; }
+.prose .talk-slide img { display: block; width: 100%; height: auto; border: 1px solid #e4e4e7; border-radius: 4px; }
+.talk-recording figcaption, .talk-slide figcaption, .project-video figcaption { font-size: 13px; color: #71717a; line-height: 1.6; margin-top: 8px; }
+.prose .talk-slide figcaption a, .prose .talk-recording figcaption a, .prose .project-video figcaption a { font-weight: 400; text-decoration: underline; }
+.prose .talk-toc { border-block: 1px solid #e4e4e7; padding: 14px 0; margin: 24px 0 40px; font-size: 14px; }
+.talk-toc summary { cursor: pointer; font-weight: 700; }
+.prose .talk-toc ol { padding-left: 24px; margin: 16px 0 0; }
+.prose .talk-toc a { font-weight: 400; }
+.prose h2[id] { scroll-margin-top: 24px; }
+.prose hr { margin: 40px 0; border: 0; border-top: 1px solid #e4e4e7; }
+
+/* Home is an overview; About carries the detailed career history. */
+.home-current { margin-top: 14px; }
+.inline-company { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.home-about-link { display: inline-block; margin-top: 14px; font-size: 14px; color: #71717a; }
+.home-section { margin-top: 48px; }
+.home-section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.home-section-heading h2 { font-size: 20px; line-height: 1.4; font-weight: 700; }
+.home-section-heading > a { flex-shrink: 0; font-size: 14px; color: #71717a; }
+.home-writing-list { list-style: none; padding: 0; }
+.home-writing-list li + li { margin-top: 22px; }
+.home-writing-list h3 { font-size: 17px; line-height: 1.5; font-weight: 700; }
+.home-writing-list p { margin-top: 4px; font-size: 13px; color: #71717a; }
+.prose .inline-company-icon { display: inline-block; width: 16px; height: 16px; vertical-align: -1px; margin-right: 4px; }
+@media (max-width: 560px) {
+  .home-section { margin-top: 40px; }
+  .home-section-heading h2 { font-size: 19px; }
+  .home-section-heading > a { font-size: 13px; }
+}
+
+.prose .article-toc { margin: 24px 0; padding: 14px 0; border-block: 1px solid #e4e4e7; font-size: 14px; }
+.article-toc summary { cursor: pointer; font-weight: 700; }
+.prose .article-toc ul, .prose .article-toc ol { margin: 12px 0 0; padding-left: 22px; }
+.prose .article-toc a { font-weight: 400; }
+.prose .math-block { margin: 22px 0; padding: 14px 12px; overflow-x: auto; background: #fafafa; border: 1px solid #e4e4e7; border-radius: 4px; }
+.prose math { font-size: 1.05em; }
+.prose .math-block math { min-width: max-content; }
+
+/* Only inline code is theme-specific; fenced blocks are styled by Expressive Code. */
+.prose :not(pre) > code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: .85em; padding: .12em .3em; background: #f3f4f6; border: 1px solid #e8eaed; border-radius: 4px; overflow-wrap: anywhere; }
+.prose .expressive-code { margin: 24px 0; }
+
+/* Wide HTML figures keep dense architecture labels readable without widening prose. */
+.prose figure.architecture-embed { width: min(1200px, calc(100vw - 48px)); max-width: none; margin: 32px 0 40px 50%; transform: translateX(-50%); border: 1px solid #dce3ed; border-radius: 6px; overflow: hidden; background: #fff; }
+.architecture-embed-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 16px; background: #f7f9fc; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #455570; border-bottom: 1px solid #e3e8f0; }
+.prose .architecture-embed-heading a { font-weight: 500; white-space: nowrap; }
+.architecture-embed iframe { display: block; width: 100%; height: clamp(420px, calc((100vw - 48px) * .64), 800px); border: 0; }
+.architecture-embed figcaption { padding: 12px 16px; border-top: 1px solid #e3e8f0; font-size: 13px; line-height: 1.6; color: #71717a; }
+@media (max-width: 560px) { .architecture-embed-heading { padding: 10px; font-size: 12px; gap: 8px; } .architecture-embed iframe { height: 420px; } }

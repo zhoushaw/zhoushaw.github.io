@@ -1,0 +1,46 @@
+Bundled license information:
+
+lucide/dist/esm/defaultAttributes.mjs:
+lucide/dist/esm/createElement.mjs:
+lucide/dist/esm/shared/src/utils/mergeClasses.mjs:
+lucide/dist/esm/shared/src/utils/hasA11yProp.mjs:
+lucide/dist/esm/shared/src/utils/toCamelCase.mjs:
+lucide/dist/esm/shared/src/utils/toPascalCase.mjs:
+lucide/dist/esm/replaceElement.mjs:
+lucide/dist/esm/icons/arrow-down.mjs:
+lucide/dist/esm/icons/arrow-right-left.mjs:
+lucide/dist/esm/icons/arrow-right.mjs:
+lucide/dist/esm/icons/box.mjs:
+lucide/dist/esm/icons/chart-no-axes-column.mjs:
+lucide/dist/esm/icons/clipboard-list.mjs:
+lucide/dist/esm/icons/cloud.mjs:
+lucide/dist/esm/icons/code.mjs:
+lucide/dist/esm/icons/database.mjs:
+lucide/dist/esm/icons/download.mjs:
+lucide/dist/esm/icons/file-archive.mjs:
+lucide/dist/esm/icons/file-check.mjs:
+lucide/dist/esm/icons/file-text.mjs:
+lucide/dist/esm/icons/files.mjs:
+lucide/dist/esm/icons/folder-open.mjs:
+lucide/dist/esm/icons/gauge.mjs:
+lucide/dist/esm/icons/key-round.mjs:
+lucide/dist/esm/icons/lightbulb.mjs:
+lucide/dist/esm/icons/maximize.mjs:
+lucide/dist/esm/icons/minus.mjs:
+lucide/dist/esm/icons/monitor.mjs:
+lucide/dist/esm/icons/network.mjs:
+lucide/dist/esm/icons/plus.mjs:
+lucide/dist/esm/icons/scale.mjs:
+lucide/dist/esm/icons/server.mjs:
+lucide/dist/esm/icons/settings.mjs:
+lucide/dist/esm/icons/shield-check.mjs:
+lucide/dist/esm/icons/sliders-horizontal.mjs:
+lucide/dist/esm/icons/terminal.mjs:
+lucide/dist/esm/icons/trash.mjs:
+lucide/dist/esm/lucide.mjs:
+  /**
+   * @license lucide v1.48.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   */

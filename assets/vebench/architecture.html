@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Architecture · VeBench</title>
+    <link rel="stylesheet" href="diagram.css" />
+  </head>
+  <body>
+    <header class="viewer-toolbar">
+      <span class="viewer-name">VeBench <span> / Architecture</span></span>
+      <div class="viewer-controls" role="toolbar" aria-label="Diagram controls">
+        <button id="zoom-out" type="button" disabled aria-label="Zoom out">
+          <i data-lucide="minus" aria-hidden="true"></i></button
+        ><output id="zoom-level" aria-live="polite">Fit</output
+        ><button id="zoom-in" type="button" disabled aria-label="Zoom in">
+          <i data-lucide="plus" aria-hidden="true"></i></button
+        ><button id="fit" type="button" disabled>Fit</button
+        ><button id="text-mode" type="button" disabled aria-pressed="false">
+          Select text</button
+        ><button
+          id="fullscreen"
+          type="button"
+          disabled
+          aria-label="Toggle fullscreen"
+        >
+          <i data-lucide="maximize" aria-hidden="true"></i>
+        </button>
+      </div>
+    </header>
+    <main
+      class="diagram-stage"
+      tabindex="0"
+      aria-label="Architecture. Use zoom controls, drag to pan, or choose Select text."
+    >
+      <div class="diagram-canvas architecture" id="diagram-canvas">
+        <header class="board-title">
+          <h1>VeBench evaluation architecture</h1>
+          <p>Versioned tasks · controlled scheduling · isolated execution</p>
+        </header>
+        <div class="overview-grid">
+          <section class="phase blue">
+            <h2><span class="step-number">01</span>Tasks & images</h2>
+            <div class="phase-body">
+              <div class="node-pair">
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="file-text" aria-hidden="true"></i
+                    ><strong>Benchmark</strong>
+                  </div>
+                  <p>Original tasks</p>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="database" aria-hidden="true"></i
+                    ><strong>Harbor Task</strong>
+                  </div>
+                  <p>Reuse directly</p>
+                </div>
+              </div>
+              <div class="flow-arrow down">
+                <i data-lucide="arrow-down" aria-hidden="true"></i
+                ><span>Convert / reuse</span>
+              </div>
+              <div class="node task-contract panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="file-check" aria-hidden="true"></i
+                  ><strong>Normalize as a Harbor Task</strong>
+                </div>
+                <dl>
+                  <div>
+                    <dt>Instructions</dt>
+                    <dd>instruction.md</dd>
+                  </div>
+                  <div>
+                    <dt>Environment</dt>
+                    <dd>task.toml / environment</dd>
+                  </div>
+                  <div>
+                    <dt>Verification</dt>
+                    <dd>tests</dd>
+                  </div>
+                </dl>
+                <p class="node-note">
+                  One task contract; existing tasks stay reusable.
+                </p>
+              </div>
+              <div class="flow-arrow down">
+                <i data-lucide="arrow-down" aria-hidden="true"></i><span></span>
+              </div>
+              <div class="node-pair">
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="box" aria-hidden="true"></i
+                    ><strong>OCI image</strong>
+                  </div>
+                  <p>Build or synchronize</p>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="database" aria-hidden="true"></i
+                    ><strong>Prewarm</strong>
+                  </div>
+                  <p>Validate the exact image</p>
+                </div>
+              </div>
+              <div class="flow-arrow down">
+                <i data-lucide="arrow-down" aria-hidden="true"></i
+                ><span>Register only after preparation</span>
+              </div>
+              <div class="node gold panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="clipboard-list" aria-hidden="true"></i
+                  ><strong>TOS manifest · admission</strong>
+                </div>
+                <p>Task identity + digest → image + task configuration</p>
+              </div>
+              <p class="phase-note">Task = definition. Image = environment.</p>
+            </div>
+          </section>
+          <section class="phase indigo">
+            <h2><span class="step-number">02</span>Jobs & scheduling</h2>
+            <div class="phase-body">
+              <div class="node run-entry panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="terminal" aria-hidden="true"></i
+                  ><strong>vebench run</strong>
+                </div>
+                <p>Select case · agent · model</p>
+              </div>
+              <div class="flow-arrow down">
+                <i data-lucide="arrow-down" aria-hidden="true"></i
+                ><span>Evaluation configuration</span>
+              </div>
+              <div class="scheduler-row">
+                <div class="node violet scheduler panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="settings" aria-hidden="true"></i
+                    ><strong>Evaluation scheduler</strong>
+                  </div>
+                  <p>Resolve task → lock versions</p>
+                  <p>Trial queue · concurrency · retry</p>
+                </div>
+                <div class="node compact policy panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="sliders-horizontal" aria-hidden="true"></i
+                    ><strong>Runtime policy</strong>
+                  </div>
+                  <p>Execution configuration</p>
+                </div>
+              </div>
+              <div class="flow-arrow down">
+                <i data-lucide="arrow-down" aria-hidden="true"></i
+                ><span>Execute trial</span>
+              </div>
+              <div class="node environment panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="box" aria-hidden="true"></i
+                  ><strong>VeBench Environment</strong>
+                </div>
+                <p>Resolve the exact image and task version</p>
+                <p>E2B: connect · execute commands · transfer files</p>
+              </div>
+              <p class="phase-note">
+                Scheduling stays separate from sandbox execution.
+              </p>
+            </div>
+          </section>
+          <section class="phase teal">
+            <h2><span class="step-number">03</span>veFaaS execution</h2>
+            <div class="phase-body">
+              <div class="node provision panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="cloud" aria-hidden="true"></i
+                  ><strong>Provision through veFaaS</strong>
+                </div>
+                <p>Prewarmed image + resources + mounts + gateway</p>
+              </div>
+              <div class="sandbox-boundary">
+                <h3>
+                  <i data-lucide="shield-check" aria-hidden="true"></i>One trial
+                  · one Agent Sandbox
+                </h3>
+                <div class="node bundle panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="file-archive" aria-hidden="true"></i
+                    ><strong>Versioned agent bundle</strong>
+                  </div>
+                  <p>Read-only mount from TOS</p>
+                </div>
+                <p class="mini-note">
+                  Upgrade the harness without rebuilding task images.
+                </p>
+                <div class="flow-arrow down">
+                  <i data-lucide="arrow-down" aria-hidden="true"></i
+                  ><span></span>
+                </div>
+                <div class="runtime-pair">
+                  <div class="node runtime panzoom-exclude">
+                    <div class="node-title">
+                      <i data-lucide="box" aria-hidden="true"></i
+                      ><strong>Agent runtime</strong>
+                    </div>
+                    <p>Task environment + agent runtime</p>
+                    <p>Read task → call model → run tools</p>
+                  </div>
+                  <div class="loopback">
+                    localhost<br /><i
+                      data-lucide="arrow-right-left"
+                      aria-hidden="true"
+                    ></i>
+                  </div>
+                  <div class="node gateway panzoom-exclude">
+                    <div class="node-title">
+                      <i data-lucide="network" aria-hidden="true"></i
+                      ><strong>Model gateway</strong>
+                    </div>
+                    <p>Provider access + model requests</p>
+                    <p>Collect raw execution traces</p>
+                  </div>
+                </div>
+                <p class="boundary-note">
+                  Shared loopback · separate filesystems
+                </p>
+              </div>
+              <div class="model-service">
+                <div class="flow-arrow right">
+                  <i data-lucide="arrow-right" aria-hidden="true"></i
+                  ><span>Model API</span>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="database" aria-hidden="true"></i
+                    ><strong>Model service</strong>
+                  </div>
+                  <p>Ark / other providers</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="phase purple">
+            <h2><span class="step-number">04</span>Scoring & results</h2>
+            <div class="phase-body">
+              <div class="node scorer panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="scale" aria-hidden="true"></i
+                  ><strong>Independent verifier</strong>
+                </div>
+                <p>Run the task tests</p>
+                <p>Separate scoring sandbox</p>
+              </div>
+              <div class="flow-arrow down">
+                <i data-lucide="arrow-down" aria-hidden="true"></i
+                ><span>Reward + verification output</span>
+              </div>
+              <div class="node artifact panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="files" aria-hidden="true"></i
+                  ><strong>Evaluation artifacts</strong>
+                </div>
+                <p>Reward · logs · outputs · traces</p>
+              </div>
+              <div class="flow-arrow down">
+                <i data-lucide="arrow-down" aria-hidden="true"></i><span></span>
+              </div>
+              <div class="node result-tools panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="chart-no-axes-column" aria-hidden="true"></i
+                  ><strong>Result tools</strong>
+                </div>
+                <p>Reports · leaderboard · trace analysis</p>
+              </div>
+              <p class="phase-note">
+                Scoring images are prepared and prewarmed too.
+              </p>
+            </div>
+          </section>
+        </div>
+        <section class="capacity-loop">
+          <h2>
+            <i data-lucide="gauge" aria-hidden="true"></i>Adaptive concurrency ·
+            optional control loop
+          </h2>
+          <div class="capacity-steps">
+            <div class="node compact panzoom-exclude">
+              <div class="node-title">
+                <i data-lucide="chart-no-axes-column" aria-hidden="true"></i
+                ><strong>01 Observe</strong>
+              </div>
+              <p>Model capacity, usage and rate-limit feedback</p>
+            </div>
+            <div class="flow-arrow right">
+              <i data-lucide="arrow-right" aria-hidden="true"></i><span></span>
+            </div>
+            <div class="node compact panzoom-exclude">
+              <div class="node-title">
+                <i data-lucide="lightbulb" aria-hidden="true"></i
+                ><strong>02 Decide</strong>
+              </div>
+              <p>Estimate headroom and workload demand</p>
+            </div>
+            <div class="flow-arrow right">
+              <i data-lucide="arrow-right" aria-hidden="true"></i><span></span>
+            </div>
+            <div class="node compact panzoom-exclude">
+              <div class="node-title">
+                <i data-lucide="sliders-horizontal" aria-hidden="true"></i
+                ><strong>03 Control</strong>
+              </div>
+              <p>Adjust admission for new trials</p>
+            </div>
+          </div>
+          <p>
+            Running trials continue; control changes apply to new admissions.
+          </p>
+        </section>
+        <footer class="diagram-legend">
+          <span
+            ><i data-lucide="shield-check" aria-hidden="true"></i>Registered
+            tasks only</span
+          ><span
+            ><i data-lucide="database" aria-hidden="true"></i>Prewarm before
+            execution</span
+          ><span
+            ><i data-lucide="key-round" aria-hidden="true"></i>Provider access
+            isolated in the gateway</span
+          ><span><b class="legend-line"></b>Execution / data</span
+          ><span><b class="legend-line dashed"></b>Observation / control</span>
+        </footer>
+        <span class="provider-link-label">Model API</span>
+        <svg class="cross-links" viewBox="0 0 1680 1070" aria-hidden="true">
+          <defs>
+            <marker
+              id="arrow"
+              viewBox="0 0 10 10"
+              refX="9"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto-start-reverse"
+            >
+              <path d="M0 0 L10 5 L0 10" fill="#183d8d" />
+            </marker>
+            <marker
+              id="control-arrow"
+              viewBox="0 0 10 10"
+              refX="9"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto-start-reverse"
+            >
+              <path d="M0 0 L10 5 L0 10" fill="#f08b27" />
+            </marker>
+            <marker
+              id="trace-arrow"
+              viewBox="0 0 10 10"
+              refX="9"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto"
+            >
+              <path d="M0 0 L10 5 L0 10" fill="#8b5cf6" />
+            </marker>
+          </defs>
+          <path class="model-wire" d="M1208 608 V701" />
+          <path class="trace-wire" d="M1317 545 H1348 V445 H1364" />
+          <path d="M386 648 H398" />
+          <path d="M788 648 H794 V222 H800" />
+          <path d="M1340 598 H1344 V242 H1352" />
+          <path class="control-wire" d="M910 800 H794 V520 H550 V506" />
+          <path class="observation-wire" d="M1207 773 V791 H391 V889 H410" />
+        </svg>
+      </div>
+    </main>
+    <p class="viewer-hint">
+      Drag to pan · Pinch or Ctrl / ⌘ + scroll to zoom · Arrow keys to move
+    </p>
+    <script src="viewer.js" defer></script>
+  </body>
+</html>

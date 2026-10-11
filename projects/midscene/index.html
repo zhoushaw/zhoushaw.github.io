@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Midscene.js · Xiao Zhou</title>
+<meta name="description" content="A multimodal GUI agent for natural-language UI automation.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Midscene.js">
+<meta property="og:description" content="A multimodal GUI agent for natural-language UI automation.">
+<link rel="icon" href="/images/monogram.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/editorial.css">
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <a class="skip-link" href="#main"> Skip to content</a>
+  <div class="site-shell">
+    <header class="site-header">
+  <div class="site-name">
+    <a href="/">晓</a>
+  </div>
+  <nav aria-label="Main navigation">
+    
+      <a href="/projects/" aria-current="page">Projects</a>
+    
+      <a href="/archives/" >Writing</a>
+    
+      <a href="/about/" >About</a>
+    
+    <span aria-hidden="true">|</span>
+    <a class="github-link" href="https://github.com/zhoushaw" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.14.68-3.8-1.34-3.8-1.34-.51-1.31-1.25-1.66-1.25-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.74.4-1.23.72-1.51-2.51-.29-5.15-1.26-5.15-5.57 0-1.23.44-2.23 1.17-3.02-.12-.29-.51-1.43.11-2.99 0 0 .95-.31 3.1 1.15a10.7 10.7 0 0 1 5.64 0c2.15-1.46 3.1-1.15 3.1-1.15.62 1.56.23 2.7.11 2.99.73.79 1.17 1.79 1.17 3.02 0 4.32-2.64 5.28-5.16 5.56.41.36.77 1.05.77 2.12v3.1c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+    </a>
+  </nav>
+</header>
+
+    <main id="main"><article class="prose">
+  <h1>Midscene.js</h1>
+  <p class="project-detail-meta">Project lead · Open source · July 2024 – October 2025</p>
+
+<p>Midscene brings multimodal models into UI automation. Developers describe what to do, what to extract and what to verify in natural language, while retaining the integrations and debugging tools needed for an engineering workflow.</p>
+<figure class="project-figure">
+  <a href="/assets/projects/midscene-demo.png" target="_blank" rel="noopener" aria-label="Open full-size image: Midscene product illustration"><img width="1246" height="798" src="/assets/projects/midscene-demo.png" alt="Midscene product illustration" loading="lazy" decoding="async"></a>
+  <figcaption>Product illustration from the <a target="_blank" rel="noopener" href="https://midscenejs.com/">official Midscene website</a>. It illustrates the project; my contributions below refer to my 2024–2025 tenure.</figcaption>
+</figure>
+
+<h2 id="From-intent-to-UI-interaction"><a href="#From-intent-to-UI-interaction" class="headerlink" title="From intent to UI interaction"></a>From intent to UI interaction</h2><p>Traditional E2E scripts often depend on selectors that need maintenance as an interface evolves. Visual and semantic checks can also be difficult to express through DOM state alone.</p>
+<p>I led the planning-and-execution architecture, connecting multimodal task understanding with concrete UI actions and feedback. YAML, JavaScript SDK and Playwright integrations made the framework usable within existing test projects.</p>
+<figure class="project-figure">
+  <a href="/assets/projects/midscene-workflow.svg" target="_blank" rel="noopener" aria-label="Open full-size image: Midscene planning and execution workflow"><img width="960" height="560" src="/assets/projects/midscene-workflow.svg" alt="Midscene planning and execution workflow" loading="lazy" decoding="async"></a>
+  <figcaption>A simplified view of the planning, execution and inspection workflow.</figcaption>
+</figure>
+
+<h2 id="Making-automation-observable"><a href="#Making-automation-observable" class="headerlink" title="Making automation observable"></a>Making automation observable</h2><p>I developed Chrome tooling for recording, replay and script generation, and worked on reports that make actions, page state and extraction results inspectable. Caching reduces repeated inference work, while replayable reports help explain where a task diverged from the intended behavior.</p>
+<p>The framework was adopted in ByteDance business workflows and by external companies for UI automation and regression testing.</p>
+<h2 id="GUI-agents-and-model-engineering"><a href="#GUI-agents-and-model-engineering" class="headerlink" title="GUI agents and model engineering"></a>GUI agents and model engineering</h2><p>Working with the algorithm team, I contributed to UI-TARS engineering and the GUI Agent implementation. I also built rollout data pipelines to collect successful and failed interaction traces and connect them to annotation workflows.</p>
+<p>I am a co-author of <em>UI-TARS: Pioneering Automated GUI Interaction with Native Agents</em>, listed as Xiao Zhou. My <a href="/talks/midscene-feday/">Feday talk</a> covers the UI automation architecture and the engineering work behind it.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/web-infra-dev/midscene">GitHub</a> · <a target="_blank" rel="noopener" href="https://midscenejs.com/introduction">Documentation</a> · <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2501.12326">UI-TARS paper</a></p>
+
+</article>
+</main>
+    <footer><a href="/">Xiao Zhou</a><span>© 2026</span></footer>
+  </div>
+</body>
+</html>

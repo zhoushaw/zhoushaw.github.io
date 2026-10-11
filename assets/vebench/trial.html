@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Trial lifecycle · VeBench</title>
+    <link rel="stylesheet" href="diagram.css" />
+  </head>
+  <body>
+    <header class="viewer-toolbar">
+      <span class="viewer-name">VeBench <span> / Trial lifecycle</span></span>
+      <div class="viewer-controls" role="toolbar" aria-label="Diagram controls">
+        <button id="zoom-out" type="button" disabled aria-label="Zoom out">
+          <i data-lucide="minus" aria-hidden="true"></i></button
+        ><output id="zoom-level" aria-live="polite">Fit</output
+        ><button id="zoom-in" type="button" disabled aria-label="Zoom in">
+          <i data-lucide="plus" aria-hidden="true"></i></button
+        ><button id="fit" type="button" disabled>Fit</button
+        ><button id="text-mode" type="button" disabled aria-pressed="false">
+          Select text</button
+        ><button
+          id="fullscreen"
+          type="button"
+          disabled
+          aria-label="Toggle fullscreen"
+        >
+          <i data-lucide="maximize" aria-hidden="true"></i>
+        </button>
+      </div>
+    </header>
+    <main
+      class="diagram-stage"
+      tabindex="0"
+      aria-label="Trial lifecycle. Use zoom controls, drag to pan, or choose Select text."
+    >
+      <div class="diagram-canvas trial" id="diagram-canvas">
+        <header class="board-title">
+          <h1>How one task completes an evaluation</h1>
+          <p>
+            VeBench orchestrates · veFaaS provisions · E2B connects, executes
+            and transfers
+          </p>
+        </header>
+        <div class="trial-grid">
+          <section class="phase blue">
+            <h2><span class="step-number">01</span>Load the task</h2>
+            <div class="phase-body">
+              <div class="node task-contract panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="files" aria-hidden="true"></i
+                  ><strong>Harbor Task</strong>
+                </div>
+                <dl>
+                  <div>
+                    <dt>
+                      <i data-lucide="file-text" aria-hidden="true"></i
+                      >instruction.md
+                    </dt>
+                    <dd>What the agent should accomplish</dd>
+                  </div>
+                  <div>
+                    <dt>
+                      <i data-lucide="settings" aria-hidden="true"></i>task.toml
+                      / environment
+                    </dt>
+                    <dd>The execution environment</dd>
+                  </div>
+                  <div>
+                    <dt>
+                      <i data-lucide="file-check" aria-hidden="true"></i>tests
+                    </dt>
+                    <dd>How the result is verified</dd>
+                  </div>
+                </dl>
+              </div>
+              <p class="phase-strip">
+                Lock the task version → create one Trial.
+              </p>
+              <p class="phase-note">
+                A task is a content contract, not a container image.
+              </p>
+            </div>
+          </section>
+          <section class="phase indigo">
+            <h2><span class="step-number">02</span>Create & connect</h2>
+            <div class="phase-body">
+              <div class="node compact panzoom-exclude">
+                <div class="node-title">
+                  <i data-lucide="database" aria-hidden="true"></i
+                  ><strong>TOS mapping → prewarmed image</strong>
+                </div>
+                <p>Pinned task identity → exact image</p>
+              </div>
+              <div class="flow-arrow down">
+                <i data-lucide="arrow-down" aria-hidden="true"></i
+                ><span>Prepared image + mounts + gateway</span>
+              </div>
+              <div class="process-row">
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="monitor" aria-hidden="true"></i
+                    ><strong>VeBench Environment</strong>
+                  </div>
+                </div>
+                <div class="flow-arrow right">
+                  <i data-lucide="arrow-right" aria-hidden="true"></i
+                  ><span></span>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="server" aria-hidden="true"></i
+                    ><strong>veFaaS provisioning</strong>
+                  </div>
+                </div>
+                <div class="flow-arrow right">
+                  <i data-lucide="arrow-right" aria-hidden="true"></i
+                  ><span></span>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="box" aria-hidden="true"></i
+                    ><strong>Created sandbox</strong>
+                  </div>
+                </div>
+              </div>
+              <p class="phase-strip">E2B connect(sandbox_id)</p>
+              <p class="phase-note">
+                Provision with veFaaS first, then connect through E2B.
+              </p>
+            </div>
+          </section>
+          <section class="phase teal">
+            <h2><span class="step-number">03</span>Run the agent</h2>
+            <div class="phase-body">
+              <div class="sandbox-boundary">
+                <h3>
+                  <i data-lucide="box" aria-hidden="true"></i>Agent Sandbox ·
+                  veFaaS
+                </h3>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="file-archive" aria-hidden="true"></i
+                    ><strong>Agent bundle</strong>
+                  </div>
+                  <p>Read-only runtime mount</p>
+                </div>
+                <div class="flow-arrow down">
+                  <i data-lucide="arrow-down" aria-hidden="true"></i
+                  ><span></span>
+                </div>
+                <div class="process-row runtime-process">
+                  <div class="node compact panzoom-exclude">
+                    <div class="node-title">
+                      <i data-lucide="code" aria-hidden="true"></i
+                      ><strong>Agent runtime</strong>
+                    </div>
+                    <p>Task environment</p>
+                  </div>
+                  <div class="flow-arrow right">
+                    <i data-lucide="arrow-right" aria-hidden="true"></i
+                    ><span>localhost</span>
+                  </div>
+                  <div class="node compact panzoom-exclude">
+                    <div class="node-title">
+                      <i data-lucide="network" aria-hidden="true"></i
+                      ><strong>Gateway</strong>
+                    </div>
+                    <p>Model access</p>
+                  </div>
+                </div>
+                <p class="phase-strip">
+                  Read task → invoke model → execute tools
+                </p>
+              </div>
+              <p class="phase-note">
+                E2B uploads inputs and starts the agent process.
+              </p>
+            </div>
+          </section>
+          <section class="phase blue">
+            <h2><span class="step-number">04</span>Hand off artifacts</h2>
+            <div class="phase-body">
+              <p class="step-intro">
+                Collect the outputs declared by the task and hand them to the
+                verifier.
+              </p>
+              <div class="process-row handoff-process">
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="files" aria-hidden="true"></i
+                    ><strong>Agent outputs</strong>
+                  </div>
+                  <p>Answer files + task artifacts</p>
+                </div>
+                <div class="flow-arrow right">
+                  <i data-lucide="arrow-right" aria-hidden="true"></i
+                  ><span>download</span>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="folder-open" aria-hidden="true"></i
+                    ><strong>Declared artifacts</strong>
+                  </div>
+                  <p>Only the task-required outputs</p>
+                </div>
+                <div class="flow-arrow right">
+                  <i data-lucide="arrow-right" aria-hidden="true"></i
+                  ><span>upload</span>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="files" aria-hidden="true"></i
+                    ><strong>Scoring inputs</strong>
+                  </div>
+                  <p>Ready for verification</p>
+                </div>
+              </div>
+              <p class="phase-strip">
+                An explicit artifact contract connects execution and scoring.
+              </p>
+            </div>
+          </section>
+          <section class="phase purple">
+            <h2><span class="step-number">05</span>Score independently</h2>
+            <div class="phase-body">
+              <div class="sandbox-boundary">
+                <h3>
+                  <i data-lucide="box" aria-hidden="true"></i>Independent
+                  scoring sandbox
+                </h3>
+                <div class="scoring-inputs">
+                  <div class="node compact panzoom-exclude">
+                    <div class="node-title">
+                      <i data-lucide="file-text" aria-hidden="true"></i
+                      ><strong>Artifacts</strong>
+                    </div>
+                    <p>From step 04</p>
+                  </div>
+                  <div class="node compact panzoom-exclude">
+                    <div class="node-title">
+                      <i data-lucide="file-check" aria-hidden="true"></i
+                      ><strong>Task tests</strong>
+                    </div>
+                    <p>From the pinned task</p>
+                  </div>
+                </div>
+                <div class="flow-arrow down">
+                  <i data-lucide="arrow-down" aria-hidden="true"></i
+                  ><span></span>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="settings" aria-hidden="true"></i
+                    ><strong>Run the verifier</strong>
+                  </div>
+                  <p>Execute task tests → reward and diagnostics</p>
+                </div>
+              </div>
+              <p class="phase-note">
+                The grader uses a separate, prewarmed environment.
+              </p>
+            </div>
+          </section>
+          <section class="phase teal">
+            <h2><span class="step-number">06</span>Collect & clean up</h2>
+            <div class="phase-body">
+              <div class="result-stack">
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="download" aria-hidden="true"></i
+                    ><strong>Download the result</strong>
+                  </div>
+                  <p>Reward · logs · declared outputs</p>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="network" aria-hidden="true"></i
+                    ><strong>Collect gateway traces</strong>
+                  </div>
+                  <p>Associate model calls with the trial</p>
+                </div>
+                <div class="node compact panzoom-exclude">
+                  <div class="node-title">
+                    <i data-lucide="trash-2" aria-hidden="true"></i
+                    ><strong>Save and clean up</strong>
+                  </div>
+                  <p>Persist evidence and release sandbox resources</p>
+                </div>
+              </div>
+              <p class="phase-strip">
+                Results → reports / comparisons / trace analysis
+              </p>
+            </div>
+          </section>
+        </div>
+        <footer class="trial-legend">
+          <strong
+            >One trial = agent execution + independent scoring + result
+            collection</strong
+          >
+          <div>
+            <span
+              ><i data-lucide="files" aria-hidden="true"></i
+              ><b>Task</b>Instructions, environment and tests</span
+            ><span
+              ><i data-lucide="terminal" aria-hidden="true"></i
+              ><b>E2B</b>Connection, commands and files</span
+            ><span
+              ><i data-lucide="cloud" aria-hidden="true"></i
+              ><b>veFaaS</b>Sandbox provisioning and cleanup</span
+            >
+          </div>
+        </footer>
+        <svg class="trial-links" viewBox="0 0 1680 1070" aria-hidden="true">
+          <defs>
+            <marker
+              id="trial-arrow"
+              viewBox="0 0 10 10"
+              refX="9"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto"
+            >
+              <path d="M0 0 L10 5 L0 10" fill="#2670de" />
+            </marker>
+          </defs>
+          <path d="M1393 498 V520 H286 V542" />
+        </svg>
+      </div>
+    </main>
+    <p class="viewer-hint">
+      Drag to pan · Pinch or Ctrl / ⌘ + scroll to zoom · Arrow keys to move
+    </p>
+    <script src="viewer.js" defer></script>
+  </body>
+</html>

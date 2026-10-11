@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>如何让 Coding Agent “吃”点好的上下文？ · Xiao Zhou</title>
+<meta name="description" content="从 KV Cache 和 Prompt 布局，到工具反馈、Skill、Sub Agent 与人机协作，构建可靠的 Coding Agent 工作流。">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="如何让 Coding Agent “吃”点好的上下文？">
+<meta property="og:description" content="从 KV Cache 和 Prompt 布局，到工具反馈、Skill、Sub Agent 与人机协作，构建可靠的 Coding Agent 工作流。">
+<link rel="icon" href="/images/monogram.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/editorial.css">
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <a class="skip-link" href="#main"> 跳到正文</a>
+  <div class="site-shell">
+    <header class="site-header">
+  <div class="site-name">
+    <a href="/">晓</a>
+  </div>
+  <nav aria-label="Main navigation">
+    
+      <a href="/projects/" >Projects</a>
+    
+      <a href="/archives/" aria-current="page">Writing</a>
+    
+      <a href="/about/" >About</a>
+    
+    <span aria-hidden="true">|</span>
+    <a class="github-link" href="https://github.com/zhoushaw" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.14.68-3.8-1.34-3.8-1.34-.51-1.31-1.25-1.66-1.25-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.74.4-1.23.72-1.51-2.51-.29-5.15-1.26-5.15-5.57 0-1.23.44-2.23 1.17-3.02-.12-.29-.51-1.43.11-2.99 0 0 .95-.31 3.1 1.15a10.7 10.7 0 0 1 5.64 0c2.15-1.46 3.1-1.15 3.1-1.15.62 1.56.23 2.7.11 2.99.73.79 1.17 1.79 1.17 3.02 0 4.32-2.64 5.28-5.16 5.56.41.36.77 1.05.77 2.12v3.1c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+    </a>
+  </nav>
+</header>
+
+    <main id="main"><article class="prose">
+  <h1>如何让 Coding Agent “吃”点好的上下文？</h1>
+  <time class="muted" datetime="2026-02">2026.02</time>
+  
+    <details class="article-toc">
+      <summary>文章目录</summary>
+      <nav aria-label="文章目录"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%94%AF%E5%BF%AB%E4%B8%8D%E7%A0%B4-%E2%80%94%E2%80%94-%E4%BB%8E-Transformer-%E5%8E%9F%E7%90%86%E5%88%B0-Prompt-Cache"><span class="toc-text">唯快不破 —— 从 Transformer 原理到 Prompt Cache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E6%AC%A1-agent-%E4%BB%BB%E5%8A%A1-%E8%83%8C%E5%90%8E%EF%BC%8C%E6%A8%A1%E5%9E%8B%E5%88%B0%E5%BA%95%E7%9C%8B%E5%88%B0%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">一次 agent &quot;任务&quot; 背后，模型到底看到了什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8D%E6%98%AF%E8%B6%8A%E5%A4%9A%E8%B6%8A%E5%A5%BD%EF%BC%9A%E8%AE%B0%E5%BF%86%E7%9A%84%E8%89%BA%E6%9C%AF"><span class="toc-text">上下文不是越多越好：记忆的艺术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%EF%BC%9A%E6%97%A2%E8%A6%81%E9%81%BF%E5%85%8D%E7%BB%B4%E5%BA%A6%E8%AF%85%E5%92%92%EF%BC%8C%E5%8F%88%E8%A6%81%E8%AE%A9%E6%A8%A1%E5%9E%8B%E2%80%9C%E7%9C%8B%E5%BE%97%E5%88%B0%E5%8F%8D%E9%A6%88%E2%80%9D"><span class="toc-text">工具：既要避免维度诅咒，又要让模型“看得到反馈”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Skill%EF%BC%9A%E4%B8%8D%E6%98%AF%E5%B0%8F%E5%B7%A5%E5%85%B7%EF%BC%8C%E8%80%8C%E6%98%AF%E2%80%9C%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E5%A4%B9-SOP%E2%80%9D"><span class="toc-text">Skill：不是小工具，而是“可执行文件夹 + SOP”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E8%84%91%E5%88%86%E5%B7%A5%EF%BC%9Asub-agent-%E7%9A%84%E9%9A%94%E7%A6%BB%E4%B8%8E%E5%B9%B6%E8%A1%8C"><span class="toc-text">大脑分工：sub agent  的隔离与并行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AskUserQuestion%EF%BC%9A%E6%8A%8A%E2%80%9C%E6%88%91%E4%B8%8D%E7%A1%AE%E5%AE%9A%EF%BC%8C%E5%85%88%E9%97%AE%E4%BA%BA%E2%80%9D%E5%8F%98%E6%88%90%E4%B8%80%E7%AD%89%E5%85%AC%E6%B0%91"><span class="toc-text">AskUserQuestion：把“我不确定，先问人”变成一等公民</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spec-Kit-DSL%EF%BC%9A%E7%94%A8%E7%BB%93%E6%9E%84%E5%8C%96%E9%9C%80%E6%B1%82%E9%99%8D%E4%BD%8E%E2%80%9C%E7%9E%8E%E7%8C%9C%E7%A9%BA%E9%97%B4%E2%80%9D"><span class="toc-text">Spec Kit &#x2F; DSL：用结构化需求降低“瞎猜空间”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Plan-%E6%A8%A1%E5%BC%8F-Skill-%E6%A8%A1%E5%BC%8F%EF%BC%9A%E8%AE%A9-Agent-%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F%E2%80%9C%E5%8F%AF%E9%A2%84%E6%B5%8B%E2%80%9D"><span class="toc-text">Plan 模式 &amp; Skill 模式：让 Agent 工作方式“可预测”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%EF%BC%9A%E4%BB%8E-agent-%E5%88%B0%E2%80%9C%E6%8F%92%E4%BB%B6%E5%8C%96%E2%80%9D"><span class="toc-text">构建自己的工作流：从 .agent&#x2F; 到“插件化”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD%EF%BC%9A%E4%BB%8E%E2%80%9C%E7%94%A8-Agent%E2%80%9D%E5%88%B0%E2%80%9C%E8%AE%BE%E8%AE%A1-Agent-%E5%B7%A5%E5%85%B7-%E4%BA%BA%E7%9A%84%E7%B3%BB%E7%BB%9F%E2%80%9D"><span class="toc-text">结语：从“用 Agent”到“设计 Agent + 工具 + 人的系统”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></nav>
+    </details>
+  
+  <p>本文由我的技术分享整理为公开版。示例中的 <code>agent</code> 命令、<code>.agent/</code> 目录和工具名用于说明设计思路，不代表某个产品的实际接口；具体加载、缓存和压缩行为应以所用工具的实现为准。</p>
+<figure class="project-figure">
+  <a href="/assets/writing/context-engineering.svg" target="_blank" rel="noopener"><img src="/assets/writing/context-engineering.svg" width="960" height="560" alt="Coding Agent 的稳定指令、任务状态和工具反馈共同构成上下文，并通过执行与验证形成循环" loading="lazy" decoding="async"></a>
+  <figcaption>上下文组织与工具反馈的关系，概念示意。</figcaption>
+</figure>
+
+<p>现在写代码不用 Agent，反而显得有点“原始”。</p>
+<p>但很多人用 Coding Agent 时，心里都会吐槽：</p>
+<ul>
+<li>🐢 <strong>慢</strong>：问个很小的改动，转啊转半天不回</li>
+<li>🥴 <strong>笨</strong>：上下文塞了一大堆文档和代码，它还是理解错</li>
+<li>👻 <strong>爱“幻觉”</strong>：信誓旦旦给你一坨实现，跑起来直接报错</li>
+</ul>
+<p>除了模型智能的上限，还在于我们：</p>
+<blockquote>
+<p>不了解它在执行任务时 <strong>究竟把什么东西塞进了上下文</strong>，<br>也不知道 <strong>模型 + 工具 + 人</strong>是怎么靠 <strong>Prompt Cache / 上下文布局 / 工具设计 / 人类参与</strong> 一起工作的，<br>更不知道怎么利用这些机制 <strong>减少幻觉、提升生产效率</strong>。</p>
+</blockquote>
+<p>这篇文章，我会以 <strong>Coding Agent</strong> 为例，从底层往上拆：</p>
+<ul>
+<li>Transformer 为什么只能“一个 token 一个 token”吐？</li>
+<li>Prompt Cache / KV Cache 到底在干嘛？</li>
+<li>一个 <code>agent "任务"</code> 背后，模型真正看到的 Prompt 是什么样的？</li>
+<li>上下文为什么不能乱塞，为什么要压缩、要 snapshot、要 AGENTS.md？</li>
+<li>Coding Agent 内置的工具（文件读写 / bash / 搜索 / webfetch）怎么决定它的“能力边界”？</li>
+<li>好的工具应该长什么样：<strong>健壮、会分页、会给清晰反馈，还帮模型“看见红线”</strong>？</li>
+<li>Skill 和 MCP、Sub Agent 有什么本质区别，分别适合干什么？</li>
+<li>Sub Agent 怎么用来做并行 Explore / 方案论证？</li>
+<li>AskUserQuestion（HIL）怎么把“我不确定，先问人”变成一等公民，从源头减少幻觉？</li>
+<li>最后，如何用 <code>.agent/</code> 把这些变成可复用的工作流甚至“插件”。</li>
+</ul>
+<h2 id="唯快不破-——-从-Transformer-原理到-Prompt-Cache"><a href="#唯快不破-——-从-Transformer-原理到-Prompt-Cache" class="headerlink" title="唯快不破 —— 从 Transformer 原理到 Prompt Cache"></a>唯快不破 —— 从 Transformer 原理到 Prompt Cache</h2><h3 id="1-1-为什么是一个-token-一个-token-吐？"><a href="#1-1-为什么是一个-token-一个-token-吐？" class="headerlink" title="1.1 为什么是一个 token 一个 token 吐？"></a>1.1 为什么是一个 token 一个 token 吐？</h3><p>大部分 LLM 本质都是一个「下一个 token 预测器」（扩散模型不是这种方式）：</p>
+<blockquote>
+<p>给定前面所有 token，预测下一个 token。</p>
+</blockquote>
+<p>形式上可以写成：</p>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>P</mi><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>T</mi></msub><mo>)</mo><mo>=</mo><munderover><mo>∏</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mi>T</mi></munderover><mi>P</mi><mo>(</mo><msub><mi>x</mi><mi>t</mi></msub><mo>|</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>)</mo></math></div>
+
+<p>这就是所谓的<strong>自回归分解</strong>（整句话出现的概率，可以分解成每个 token 在当前上下文出现的概率）：整段文本的联合概率<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mi>T</mi></msub><mo>)</mo></math>，被拆成了很多个“按顺序一个个生成”的条件概率因子：</p>
+<ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi><mo>(</mo><msub><mi>x</mi><mi>t</mi></msub><mo>|</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>)</mo></math>：在已经看到前面所有 token 的前提下，第 <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>t</mi></math> 个 token 取某个值的概率</li>
+</ul>
+<p>训练的时候，模型在做的事就是：<br>对每个位置 <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>t</mi></math>，让真实的 <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>x</mi><mi>t</mi></msub></math> 的对数概率 <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>log</mi><mi>P</mi><mo>(</mo><msub><mi>x</mi><mi>t</mi></msub><mo>|</mo><msub><mi>x</mi><mrow><mo>&#x3C;</mo><mi>t</mi></mrow></msub><mo>)</mo></math> 尽量大（最小化交叉熵损失）。</p>
+<p>推理的时候，就是不断地：</p>
+<ol>
+<li>给定前缀 <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>)</mo></math> 喂进模型</li>
+<li>让模型输出一个分布 <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi><mo>(</mo><mo>·</mo><mo>|</mo><msub><mi>x</mi><mrow><mo>&#x3C;</mo><mi>t</mi></mrow></msub><mo>)</mo></math></li>
+<li>从这个分布里选出下一个 token（argmax / 采样），继续往后接</li>
+</ol>
+<p>所以“一个 token 一个 token 往外吐”，不是模型故意装神秘，而是<strong>训练目标和建模形式本身就是这样的</strong>。</p>
+<h3 id="1-2-用一段-PyTorch-把推理循环“摊开给你看”"><a href="#1-2-用一段-PyTorch-把推理循环“摊开给你看”" class="headerlink" title="1.2 用一段 PyTorch 把推理循环“摊开给你看”"></a>1.2 用一段 PyTorch 把推理循环“摊开给你看”</h3><p>下面这段代码，就是一个<strong>完全不带缓存优化的最朴素自回归生成循环</strong>：</p>
+<div class="expressive-code"><style>.expressive-code{font-family:var(--ec-uiFontFml);font-size:var(--ec-uiFontSize);font-weight:var(--ec-uiFontWg);line-height:var(--ec-uiLineHt);text-size-adjust:none;-webkit-text-size-adjust:none}.expressive-code *:not(:is(svg, svg *)){all:revert;box-sizing:border-box}.expressive-code pre{display:flex;margin:0;padding:0;border:var(--ec-brdWd) solid var(--ec-brdCol);border-radius:calc(var(--ec-brdRad) + var(--ec-brdWd));background:var(--ec-codeBg)}.expressive-code pre:focus-visible{outline:3px solid var(--ec-focusBrd);outline-offset:-3px}.expressive-code pre > code{all:unset;display:block;flex:1 0 100%;padding:var(--ec-codePadBlk) 0;color:var(--ec-codeFg);font-family:var(--ec-codeFontFml);font-size:var(--ec-codeFontSize);font-weight:var(--ec-codeFontWg);line-height:var(--ec-codeLineHt)}.expressive-code pre{overflow-x:auto}.expressive-code pre.wrap .ec-line .code{white-space:pre-wrap;overflow-wrap:break-word;min-width:min(20ch, var(--ecMaxLine, 20ch))}.expressive-code pre.wrap .ec-line .code span.indent{white-space:pre}.expressive-code pre::-webkit-scrollbar,.expressive-code pre::-webkit-scrollbar-track{background-color:inherit;border-radius:calc(var(--ec-brdRad) + var(--ec-brdWd));border-top-left-radius:0;border-top-right-radius:0}.expressive-code pre::-webkit-scrollbar-thumb{background-color:var(--ec-sbThumbCol);border:4px solid transparent;background-clip:content-box;border-radius:10px}.expressive-code pre::-webkit-scrollbar-thumb:hover{background-color:var(--ec-sbThumbHoverCol)}.expressive-code pre::-webkit-scrollbar-corner{background:transparent}.expressive-code .ec-line{direction:ltr;unicode-bidi:isolate;display:grid;grid-template-areas:'gutter code';grid-template-columns:auto 1fr;position:relative}.expressive-code .ec-line .gutter{grid-area:gutter;color:var(--ec-gtrFg)}.expressive-code .ec-line .gutter > *{pointer-events:none;user-select:none;-webkit-user-select:none}.expressive-code .ec-line .gutter ~ .code{--ecLineBrdCol:var(--ec-gtrBrdCol)}.expressive-code .ec-line.highlight .gutter{color:var(--ec-gtrHlFg)}.expressive-code .ec-line .code{grid-area:code;position:relative;box-sizing:content-box;padding-inline-start:calc(var(--ecIndent, 0ch) + var(--ec-codePadInl) - var(--ecGtrBrdWd));padding-inline-end:var(--ec-codePadInl);text-indent:calc(var(--ecIndent, 0ch) * -1)}.expressive-code .ec-line .code::before,.expressive-code .ec-line .code::after,.expressive-code .ec-line .code :where(*){text-indent:0}.expressive-code .ec-line .code{--ecGtrBrdWd:var(--ec-gtrBrdWd);border-inline-start:var(--ecGtrBrdWd) solid var(--ecLineBrdCol, transparent)}.expressive-code .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border-width:0}.expressive-code .ec-line.mark{--tmLineBgCol:var(--ec-tm-markBg)}.expressive-code .ec-line.mark .code{--ecLineBrdCol:var(--ec-tm-markBrdCol)}.expressive-code .ec-line.ins{--tmLineBgCol:var(--ec-tm-insBg);--tmLabel:var(--ec-tm-insDiffIndContent)}.expressive-code .ec-line.ins .code{--ecLineBrdCol:var(--ec-tm-insBrdCol)}.expressive-code .ec-line.ins .code::before{color:var(--ec-tm-insDiffIndCol)}.expressive-code .ec-line.del{--tmLineBgCol:var(--ec-tm-delBg);--tmLabel:var(--ec-tm-delDiffIndContent)}.expressive-code .ec-line.del .code{--ecLineBrdCol:var(--ec-tm-delBrdCol)}.expressive-code .ec-line.del .code::before{color:var(--ec-tm-delDiffIndCol)}.expressive-code .ec-line.mark,.expressive-code .ec-line.ins,.expressive-code .ec-line.del{background:var(--tmLineBgCol)}.expressive-code .ec-line.mark .code,.expressive-code .ec-line.ins .code,.expressive-code .ec-line.del .code{--ecGtrBrdWd:var(--ec-tm-lineMarkerAccentWd)}.expressive-code .ec-line.mark .code::before,.expressive-code .ec-line.ins .code::before,.expressive-code .ec-line.del .code::before{display:block;position:absolute;left:0;box-sizing:border-box;content:var(--tmLabel, ' ');padding-inline-start:var(--ec-tm-lineDiffIndMargLeft);text-align:center;white-space:pre}.expressive-code .ec-line.mark.tm-label .code::before,.expressive-code .ec-line.ins.tm-label .code::before,.expressive-code .ec-line.del.tm-label .code::before{background:var(--ecLineBrdCol);padding:0 calc(var(--ec-tm-lineMarkerLabelPadInl) + var(--ec-tm-lineMarkerAccentWd)) 0 var(--ec-tm-lineMarkerLabelPadInl);color:var(--ec-tm-lineMarkerLabelCol)}.expressive-code .ec-line mark{--tmInlineBgCol:var(--ec-tm-markBg);--tmInlineBrdCol:var(--ec-tm-markBrdCol)}.expressive-code .ec-line ins{--tmInlineBgCol:var(--ec-tm-insBg);--tmInlineBrdCol:var(--ec-tm-insBrdCol)}.expressive-code .ec-line del{--tmInlineBgCol:var(--ec-tm-delBg);--tmInlineBrdCol:var(--ec-tm-delBrdCol)}.expressive-code .ec-line mark,.expressive-code .ec-line ins,.expressive-code .ec-line del{all:unset;display:inline-block;position:relative;--tmBrdL:var(--ec-tm-inlMarkerBrdWd);--tmBrdR:var(--ec-tm-inlMarkerBrdWd);--tmRadL:var(--ec-tm-inlMarkerBrdRad);--tmRadR:var(--ec-tm-inlMarkerBrdRad);margin-inline:0.025rem;padding-inline:var(--ec-tm-inlMarkerPad);border-radius:var(--tmRadL) var(--tmRadR) var(--tmRadR) var(--tmRadL);background:var(--tmInlineBgCol);background-clip:padding-box}.expressive-code .ec-line mark.open-start,.expressive-code .ec-line ins.open-start,.expressive-code .ec-line del.open-start{margin-inline-start:0;padding-inline-start:0;--tmBrdL:0px;--tmRadL:0}.expressive-code .ec-line mark.open-end,.expressive-code .ec-line ins.open-end,.expressive-code .ec-line del.open-end{margin-inline-end:0;padding-inline-end:0;--tmBrdR:0px;--tmRadR:0}.expressive-code .ec-line mark::before,.expressive-code .ec-line ins::before,.expressive-code .ec-line del::before{content:'';position:absolute;pointer-events:none;display:inline-block;inset:0;border-radius:var(--tmRadL) var(--tmRadR) var(--tmRadR) var(--tmRadL);border:var(--ec-tm-inlMarkerBrdWd) solid var(--tmInlineBrdCol);border-inline-width:var(--tmBrdL) var(--tmBrdR)}.expressive-code .frame{all:unset;position:relative;display:block;--header-border-radius:calc(var(--ec-brdRad) + var(--ec-brdWd));--tab-border-radius:calc(var(--ec-frm-edTabBrdRad) + var(--ec-brdWd));--button-spacing:0.4rem;--code-background:var(--ec-frm-edBg);border-radius:var(--header-border-radius);box-shadow:var(--ec-frm-frameBoxShdCssVal)}.expressive-code .frame .header{display:none;z-index:1;position:relative;border-radius:var(--header-border-radius) var(--header-border-radius) 0 0}.expressive-code .frame.has-title pre,.expressive-code .frame.has-title code,.expressive-code .frame.is-terminal pre,.expressive-code .frame.is-terminal code{border-top:none;border-top-left-radius:0;border-top-right-radius:0}.expressive-code .frame .title:empty:before{content:'\a0'}.expressive-code .frame.has-title:not(.is-terminal){--button-spacing:calc(1.9rem + 2 * (var(--ec-uiPadBlk) + var(--ec-frm-edActTabIndHt)))}.expressive-code .frame.has-title:not(.is-terminal) .title{position:relative;color:var(--ec-frm-edActTabFg);background:var(--ec-frm-edActTabBg);background-clip:padding-box;margin-block-start:var(--ec-frm-edTabsMargBlkStart);padding:calc(var(--ec-uiPadBlk) + var(--ec-frm-edActTabIndHt)) var(--ec-uiPadInl);border:var(--ec-brdWd) solid var(--ec-frm-edActTabBrdCol);border-radius:var(--tab-border-radius) var(--tab-border-radius) 0 0;border-bottom:none;overflow:hidden}.expressive-code .frame.has-title:not(.is-terminal) .title::after{content:'';position:absolute;pointer-events:none;inset:0;border-top:var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndTopCol);border-bottom:var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndBtmCol)}.expressive-code .frame.has-title:not(.is-terminal) .header{display:flex;background:linear-gradient(to top, var(--ec-frm-edTabBarBrdBtmCol) var(--ec-brdWd), transparent var(--ec-brdWd)),linear-gradient(var(--ec-frm-edTabBarBg), var(--ec-frm-edTabBarBg));background-repeat:no-repeat;padding-inline-start:var(--ec-frm-edTabsMargInlStart)}.expressive-code .frame.has-title:not(.is-terminal) .header::before{content:'';position:absolute;pointer-events:none;inset:0;border:var(--ec-brdWd) solid var(--ec-frm-edTabBarBrdCol);border-radius:inherit;border-bottom:none}.expressive-code .frame.is-terminal{--button-spacing:calc(1.9rem + var(--ec-brdWd) + 2 * var(--ec-uiPadBlk));--code-background:var(--ec-frm-trmBg)}.expressive-code .frame.is-terminal .header{display:flex;align-items:center;justify-content:center;padding-block:var(--ec-uiPadBlk);padding-block-end:calc(var(--ec-uiPadBlk) + var(--ec-brdWd));position:relative;font-weight:500;letter-spacing:0.025ch;color:var(--ec-frm-trmTtbFg);background:var(--ec-frm-trmTtbBg);border:var(--ec-brdWd) solid var(--ec-brdCol);border-bottom:none}.expressive-code .frame.is-terminal .header::before{content:'';position:absolute;pointer-events:none;left:var(--ec-uiPadInl);width:2.1rem;height:0.56rem;line-height:0;background-color:var(--ec-frm-trmTtbDotsFg);opacity:var(--ec-frm-trmTtbDotsOpa);-webkit-mask-image:var(--ec-frm-trmIcon);-webkit-mask-repeat:no-repeat;mask-image:var(--ec-frm-trmIcon);mask-repeat:no-repeat}.expressive-code .frame.is-terminal .header::after{content:'';position:absolute;pointer-events:none;inset:0;border-bottom:var(--ec-brdWd) solid var(--ec-frm-trmTtbBrdBtmCol)}.expressive-code .frame pre{background:var(--code-background)}.expressive-code .copy{display:flex;gap:0.25rem;flex-direction:row;position:absolute;inset-block-start:calc(var(--ec-brdWd) + var(--button-spacing));inset-inline-end:calc(var(--ec-brdWd) + var(--ec-uiPadInl) / 2)}@media (scripting: none){.expressive-code .copy{display:none}}.expressive-code .copy{direction:ltr;unicode-bidi:isolate}.expressive-code .copy button{position:relative;align-self:flex-end;margin:0;padding:0;border:none;border-radius:0.2rem;z-index:1;cursor:pointer;transition-property:opacity, background, border-color;transition-duration:0.2s;transition-timing-function:cubic-bezier(0.25, 0.46, 0.45, 0.94);width:2.5rem;height:2.5rem;background:var(--code-background);opacity:0.75}.expressive-code .copy button div{position:absolute;inset:0;border-radius:inherit;background:var(--ec-frm-inlBtnBg);opacity:var(--ec-frm-inlBtnBgIdleOpa);transition-property:inherit;transition-duration:inherit;transition-timing-function:inherit}.expressive-code .copy button::before{content:'';position:absolute;pointer-events:none;inset:0;border-radius:inherit;border:var(--ec-brdWd) solid var(--ec-frm-inlBtnBrd);opacity:var(--ec-frm-inlBtnBrdOpa)}.expressive-code .copy button::after{content:'';position:absolute;pointer-events:none;inset:0;background-color:var(--ec-frm-inlBtnFg);-webkit-mask-image:var(--ec-frm-copyIcon);-webkit-mask-repeat:no-repeat;mask-image:var(--ec-frm-copyIcon);mask-repeat:no-repeat;margin:0.475rem;line-height:0}.expressive-code .copy button:hover,.expressive-code .copy button:focus:focus-visible{opacity:1}.expressive-code .copy button:hover div,.expressive-code .copy button:focus:focus-visible div{opacity:var(--ec-frm-inlBtnBgHoverOrFocusOpa)}.expressive-code .copy button:active{opacity:1}.expressive-code .copy button:active div{opacity:var(--ec-frm-inlBtnBgActOpa)}.expressive-code .copy .feedback{--tooltip-arrow-size:0.35rem;--tooltip-bg:var(--ec-frm-tooltipSuccessBg);color:var(--ec-frm-tooltipSuccessFg);pointer-events:none;user-select:none;-webkit-user-select:none;position:relative;align-self:center;background-color:var(--tooltip-bg);z-index:99;padding:0.125rem 0.75rem;border-radius:0.2rem;margin-inline-end:var(--tooltip-arrow-size);opacity:0;transition-property:opacity, transform;transition-duration:0.2s;transition-timing-function:ease-in-out;transform:translate3d(0, 0.25rem, 0)}.expressive-code .copy .feedback::after{content:'';position:absolute;pointer-events:none;top:calc(50% - var(--tooltip-arrow-size));inset-inline-end:calc(-2 * (var(--tooltip-arrow-size) - 0.5px));border:var(--tooltip-arrow-size) solid transparent;border-inline-start-color:var(--tooltip-bg)}.expressive-code .copy .feedback.show{opacity:1;transform:translate3d(0, 0, 0)}@media (hover: hover){.expressive-code{}.expressive-code .copy button{opacity:0;width:2rem;height:2rem}.expressive-code .frame:hover .copy button:not(:hover),.expressive-code .frame:focus-within :focus-visible ~ .copy button:not(:hover),.expressive-code .frame .copy .feedback.show ~ button:not(:hover){opacity:0.75}}.expressive-code :nth-child(1 of .ec-line) .code{padding-inline-end:calc(2rem + var(--ec-codePadInl))}:root,:root:not([data-theme='github-light']) .expressive-code[data-theme='github-light']{--ec-brdRad:0.375rem;--ec-brdWd:1.5px;--ec-brdCol:#e1e4e8;--ec-codeFontFml:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;--ec-codeFontSize:0.8125rem;--ec-codeFontWg:400;--ec-codeLineHt:1.75;--ec-codePadBlk:1rem;--ec-codePadInl:1.35rem;--ec-codeBg:#fff;--ec-codeFg:#24292e;--ec-codeSelBg:#0366d625;--ec-gtrFg:#1b1f2381;--ec-gtrBrdCol:#1b1f2333;--ec-gtrBrdWd:1.5px;--ec-gtrHlFg:#24292eab;--ec-uiFontFml:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';--ec-uiFontSize:0.9rem;--ec-uiFontWg:400;--ec-uiLineHt:1.65;--ec-uiPadBlk:0.25rem;--ec-uiPadInl:1rem;--ec-uiSelBg:#e2e5e9;--ec-uiSelFg:#2f363d;--ec-focusBrd:#2188ff;--ec-sbThumbCol:#959da533;--ec-sbThumbHoverCol:#959da5eb;--ec-tm-lineMarkerAccentMarg:0rem;--ec-tm-lineMarkerAccentWd:0.15rem;--ec-tm-lineMarkerLabelPadInl:0.2rem;--ec-tm-lineMarkerLabelCol:white;--ec-tm-lineDiffIndMargLeft:0.3rem;--ec-tm-inlMarkerBrdWd:1.5px;--ec-tm-inlMarkerBrdRad:0.2rem;--ec-tm-inlMarkerPad:0.15rem;--ec-tm-insDiffIndContent:'+';--ec-tm-delDiffIndContent:'-';--ec-tm-markBg:#9fb6ff80;--ec-tm-markBrdCol:#5570b3d0;--ec-tm-insBg:#94c68480;--ec-tm-insBrdCol:#4e7e41d0;--ec-tm-insDiffIndCol:#3a692fd0;--ec-tm-delBg:#fea09280;--ec-tm-delBrdCol:#ae594fd0;--ec-tm-delDiffIndCol:#97453dd0;--ec-frm-shdCol:#00000028;--ec-frm-frameBoxShdCssVal:0.1rem 0.1rem 0.2rem #00000028;--ec-frm-edActTabBg:#fff;--ec-frm-edActTabFg:#2f363d;--ec-frm-edActTabBrdCol:transparent;--ec-frm-edActTabIndHt:1.5px;--ec-frm-edActTabIndTopCol:#f9826c;--ec-frm-edActTabIndBtmCol:#fff;--ec-frm-edTabsMargInlStart:0;--ec-frm-edTabsMargBlkStart:0;--ec-frm-edTabBrdRad:0.375rem;--ec-frm-edTabBarBg:#f6f8fa;--ec-frm-edTabBarBrdCol:#e1e4e8;--ec-frm-edTabBarBrdBtmCol:#e1e4e8;--ec-frm-edBg:#fff;--ec-frm-trmTtbFg:#2f363d;--ec-frm-trmTtbDotsFg:#2f363d;--ec-frm-trmTtbDotsOpa:0.15;--ec-frm-trmTtbBg:#fff;--ec-frm-trmTtbBrdBtmCol:#e1e4e8;--ec-frm-trmBg:#f6f8fa;--ec-frm-inlBtnFg:#24292e;--ec-frm-inlBtnBg:#24292e;--ec-frm-inlBtnBgIdleOpa:0;--ec-frm-inlBtnBgHoverOrFocusOpa:0.2;--ec-frm-inlBtnBgActOpa:0.3;--ec-frm-inlBtnBrd:#24292e;--ec-frm-inlBtnBrdOpa:0.4;--ec-frm-tooltipSuccessBg:#208638;--ec-frm-tooltipSuccessFg:white;--ec-frm-copyIcon:url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'1.75'%3E%3Cpath%20d%3D'M3%2019a2%202%200%200%201-1-2V2a2%202%200%200%201%201-1h13a2%202%200%200%201%202%201'%2F%3E%3Crect%20x%3D'6'%20y%3D'5'%20width%3D'16'%20height%3D'18'%20rx%3D'1.5'%20ry%3D'1.5'%2F%3E%3C%2Fsvg%3E");--ec-frm-trmIcon:url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2060%2016'%20preserveAspectRatio%3D'xMidYMid%20meet'%3E%3Ccircle%20cx%3D'8'%20cy%3D'8'%20r%3D'8'%2F%3E%3Ccircle%20cx%3D'30'%20cy%3D'8'%20r%3D'8'%2F%3E%3Ccircle%20cx%3D'52'%20cy%3D'8'%20r%3D'8'%2F%3E%3C%2Fsvg%3E")}.expressive-code .ec-line :where(span[style^='--']:not([class])),:root:not([data-theme='github-light']) .expressive-code[data-theme='github-light'] .ec-line :where(span[style^='--']:not([class])){color:var(--0, inherit);background-color:var(--0bg, transparent);font-style:var(--0fs, inherit);font-weight:var(--0fw, inherit);text-decoration:var(--0td, inherit)}</style><script type="module">try{(()=>{function a(e){if(!e)return;let t=e.getAttribute("tabindex")!==null,r=e.scrollWidth>e.clientWidth;r&&!t?(e.setAttribute("tabindex","0"),e.setAttribute("role","region")):!r&&t&&(e.removeAttribute("tabindex"),e.removeAttribute("role"))}var u=window.requestIdleCallback||(e=>setTimeout(e,1)),s=window.cancelIdleCallback||clearTimeout;function l(e){let t=new Set,r,n;return new ResizeObserver(c=>{c.forEach(o=>t.add(o.target)),r&&clearTimeout(r),n&&s(n),r=setTimeout(()=>{n&&s(n),n=u(()=>{t.forEach(o=>e(o)),t.clear()})},250)})}function i(e,t){e.querySelectorAll?.(".expressive-code pre > code").forEach(r=>{let n=r.parentElement;n&&t.observe(n)})}var d=l(a);i(document,d);var b=new MutationObserver(e=>e.forEach(t=>t.addedNodes.forEach(r=>{i(r,d)})));b.observe(document.body,{childList:!0,subtree:!0});document.addEventListener("astro:page-load",()=>{i(document,d)});})();}catch(e){console.error("[EC] tabindex-js-module failed:",e)}</script><script type="module">try{(()=>{function l(o){let e=document.createElement("pre");Object.assign(e.style,{opacity:"0",pointerEvents:"none",position:"absolute",overflow:"hidden",left:"0",top:"0",width:"20px",height:"20px",webkitUserSelect:"auto",userSelect:"all"}),e.ariaHidden="true",e.textContent=o,document.body.appendChild(e);let a=document.createRange();a.selectNode(e);let n=getSelection();if(!n)return!1;n.removeAllRanges(),n.addRange(a);let r=!1;try{r=document.execCommand("copy")}finally{n.removeAllRanges(),document.body.removeChild(e)}return r}async function u(o){let e=o.currentTarget,a=e.dataset,n=!1,r=a.code.replace(/\u007f/g,`
+`);try{await navigator.clipboard.writeText(r),n=!0}catch{n=l(r)}if(!n||e.parentNode?.querySelector(".feedback"))return;let c=e.parentNode?.querySelector("[aria-live]"),t=document.createElement("div");t.classList.add("feedback"),t.append(a.copied),c.append(t),t.offsetWidth,requestAnimationFrame(()=>t?.classList.add("show"));let s=()=>!t||t.classList.remove("show"),d=()=>{!t||parseFloat(getComputedStyle(t).opacity)>0||(t.remove(),t=void 0)};setTimeout(s,1500),setTimeout(d,2500),e.addEventListener("blur",s),t.addEventListener("transitioncancel",d),t.addEventListener("transitionend",d)}function i(o){o.querySelectorAll?.(".expressive-code .copy button").forEach(e=>e.addEventListener("click",u))}i(document);var m=new MutationObserver(o=>o.forEach(e=>e.addedNodes.forEach(a=>{i(a)})));m.observe(document.body,{childList:!0,subtree:!0});document.addEventListener("astro:page-load",()=>{i(document)});})();}catch(e){console.error("[EC] copy-js-module failed:",e)}</script><figure class="frame"><figcaption class="header"></figcaption><pre data-language="python"><code><div class="ec-line"><div class="code"><span style="--0:#BF3441">import</span><span style="--0:#24292E"> torch</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#616972"># 假设已经有一个加载好的自回归语言模型</span></div></div><div class="ec-line"><div class="code"><span style="--0:#616972"># model: (input_ids) -> logits</span></div></div><div class="ec-line"><div class="code"><span style="--0:#616972"># tokenizer: 文本 &#x3C;-> token id</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#616972"># 1. 准备初始输入</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E">prompt </span><span style="--0:#BF3441">=</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"写一个简单的 React 组件："</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E">input_ids </span><span style="--0:#BF3441">=</span><span style="--0:#24292E"> tokenizer.encode(prompt, </span><span style="--0:#AE4B07">return_tensors</span><span style="--0:#BF3441">=</span><span style="--0:#032F62">"pt"</span><span style="--0:#24292E">)</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#616972"># 2. 循环生成后续 token</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E">max_new_tokens </span><span style="--0:#BF3441">=</span><span style="--0:#24292E"> </span><span style="--0:#005CC5">50</span></div></div><div class="ec-line"><div class="code"><span style="--0:#616972"># 开始推理模式</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E">model.eval()</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#BF3441">for</span><span style="--0:#24292E"> step </span><span style="--0:#BF3441">in</span><span style="--0:#24292E"> </span><span style="--0:#005CC5">range</span><span style="--0:#24292E">(max_new_tokens):</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#BF3441">with</span><span style="--0:#24292E"> torch.no_grad():</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#616972"># 前向传播：把“当前的所有 token 序列”丢进模型</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#616972"># 注意：每一步都要重新计算“到目前为止的全部上下文”</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E">        </span></span><span style="--0:#24292E">outputs </span><span style="--0:#BF3441">=</span><span style="--0:#24292E"> model(</span><span style="--0:#AE4B07">input_ids</span><span style="--0:#BF3441">=</span><span style="--0:#24292E">input_ids)</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#616972"># 只关心最后一个位置的 logits (代表“下一个 token”的预测依据)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E">        </span></span><span style="--0:#24292E">next_token_logits </span><span style="--0:#BF3441">=</span><span style="--0:#24292E"> outputs.logits[:, </span><span style="--0:#BF3441">-</span><span style="--0:#005CC5">1</span><span style="--0:#24292E">, :]</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#616972"># 选取概率最大的 token</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E">        </span></span><span style="--0:#24292E">probs </span><span style="--0:#BF3441">=</span><span style="--0:#24292E"> torch.softmax(next_token_logits, </span><span style="--0:#AE4B07">dim</span><span style="--0:#BF3441">=-</span><span style="--0:#005CC5">1</span><span style="--0:#24292E">)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E">        </span></span><span style="--0:#24292E">next_token_id </span><span style="--0:#BF3441">=</span><span style="--0:#24292E"> torch.argmax(probs, </span><span style="--0:#AE4B07">dim</span><span style="--0:#BF3441">=-</span><span style="--0:#005CC5">1</span><span style="--0:#24292E">, </span><span style="--0:#AE4B07">keepdim</span><span style="--0:#BF3441">=</span><span style="--0:#005CC5">True</span><span style="--0:#24292E">)</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#616972"># 把新 token 拼回输入，作为下一轮的输入</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E">        </span></span><span style="--0:#24292E">input_ids </span><span style="--0:#BF3441">=</span><span style="--0:#24292E"> torch.cat([input_ids, next_token_id], </span><span style="--0:#AE4B07">dim</span><span style="--0:#BF3441">=-</span><span style="--0:#005CC5">1</span><span style="--0:#24292E">)</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#BF3441">if</span><span style="--0:#24292E"> next_token_id.item() </span><span style="--0:#BF3441">==</span><span style="--0:#24292E"> tokenizer.eos_token_id:</span></div></div><div class="ec-line"><div class="code"><span class="indent">            </span><span style="--0:#BF3441">break</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="import torch# 假设已经有一个加载好的自回归语言模型# model: (input_ids) -> logits# tokenizer: 文本 <-> token id# 1. 准备初始输入prompt = &#x22;写一个简单的 React 组件：&#x22;input_ids = tokenizer.encode(prompt, return_tensors=&#x22;pt&#x22;)# 2. 循环生成后续 tokenmax_new_tokens = 50# 开始推理模式model.eval()for step in range(max_new_tokens):    with torch.no_grad():        # 前向传播：把“当前的所有 token 序列”丢进模型        # 注意：每一步都要重新计算“到目前为止的全部上下文”        outputs = model(input_ids=input_ids)        # 只关心最后一个位置的 logits (代表“下一个 token”的预测依据)        next_token_logits = outputs.logits[:, -1, :]        # 选取概率最大的 token        probs = torch.softmax(next_token_logits, dim=-1)        next_token_id = torch.argmax(probs, dim=-1, keepdim=True)        # 把新 token 拼回输入，作为下一轮的输入        input_ids = torch.cat([input_ids, next_token_id], dim=-1)        if next_token_id.item() == tokenizer.eos_token_id:            break"><div></div></button></div></figure></div>
+<p>两个关键点：</p>
+<ol>
+<li><strong>每一步都把“当前全部 token 序列”重新丢进模型</strong></li>
+</ol>
+<ul>
+<li>第 1 步：算 <code>prompt</code></li>
+<li>第 2 步：算 <code>prompt + 第1个新 token</code></li>
+<li>第 3 步：算 <code>prompt + 前2个新 token</code></li>
+<li>……</li>
+</ul>
+<ol>
+<li>每一轮都在重复计算前面 90% 一模一样的东西 ——<br> 上下文越长，<strong>重复计算越离谱</strong>。<br>这就是为什么你在 Coding Agent 里塞了一大坨 System Prompt + 代码 + 文档，再问一个很短的问题，GPU 依然要“转很久”：</li>
+</ol>
+<blockquote>
+<p><strong>它在每轮推理时都要把这坨上下文重新“咀嚼”一遍。</strong></p>
+</blockquote>
+<h3 id="1-3-Transformer-KV-Cache：Q-K-V-到底在干嘛，为什么“追加”便宜？"><a href="#1-3-Transformer-KV-Cache：Q-K-V-到底在干嘛，为什么“追加”便宜？" class="headerlink" title="1.3 Transformer + KV Cache：Q/K/V 到底在干嘛，为什么“追加”便宜？"></a>1.3 Transformer + KV Cache：Q/K/V 到底在干嘛，为什么“追加”便宜？</h3><p>先看一句话：</p>
+<blockquote>
+<p>「我昨天买了一本书，它很好看。」</p>
+</blockquote>
+<p>当模型在处理“它”这个 token 时，本质上是在做一件事：</p>
+<blockquote>
+<p>“我现在说的这个『它』，到底指的是前面哪一坨东西？是『书』，还是别的啥？”</p>
+</blockquote>
+<p>在 Self‑Attention 里，这件事可以抽象成一套 “Q / K / V” 的流程：</p>
+<ul>
+<li><strong>Q（Query）= 当前 token 想问的问题</strong><br> 对“它”来说，Q 里带着的潜台词大概是：</li>
+</ul>
+<blockquote>
+<ul>
+<li>“在我出现之前的上下文里，有哪些词可以当『我指代的对象』？”</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>K（Key）= 每个历史 token 提供的一句自我介绍（标签）</strong><br> 比如前面这些 token 的 K 可能会给出信息：<ul>
+<li>“我是一条时间状语（昨天）”</li>
+<li>“我是个名词，而且是『书』”</li>
+<li>“我是人称代词（我）”</li>
+</ul>
+</li>
+<li><strong>V（Value）= 每个历史 token 的详细内容</strong><br> 也就是它真正能贡献出来的语义信息：<ul>
+<li>这本“书”到底是什么东西</li>
+<li>“我”是谁</li>
+<li>这句话的情感语气等等<br>整个 Self‑Attention 做的事情就是：</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>你（当前 token 的 Q）拿着问题，<br>看一圈所有人的标签（K），决定“我应该重点听谁”，<br>然后按这个权重，从这些人那里抽取详细内容（V），<br>把这些内容混在一起，形成你这一时刻的语义表示。</p>
+</blockquote>
+<p>如果用一句“工程版”话概括一下：</p>
+<ol>
+<li>用当前 token 的 Q 和所有历史 K 做一轮打分（点积 + softmax），得到一组注意力权重 <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>α</mi><mrow><mi>t</mi><mo>,</mo><mi>i</mi></mrow></msub></math>；</li>
+<li>用这些权重对所有历史 V 做加权求和，得到当前位置的输出向量 <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi mathvariant="bold">y</mi><mi>t</mi></msub></math>。</li>
+</ol>
+<p>这个过程在<strong>每一层</strong>都会重复一遍，所以前面 token 的信息会一层层“流动”和“重编码”到后面的表示里。</p>
+<p>那 <strong>KV Cache</strong> 在干嘛？<br>你可以把每个历史 token 的 <strong>Key / Value</strong> 想象成两张已经整理好的“小卡片”：</p>
+<ul>
+<li>K 卡片：这家伙的“标签”（大概是什么角色、能匹配什么问题）</li>
+<li>V 卡片：这家伙的“内容”（真正的语义细节）</li>
+</ul>
+<p>对于已经处理过的历史 token，它们的 K/V 一旦算出来，只要你不改前面的文本，就可以 <strong>一直复用</strong>——没必要每次生成新 token 都从头算一遍。</p>
+<p>于是推理时会分成两步：<br><strong>prefill 阶段</strong>（首轮把 prompt 丢给模型那一下）</p>
+<ul>
+<li>把整段 prompt 跑一遍，给每个 token 算出 K/V，小卡片存进 KV Cache。<br><strong>decode 阶段</strong>（后面逐 token 生成）</li>
+<li>每来一个新 token，只需要给它算一次 Q/K/V；</li>
+<li>然后用它的 Q 去和“缓存里的所有历史 K/V 卡片”做 Attention 即可。</li>
+</ul>
+<p>所以就有了那条关键结论：</p>
+<ul>
+<li><strong>在末尾追加内容，很便宜</strong><ul>
+<li>老的 K/V 小卡片全部复用；</li>
+<li>只为新 token 算一次 Q/K/V，再和缓存做 Attention；</li>
+<li>增量成本很小。</li>
+</ul>
+</li>
+<li><strong>改前缀 / 改中间，很贵</strong><ul>
+<li>你改了第 5 个 token，它自己的表示会变，它的 K/V 也会变；</li>
+<li>后面第 6、7、8… 个 token 原来是基于“旧的 K/V”算出来的，现在全都不对了；</li>
+<li>实际上需要<strong>从这个修改点开始往后，把后面所有 token 的层输出重新算一遍</strong>，之前的那部分 KV Cache 等于废掉。<br>所以各家推理服务在工程上都在配合这件事：</li>
+</ul>
+</li>
+<li>✅ 尽量只在末尾追加（append）；</li>
+<li>❌ 尽量不要改前缀 / 插中间 / 中途删除一大块。</li>
+</ul>
+<p>而你在后面看到的这些设计——</p>
+<ul>
+<li>用 snapshot / Spec 来替换长历史而不是随意剪中间；</li>
+<li>用 sub‑agent 重新开一条干净的 Session；</li>
+<li>不在开头塞会变的东西（时间戳 / 随机种子）——</li>
+</ul>
+<p>本质上都是顺着这个物理现实在做事：</p>
+<blockquote>
+<p><strong>让前缀稳定，KV Cache 好复用，推理又快又便宜。</strong></p>
+</blockquote>
+<p>进一步了解推理和训练细节：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Let’s build GPT: from scratch, in code, spelled out.</a></p>
+<h3 id="1-4-这直接决定了：Agent「敢做什么、不敢做什么」"><a href="#1-4-这直接决定了：Agent「敢做什么、不敢做什么」" class="headerlink" title="1.4 这直接决定了：Agent「敢做什么、不敢做什么」"></a>1.4 这直接决定了：Agent「敢做什么、不敢做什么」</h3><p>有了 KV Cache 这个前提，就能理解上下文布局中的一条重要优化原则：</p>
+<blockquote>
+<p><strong>在不牺牲正确性的前提下，尽量保持可复用前缀稳定。</strong></p>
+</blockquote>
+<p>比如：</p>
+<ul>
+<li>对话 / 工具结果永远是往后 append，而不是编辑前面的消息</li>
+<li>不会中间随便删，而是通过“总结 / 压缩”产生一个新的短前缀</li>
+<li>需要大改上下文时，干脆开新 Session（Sub Agent），重新走一条干净前缀</li>
+</ul>
+<p>后面我们讲的 snapshot、Spec、Sub Agent、MCP 控制工具数量，其实都可以用这条规律来审视：</p>
+<blockquote>
+<p>这样做，是不是更有利于命中 KV Cache、减少无谓重算、减小上下文噪音？</p>
+</blockquote>
+<h2 id="一次-agent-任务-背后，模型到底看到了什么？"><a href="#一次-agent-任务-背后，模型到底看到了什么？" class="headerlink" title="一次 agent &#x22;任务&#x22; 背后，模型到底看到了什么？"></a>一次 <code>agent "任务"</code> 背后，模型到底看到了什么？</h2><p>理解了生成模式，再看 Coding Agent 的行为就不那么“玄学”了。<br>例如：</p>
+<div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#6F42C1">agent</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"给 user-service 加一个 /healthz 接口，并补上测试"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent &#x22;给 user-service 加一个 /healthz 接口，并补上测试&#x22;"><div></div></button></div></figure></div>
+<p>这行命令敲下去之后，Harness 并不是“把这句话丢给模型”就完事了，而是帮你构造了一整坨 Prompt，大致包括：</p>
+<h3 id="1-系统级指令（System-Prompt）"><a href="#1-系统级指令（System-Prompt）" class="headerlink" title="1. 系统级指令（System Prompt）"></a>1. 系统级指令（System Prompt）</h3><ul>
+<li>模型服务商自带的系统提示词（安全、合规、风格等）</li>
+<li>Agent 在此基础上加一层：<ul>
+<li>你是一个 Coding Agent</li>
+<li>有哪些工具可以使用</li>
+<li>做事的方式和风格</li>
+<li>不要乱删文件、不要写危险命令……</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-项目级配置（AGENTS-md-项目宪法）"><a href="#2-项目级配置（AGENTS-md-项目宪法）" class="headerlink" title="2. 项目级配置（AGENTS.md / 项目宪法）"></a>2. 项目级配置（AGENTS.md / 项目宪法）</h3><ul>
+<li>仓库根目录下的 <code>AGENTS.md</code> 或类似文件，里面写着：<ul>
+<li>技术栈（React / Node / Go / …）</li>
+<li>代码风格（错误处理、日志、命名约定）</li>
+<li>禁止触碰的目录 / 模块</li>
+<li>如何运行测试、如何打包等等</li>
+</ul>
+</li>
+<li>这一块被放在 Prompt 的头部，高优先级、尽量稳定，便于 Prompt Cache 复用。</li>
+</ul>
+<h3 id="3-项目上下文（Project-Snapshot）"><a href="#3-项目上下文（Project-Snapshot）" class="headerlink" title="3. 项目上下文（Project Snapshot）"></a>3. 项目上下文（Project Snapshot）</h3><ul>
+<li>当前用户在那个工作目录</li>
+<li>选中了哪些文本</li>
+<li>…</li>
+</ul>
+<h3 id="4-会话历史（Conversation-工具调用）"><a href="#4-会话历史（Conversation-工具调用）" class="headerlink" title="4. 会话历史（Conversation &#x26; 工具调用）"></a>4. 会话历史（Conversation &#x26; 工具调用）</h3><ul>
+<li>几轮跟 Coding Agent 的对话</li>
+<li>之前某次任务的总结 / snapshot</li>
+<li>调用工具的请求与返回（读过哪些文件，跑过什么命令）</li>
+</ul>
+<h3 id="5-工具定义（Tool-Schemas）"><a href="#5-工具定义（Tool-Schemas）" class="headerlink" title="5. 工具定义（Tool Schemas）"></a>5. 工具定义（Tool Schemas）</h3><ul>
+<li>当前这一轮允许调用的 MCP 工具清单：<ul>
+<li>每个工具的名称</li>
+<li>一两句自然语言说明</li>
+<li>输入参数的 JSON Schema<br>所有这些一起被拼成一个 Prompt，喂给模型。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>所以，上下文不是“越多越好”，<br>而是要“<strong>把最重要的东西放到最该放的位置</strong>”。</p>
+</blockquote>
+<h3 id="ReAct：Coding-Agent-是怎么在上下文里“想-行动”的？"><a href="#ReAct：Coding-Agent-是怎么在上下文里“想-行动”的？" class="headerlink" title="ReAct：Coding Agent 是怎么在上下文里“想 + 行动”的？"></a>ReAct：Coding Agent 是怎么在上下文里“想 + 行动”的？</h3><p>只讲上下文还不够，要把 <strong>ReAct</strong> 也讲清楚——这是 Coding Agent 和纯聊天最大的区别。</p>
+<blockquote>
+<p>这里的 <strong>ReAct</strong> 是 Reason + Act 的意思，<br>和前端的 React 不是一个东西⚛️。</p>
+</blockquote>
+<p>典型的 ReAct 循环长这样（逻辑上）：</p>
+<ul>
+<li><strong>Observation</strong>：<ul>
+<li>当前用户输入 + 历史对话 + 工具输出 = 当前“世界状态”</li>
+</ul>
+</li>
+<li><strong>Reason（思考）</strong>：<ul>
+<li>模型在上下文里“自言自语”：<ul>
+<li>现在要干什么？</li>
+<li>下一步需要什么信息？</li>
+<li>要不要先读文件 / 先查日志？</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Act（行动）</strong>：<ul>
+<li>决定调用哪个工具（read_file / bash / webfetch / search…）</li>
+<li>生成带参数的工具调用请求</li>
+</ul>
+</li>
+<li><strong>Observation（再感知）</strong>：<ul>
+<li>把工具返回的结果（文件内容、日志、诊断信息）追加到上下文</li>
+<li>进入下一轮 Reason + Act</li>
+</ul>
+</li>
+</ul>
+<p>你在 Coding Agent 终端里看到的，其实就是一轮轮 ReAct：</p>
+<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="text"><code><div class="ec-line"><div class="code"><span style="--0:#24292e">用户：给 user-service 加一个 /healthz 接口，并补上测试</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292e">Agent（Reason）：先找下 user-service 的代码在哪，看看路由怎么注册的……</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292e">Agent（Act）：调用 read_file / search 工具</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292e">工具输出（Observation）：返回相关文件内容</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292e">Agent（Reason）：哦，原来这里用的是 FastAPI，那我应该……</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#24292e">Agent（Act）：写 patch + 再跑一次 pytest</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="用户：给 user-service 加一个 /healthz 接口，并补上测试Agent（Reason）：先找下 user-service 的代码在哪，看看路由怎么注册的……Agent（Act）：调用 read_file / search 工具工具输出（Observation）：返回相关文件内容Agent（Reason）：哦，原来这里用的是 FastAPI，那我应该……Agent（Act）：写 patch + 再跑一次 pytest"><div></div></button></div></figure></div>
+<p>也就是说：</p>
+<ul>
+<li>Coding Agent <strong>不是一次“问 → 一次“答”</strong>，</li>
+<li>而是一串「观察 → 思考 → 调工具 → 看结果 → 再思考 → 再调工具……」的循环。</li>
+</ul>
+<p>ReAct 对上下文的影响有两个核心点：</p>
+<ul>
+<li><strong>它会不断往上下文里追加“思路 + 工具调用 + 工具输出”</strong><ul>
+<li>这就是为什么中间“过程区”容易爆炸；</li>
+<li>也是为什么要 snapshot / summary / skill / sub‑agent 来收敛上下文。</li>
+</ul>
+</li>
+<li><strong>每次 Reason + Act 都依赖稳定前缀</strong><ul>
+<li>System Prompt + <code>AGENTS.md</code> + 项目快照尽量固定在前面；</li>
+<li>这样每一轮 ReAct 调用都能吃到 Prompt Cache 的好处。<br>ReAct 是 Agent 的“主循环”，<br> 而 KV Cache / Prompt 组织方式 / MCP 工具 / AskUserQuestion，<br> 都是为了让这条循环 <strong>跑得更快、更稳、更少瞎编</strong>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="上下文不是越多越好：记忆的艺术"><a href="#上下文不是越多越好：记忆的艺术" class="headerlink" title="上下文不是越多越好：记忆的艺术"></a>上下文不是越多越好：记忆的艺术</h2><p>很多人看到“上下文 200k / 1M”就会很兴奋：</p>
+<blockquote>
+<p>“爽，把所有文件、所有对话全丢进去，模型肯定更聪明。”</p>
+</blockquote>
+<p>更大的上下文窗口，并不自动意味着模型能同样有效地利用其中每一段信息。相关信息的位置、重复日志、过时方案和任务本身，都会影响最终表现。</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2307.03172">Lost in the Middle</a> 在其测试任务中观察到：相关信息位于输入开头或结尾时，模型往往表现更好，位于中间时则可能下降。这是一种实验现象，不能直接等同于“所有模型都给头部最高注意力权重”。</p>
+<p>工程上，我会把上下文按职责组织：稳定规则尽量保持一致，任务状态清楚可见，中间过程及时整理。具体顺序和压缩策略仍需要用自己的任务验证。</p>
+<h3 id="1-三个区域：头-中-尾"><a href="#1-三个区域：头-中-尾" class="headerlink" title="1. 三个区域：头 / 中 / 尾"></a>1. 三个区域：头 / 中 / 尾</h3><p>在这样的 Prompt 组织方式中，基本可以分成：</p>
+<ul>
+<li>头部：宪法区<ul>
+<li>模型 System Prompt</li>
+<li>Agent System Prompt</li>
+<li><code>AGENTS.md</code> / 关键架构文档片段</li>
+</ul>
+</li>
+<li>中部：过程区<ul>
+<li>很长的聊天记录</li>
+<li>多轮工具调用输出（日志、调试信息）</li>
+<li>旧的、已过时的文件片段</li>
+</ul>
+</li>
+<li>尾部：短期工作记忆<ul>
+<li>当前这轮任务描述</li>
+<li>与当前任务强相关的代码内容</li>
+<li>最新的 plan / spec / todo 节选<br>这是一种组织上下文的方式，不是模型内部注意力的固定分区。重要约束需要在长任务中持续可见，不能只靠位置来保证生效。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-主动-Compaction：把“状态”封成文件，再清过程"><a href="#2-主动-Compaction：把“状态”封成文件，再清过程" class="headerlink" title="2. 主动 Compaction：把“状态”封成文件，再清过程"></a>2. 主动 Compaction：把“状态”封成文件，再清过程</h3><p>如果你在同一个会话里长期试错、调 bug、重构，中部“过程区”很快就会膨胀。<br>更好的做法是：在关键节点<strong>主动 Compaction</strong>。<br>例子：</p>
+<div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#6F42C1">agent</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"请把我们目前关于支付模块迁移的讨论和结论，总结成一份 snapshot，写入 docs/state/payment-migration.md"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent &#x22;请把我们目前关于支付模块迁移的讨论和结论，总结成一份 snapshot，写入 docs/state/payment-migration.md&#x22;"><div></div></button></div></figure></div>
+<p>Coding Agent 会让模型把当前对话 + 相关代码，浓缩成一份结构化 snapshot，比如：</p>
+<ul>
+<li>当前系统架构</li>
+<li>迁移目标 &#x26; 选定方案</li>
+<li>风险点、注意事项</li>
+<li>下一步行动清单</li>
+</ul>
+<p>之后你可以：</p>
+<ul>
+<li>清掉大部分历史对话</li>
+<li>后续任务只需 <code>read_file("docs/state/payment-migration.md")</code> 把这份 snapshot 拼回上下文</li>
+</ul>
+<p>好处：</p>
+<ul>
+<li>有价值的“中间状态”变成文件，可版本管理、可 review</li>
+<li>对话不会无限堆积，减轻上下文压力</li>
+<li>所有支付迁移相关任务都有统一“状态锚点”</li>
+</ul>
+<h3 id="3-AGENTS-md：项目的-Prompt-宪法"><a href="#3-AGENTS-md：项目的-Prompt-宪法" class="headerlink" title="3. AGENTS.md：项目的 Prompt 宪法"></a>3. AGENTS.md：项目的 Prompt 宪法</h3><p>在支持 <code>AGENTS.md</code> 约定的工具中，它可以承载稳定的项目规则。需要由 Harness 明确加载这些规则，并确保压缩或任务交接后仍能保留重要约束。</p>
+<p>具体加载位置、作用范围、子 Agent 是否继承，以及压缩后如何处理，取决于工具实现；不能把“创建了一个文件”理解为“所有 Agent 都会自动遵守”。</p>
+<p>建议写：</p>
+<ul>
+<li>技术栈 &#x26; 框架选择</li>
+<li>代码风格 &#x26; 错误处理约定</li>
+<li>安全边界（禁止做什么）</li>
+<li>团队工作流（先写测试再实现、如何写 commit message …）</li>
+</ul>
+<p>不要写：</p>
+<ul>
+<li>本周活动、一次性需求、经常变动的信息</li>
+<li>某次重构的临时细节目标</li>
+</ul>
+<p>这些更适合放在 snapshot/spec/todo 里，而不是挂在“宪法”上。</p>
+<h2 id="工具：既要避免维度诅咒，又要让模型“看得到反馈”"><a href="#工具：既要避免维度诅咒，又要让模型“看得到反馈”" class="headerlink" title="工具：既要避免维度诅咒，又要让模型“看得到反馈”"></a>工具：既要避免维度诅咒，又要让模型“看得到反馈”</h2><p>**工具决定了模型的能力边界，**但工具不是“能调用就完事”，还要：</p>
+<ul>
+<li>能力边界清晰（能动什么、看什么、查什么）</li>
+<li>健壮（自动分页、重试、合理默认值）</li>
+<li>错误反馈清晰、结构化</li>
+<li>帮模型“看到”它原本看不到的东西（比如 IDE 里的语法飘红）</li>
+</ul>
+<h3 id="1-Coding-Agent-内置了哪些工具？能力边界在哪？"><a href="#1-Coding-Agent-内置了哪些工具？能力边界在哪？" class="headerlink" title="1. Coding Agent 内置了哪些工具？能力边界在哪？"></a>1. Coding Agent 内置了哪些工具？能力边界在哪？</h3><p>以常见的 Coding Agent 为例，通常包含以下基础能力：</p>
+<ul>
+<li><strong>文件读写（File I/O）</strong><ul>
+<li>列出项目文件 / 目录/ 读取文件内容</li>
+<li>写回 / patch 修改文件<br> 👉 这是它读取和修改代码的基础接口。</li>
+</ul>
+</li>
+<li><strong>受控 bash / shell</strong><ul>
+<li>执行受限命令（<code>npm test</code>、<code>pnpm lint</code>、<code>pytest</code>…）</li>
+<li>把 stdout / stderr 返回给模型</li>
+<li>👉 这是它感知“真实运行结果”的方式。</li>
+</ul>
+</li>
+<li><strong>网络搜索（search）</strong><ul>
+<li>带约束的搜索：技术文档、API 文档、issue、论坛等<br> 👉 不给这个，Agent 对外部世界的认知就停在训练数据 + 你贴的那点上下文。</li>
+</ul>
+</li>
+<li><strong>webfetch（HTTP 抓取）</strong><ul>
+<li>通过 URL 拉 wiki 页面、接口文档、issue 页面等<br> 👉 不配这个，它就看不到线上文档和实际接口。</li>
+</ul>
+</li>
+</ul>
+<p>你可以直接把结论记成一句话：</p>
+<blockquote>
+<p><strong>Coding Agent 的“物理上限”，是被这些工具硬性框住的。</strong><br>不给看 CI 日志的工具，它就只能猜 CI；<br>不给查监控的工具，它就只能猜服务挂在哪。</p>
+</blockquote>
+<h3 id="2-工具不只是“手”，也是“眼睛”：要有清晰反馈"><a href="#2-工具不只是“手”，也是“眼睛”：要有清晰反馈" class="headerlink" title="2. 工具不只是“手”，也是“眼睛”：要有清晰反馈"></a>2. 工具不只是“手”，也是“眼睛”：要有清晰反馈</h3><p>很多 MCP 工具只负责执行动作，却不给结构化反馈，例如：</p>
+<ul>
+<li><code>write_file</code>：只说 “ok” 或 500 错误，没更多信息</li>
+<li><code>bash.run</code>：给你几千行原始日志，模型还得在纯文本里找错误行</li>
+</ul>
+<p>理想形态应该是：</p>
+<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#24292e">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"ok": false,</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"error_type": "SyntaxError",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"file": "src/components/Button.tsx",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"line": 42,</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"column": 13,</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"message": "Unexpected token '}'"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;ok&#x22;: false,  &#x22;error_type&#x22;: &#x22;SyntaxError&#x22;,  &#x22;file&#x22;: &#x22;src/components/Button.tsx&#x22;,  &#x22;line&#x22;: 42,  &#x22;column&#x22;: 13,  &#x22;message&#x22;: &#x22;Unexpected token &#x27;}&#x27;&#x22;}"><div></div></button></div></figure></div>
+<p>或至少：</p>
+<ul>
+<li><code>ok: true/false</code></li>
+<li>清晰的 <code>error_type</code>（FileNotFound / PermissionDenied / RateLimit / SyntaxError …）</li>
+<li>必要的上下文（文件名、行号、命令、参数）</li>
+<li>有时附一个 <code>suggestion</code> 给 Agent 当 hint 用</li>
+</ul>
+<p>工具不只是给 Agent 一双“手”，还要给它“眼睛”和“痛觉”。<br> 只给命令、不给反馈，就是让 Agent 关着灯打怪。</p>
+<h3 id="3-健壮性：自动分页等细活不要丢给模型"><a href="#3-健壮性：自动分页等细活不要丢给模型" class="headerlink" title="3. 健壮性：自动分页等细活不要丢给模型"></a>3. 健壮性：自动分页等细活不要丢给模型</h3><p>很多 API 都会分页：</p>
+<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="json"><code><div class="ec-line"><div class="code"><span style="--0:#24292E">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#005CC5">"items"</span><span style="--0:#24292E">: [</span><span style="--0:#B31D28;--0fs:italic">...</span><span style="--0:#24292E">],</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#005CC5">"next_page_token"</span><span style="--0:#24292E">: </span><span style="--0:#032F62">"abc123"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292E">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;items&#x22;: [...],  &#x22;next_page_token&#x22;: &#x22;abc123&#x22;}"><div></div></button></div></figure></div>
+<p>如果你原样给模型，让它自己：调第一页 → 看 token → 再调第二页 → 合并结果 → 处理边界……<br>理论上它可以；实际上：</p>
+<ul>
+<li>prompt 一长就忘</li>
+<li>参数字段名写错、漏传 token 的概率极高</li>
+<li>经常只看第一页就开始“下结论”</li>
+</ul>
+<p>更合理的做法是：<strong>工具层负责自动分页</strong>。例如：</p>
+<ul>
+<li><code>list_logs({ service, since, limit })</code><ul>
+<li>内部自动翻页拿够 <code>limit</code> 条结果</li>
+<li>可以顺带给 summary：一共多少条 error / warn</li>
+</ul>
+</li>
+<li><code>search_issues({ query, max_results })</code><ul>
+<li>内部处理 pagination，把多页搜索结果拼成一个数组丢给模型<br>对 Agent 来说就变成了一句：</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>“我要最近 50 条 error 日志”，<br>而不是“你先拿第一页，再判断要不要拿第二页……”。</p>
+</blockquote>
+<p><strong>原则：能在工具里做的健壮性，就不要丢给模型推理。</strong><br>模型擅长的是：理解、归纳、规划、决策；<br> 不擅长的是：处理 next_page_token、边界条件、重试策略。</p>
+<h3 id="4-代码编辑后，要自动触发“机器人的-LSP”"><a href="#4-代码编辑后，要自动触发“机器人的-LSP”" class="headerlink" title="4. 代码编辑后，要自动触发“机器人的 LSP”"></a>4. 代码编辑后，要自动触发“机器人的 LSP”</h3><p>人写代码时很依赖：</p>
+<ul>
+<li>LSP / TS Server / eslint</li>
+<li>编辑器里的红线 / 波浪线 / 悬浮提示</li>
+</ul>
+<p>但对 Agent 来说：</p>
+<ul>
+<li>它只知道“我刚刚 <code>write_file</code> / <code>apply_patch</code> 了”</li>
+<li>它看不到 VS Code 里的红线</li>
+<li>如果你不给它额外反馈，它只能“逻辑上觉得没问题”</li>
+</ul>
+<p>正确的用法是：</p>
+<blockquote>
+<p>不要只做“编辑工具”，<br>要做“<strong>编辑 + 检查一体化</strong>”的工具 / 流程。</p>
+</blockquote>
+<p>例如：</p>
+<ul>
+<li><code>apply_patch_and_check</code>：<ul>
+<li>输入：patch + 文件路径列表</li>
+<li>内部流程：<ol>
+<li>应用 patch</li>
+<li>跑一次 <code>tsc --noEmit</code> 或等价 typecheck / lint</li>
+<li>收集 diagnostics（文件 / 行 / 列 / 消息）</li>
+</ol>
+</li>
+<li>返回：<ul>
+<li><code>ok: true/false</code></li>
+<li>若 <code>false</code>，附 <code>diagnostics</code> 数组<br>或者拆成两个独立工具：</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><code>edit_file</code> / <code>apply_patch</code></li>
+<li><code>run_typecheck</code> / <code>run_lint</code></li>
+</ol>
+<p>再在 AGENTS 的 SOP 里强制写上：</p>
+<ol>
+<li>修改代码后，必须立刻跑一次检查工具</li>
+<li>如果有错误，根据 diagnostics 再改</li>
+<li>没错误再考虑跑测试<br><strong>不要指望模型记得“改完要查飘红”，</strong><br><strong>也不要让它自己在五千行彩色日志里读错报错行。</strong></li>
+</ol>
+<h3 id="5-错误要“说人话”：清晰错误反馈比“失败了”重要多了"><a href="#5-错误要“说人话”：清晰错误反馈比“失败了”重要多了" class="headerlink" title="5. 错误要“说人话”：清晰错误反馈比“失败了”重要多了"></a>5. 错误要“说人话”：清晰错误反馈比“失败了”重要多了</h3><p>最烂的错误返回：</p>
+<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="json"><code><div class="ec-line"><div class="code"><span style="--0:#24292E">{ </span><span style="--0:#005CC5">"ok"</span><span style="--0:#24292E">: </span><span style="--0:#005CC5">false</span><span style="--0:#24292E">, </span><span style="--0:#005CC5">"error"</span><span style="--0:#24292E">: </span><span style="--0:#032F62">"Something went wrong"</span><span style="--0:#24292E"> }</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="{ &#x22;ok&#x22;: false, &#x22;error&#x22;: &#x22;Something went wrong&#x22; }"><div></div></button></div></figure></div>
+<p>对人都没用，对模型更没用。<br>好一点的做法：</p>
+<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#24292e">{</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"ok": false,</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"error_type": "PermissionDenied",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"message": "No permission to write /etc/config",</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">"suggestion": "This path is system-level. Ask the user to execute this operation manually with sudo if necessary."</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;ok&#x22;: false,  &#x22;error_type&#x22;: &#x22;PermissionDenied&#x22;,  &#x22;message&#x22;: &#x22;No permission to write /etc/config&#x22;,  &#x22;suggestion&#x22;: &#x22;This path is system-level. Ask the user to execute this operation manually with sudo if necessary.&#x22;}"><div></div></button></div></figure></div>
+<p>这样模型就能：</p>
+<ul>
+<li>知道这是权限问题，不是“路径写错”</li>
+<li>意识到“我重试 10 次也没用，不如 AskUserQuestion 问人”</li>
+</ul>
+<h3 id="6-小结：好工具-能力-健壮性-反馈-传感器"><a href="#6-小结：好工具-能力-健壮性-反馈-传感器" class="headerlink" title="6. 小结：好工具 = 能力 + 健壮性 + 反馈 + 传感器"></a>6. 小结：好工具 = 能力 + 健壮性 + 反馈 + 传感器</h3><p>一句 checklist 方便自查：</p>
+<ul>
+<li>能干啥：文件 / bash / 搜索 / webfetch / LSP / CI … 能力边界清楚</li>
+<li>怎么干得稳：自动分页、重试、超时、默认参数下沉到工具层</li>
+<li>干完说清楚：结构化反馈（成功 / 失败 / 错误类型 / 位置 / 建议）</li>
+<li>看到结果：通过 LSP / typecheck / lint 把“红线”显式暴露给模型</li>
+<li>知道何时该问人：权限 / 风险 / 歧义类错误时，引导 Agent 走 AskUserQuestion</li>
+</ul>
+<p>工具决定了模型的物理上限，<br><strong>工具设计得好不好</strong>，决定了模型能不能摸到这个上限。</p>
+<h2 id="Skill：不是小工具，而是“可执行文件夹-SOP”"><a href="#Skill：不是小工具，而是“可执行文件夹-SOP”" class="headerlink" title="Skill：不是小工具，而是“可执行文件夹 + SOP”"></a>Skill：不是小工具，而是“可执行文件夹 + SOP”</h2><p>在这里讨论的工作流中，Skill 不是一个“小 MCP 工具”，而更像是：</p>
+<blockquote>
+<p><strong>一整个可执行的文件夹：说明文档 + 操作步骤 + 可调用脚本。</strong></p>
+</blockquote>
+<h3 id="1-Skill-的一种组织方式"><a href="#1-Skill-的一种组织方式" class="headerlink" title="1. Skill 的一种组织方式"></a>1. Skill 的一种组织方式</h3><p>一个典型 Skill 目录：</p>
+<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#24292e">.agent/</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">skills/</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">    </span></span><span style="--0:#24292e">ci-debug/</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">      </span></span><span style="--0:#24292e">skill.md         # 给模型看的 SOP / Prompt / 使用说明</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">      </span></span><span style="--0:#24292e">run.sh           # 真正执行诊断的脚本（模型可通过 bash 工具调用）</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">      </span></span><span style="--0:#24292e">parse_log.py     # 日志解析脚本</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">      </span></span><span style="--0:#24292e">examples.md      # 示例输入输出，帮助模型理解用法</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code=".agent/  skills/    ci-debug/      skill.md         # 给模型看的 SOP / Prompt / 使用说明      run.sh           # 真正执行诊断的脚本（模型可通过 bash 工具调用）      parse_log.py     # 日志解析脚本      examples.md      # 示例输入输出，帮助模型理解用法"><div></div></button></div></figure></div>
+<p>特点：</p>
+<ul>
+<li>Skill <strong>不是一开始就挂在主 Agent 的上下文里</strong>，而是“按需激活”：<ul>
+<li>当你调用这个 Skill 时，Agent 才把 <code>skill.md</code> 拼进 Prompt；</li>
+<li>目录下允许调用的脚本，通过已有 <code>bash</code> / 文件工具暴露给模型使用。<br>可以粗暴理解为：</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>MCP 工具回答“<strong>我能做哪些原子动作</strong>”；<br>Skill 回答“<strong>遇到这类问题，我按什么 SOP 来用这些动作</strong>”。</p>
+</blockquote>
+<h3 id="2-Skill-vs-MCP：流程化-vs-原子化"><a href="#2-Skill-vs-MCP：流程化-vs-原子化" class="headerlink" title="2. Skill vs MCP：流程化 vs 原子化"></a>2. Skill vs MCP：流程化 vs 原子化</h3><ul>
+<li>MCP 工具：<ul>
+<li>通过工具定义暴露接口，可以一次加载，也可以按需发现，取决于 Harness</li>
+<li>数量可能很多、质量参差不齐</li>
+<li>描述更多是“这个工具干嘛”，很少说“在什么场景、按什么步骤用”</li>
+</ul>
+</li>
+<li>Skill：<ul>
+<li>按需注入上下文（用到时才加载 <code>skill.md</code>）</li>
+<li>每个 Skill 是一个<strong>自带文档和脚本的小包</strong>：<ul>
+<li>有详细说明（skill.md）</li>
+<li>有 bash / 脚本可以直接调用</li>
+<li>有 examples 帮助模型理解输入输出形态</li>
+</ul>
+</li>
+<li>skill.md 里可以写清楚：<ul>
+<li>步骤拆解（先 A 再 B 再 C）</li>
+<li>什么时候应该调用 AskUserQuestion 问人</li>
+<li>哪些脚本可以用、参数怎么填<br><strong>使用场景：</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>“多一只手”——多几个原子动作 → 优先用 MCP</li>
+<li>要把一整套经验 / 流程固化下来 → 做成 Skill 文件夹：<ul>
+<li>CI debug</li>
+<li>MR review checklist</li>
+<li>模块重构 SOP</li>
+<li>安全扫描 / 依赖检查流程</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-Skill-vs-Sub-Agent：可见的-SOP-vs-独立执行"><a href="#3-Skill-vs-Sub-Agent：可见的-SOP-vs-独立执行" class="headerlink" title="3. Skill vs Sub Agent：可见的 SOP vs 独立执行"></a>3. Skill vs Sub Agent：可见的 SOP vs 独立执行</h3><ul>
+<li>Sub Agent：<ul>
+<li>一个<strong>完全独立的 Agent 会话</strong>：自己的 System Prompt / 上下文 / 工具集</li>
+<li>主会话只看到“我给它任务 → 它给我结果”，主会话不必承载全部中间过程，详细轨迹可以单独记录</li>
+<li>适合大块思考、长流程规划、报告撰写</li>
+</ul>
+</li>
+<li>Skill：<ul>
+<li>在主会话里执行，步骤和脚本完全可见</li>
+<li>有真实的目录结构，可版本管理、可审查、可复用</li>
+<li>你可以给 Skill 整一个“文件夹”：可执行脚本 + 文档 + 示例<br>一句话：</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>想把“一个子任务整体包给另一个大脑”，用 Sub Agent；<br>想把“成熟打法”固化成 SOP + 脚本，让主 Agent 按流程执行，用 Skill。</p>
+</blockquote>
+<h2 id="大脑分工：sub-agent-的隔离与并行"><a href="#大脑分工：sub-agent-的隔离与并行" class="headerlink" title="大脑分工：sub agent  的隔离与并行"></a>大脑分工：sub agent  的隔离与并行</h2><h3 id="1-Sub-Agent-的典型特征"><a href="#1-Sub-Agent-的典型特征" class="headerlink" title="1. Sub Agent 的典型特征"></a>1. Sub Agent 的典型特征</h3><p>再快速总结一下 Sub Agent：</p>
+<ul>
+<li>独立的会话：自己的 System Prompt / 上下文 / 工具集</li>
+<li>主 Agent 通常只看到输入和输出，不看到中间对话细节</li>
+<li><strong>上下文隔离</strong>：不会把内部的长对话 / 垃圾过程塞爆主上下文</li>
+<li><strong>可以并行</strong>：可以同时跑多个 Sub Agent，各自做一摊事，最后结果合并</li>
+</ul>
+<p>适合这样的语境：</p>
+<blockquote>
+<p>“你们仨各去看一个服务/方案，想一阵子，最后统一回来汇报。”</p>
+</blockquote>
+<h3 id="2-典型例子：Explore-模式"><a href="#2-典型例子：Explore-模式" class="headerlink" title="2. 典型例子：Explore 模式"></a>2. 典型例子：Explore 模式</h3><p>比如很多 IDE / Code Assistant 里都有类似 “Explore” 的功能，大致是：</p>
+<ul>
+<li>你发起一个 Explore：<ul>
+<li>“帮我看看这个项目的登录流程大概怎么走？”</li>
+<li>“这个 user‑service 依赖了哪些外部系统？”</li>
+</ul>
+</li>
+<li>系统开启一个 <strong>Explore 子 Agent</strong>：<ul>
+<li>专属 System Prompt：“只读、不写，只做代码探索与说明”</li>
+<li>工具集只包括 <code>read_file</code> / <code>search</code>，禁止修改文件、禁止危险 bash</li>
+<li>在自己的会话里疯狂读文件、做内部推理、整理结构</li>
+</ul>
+</li>
+<li>最后给主会话一份<strong>压缩好的结果</strong>：<ul>
+<li>登录流程说明</li>
+<li>依赖关系概览</li>
+<li>某个模块的语义总结<br>主 Agent 不知道 Explore 里面看了多少文件、跑了几轮推理，只拿到了<strong>结论</strong>。<br>更进一步，这完全可以 <strong>并行化</strong>：</li>
+</ul>
+</li>
+<li>有 <code>auth-service</code>、<code>order-service</code>、<code>payment-service</code> 三个服务</li>
+<li>起三个子 agent：Explore‑Auth / Explore‑Order / Explore‑Payment</li>
+<li>它们各自只读自己的目录，各自写 summary（甚至写成 md 文件）</li>
+<li>主 Agent 最后一轮统一读三份 summary，做整体决策（比如重构顺序）</li>
+</ul>
+<h3 id="3-适合-Sub-Agent-的任务类型"><a href="#3-适合-Sub-Agent-的任务类型" class="headerlink" title="3. 适合 Sub Agent 的任务类型"></a>3. 适合 Sub Agent 的任务类型</h3><ul>
+<li>并行代码探索 / 盘点（多服务、多模块）</li>
+<li>大规模配置 / 多环境对比（dev/staging/prod）</li>
+<li>多方案并行论证（拆分方案 A/B/C，各自论证优劣）</li>
+<li>长篇设计文档（Design Agent 专门写方案，不直接改代码）</li>
+</ul>
+<p>这些任务的共性：</p>
+<ul>
+<li>过程长、信息量大</li>
+<li>需要隔离上下文，避免污染主对话</li>
+<li>很适合并行，让多个子 agent 各做一摊，再汇总结果</li>
+</ul>
+<h3 id="4-Skill-Sub-Agent-MCP-怎么配合？"><a href="#4-Skill-Sub-Agent-MCP-怎么配合？" class="headerlink" title="4. Skill / Sub Agent / MCP 怎么配合？"></a>4. Skill / Sub Agent / MCP 怎么配合？</h3><p>可以用一张“心智图”记住它们的分工：</p>
+<ul>
+<li>MCP 工具：<strong>原子动作</strong>- Skill：<strong>可执行文件夹 + SOP</strong>（在主会话里跑，步骤可见）</li>
+<li>Sub Agent：<strong>独立大脑，可隔离可并行</strong>（在子会话里跑，结果回传）</li>
+</ul>
+<p>实际设计 Agent 工作流时，一个很自然的组合是：</p>
+<ol>
+<li>用多个 Sub Agent 并行做 Explore / 分析 / 设计</li>
+<li>把结果写进 docs / state / spec 文件</li>
+<li>在主会话里，用 Skill + 工具按 SOP 执行改动 / debug / 检查</li>
+<li>关键岔路口用 AskUserQuestion 把你拉进来拍板</li>
+</ol>
+<h2 id="AskUserQuestion：把“我不确定，先问人”变成一等公民"><a href="#AskUserQuestion：把“我不确定，先问人”变成一等公民" class="headerlink" title="AskUserQuestion：把“我不确定，先问人”变成一等公民"></a>AskUserQuestion：把“我不确定，先问人”变成一等公民</h2><h3 id="1-为什么需要允许模型表达不确定？"><a href="#1-为什么需要允许模型表达不确定？" class="headerlink" title="1. 为什么需要允许模型表达不确定？"></a>1. 为什么需要允许模型表达不确定？</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2509.04664">Why Language Models Hallucinate</a> 讨论了一个重要机制：当训练与评测更奖励“猜一个答案”，而不是承认不确定时，模型可能给出看似合理却错误的回答。</p>
+<p>这不能解释所有错误，但给工作流设计一个直接启发：<strong>信息不足时，系统要提供澄清和求助的路径，而不是只允许继续生成。</strong></p>
+<h3 id="2-AskUserQuestion-工具：访问“人类”的接口"><a href="#2-AskUserQuestion-工具：访问“人类”的接口" class="headerlink" title="2. AskUserQuestion 工具：访问“人类”的接口"></a>2. AskUserQuestion 工具：访问“人类”的接口</h3><p>解决方案之一，就是在系统层补上一块：</p>
+<blockquote>
+<p><strong>把“问人”本身也变成一个工具：AskUserQuestion。</strong></p>
+</blockquote>
+<p>它的形态大概是：</p>
+<ul>
+<li>模型调用 <code>AskUserQuestion</code> 工具</li>
+<li>参数里放要问你的问题（自然语言）</li>
+<li>Agent 在终端显示这个问题，等你输入回答</li>
+<li>再把回答作为工具结果，喂回模型继续推理</li>
+</ul>
+<p>典型适用场景：</p>
+<ul>
+<li>需求不明确 / 有多个合理解释</li>
+<li>文档相互矛盾 / 代码和注释打架</li>
+<li>高风险操作（删库、改 schema、拆网关）前的最后确认</li>
+</ul>
+<h3 id="3-在-Agent-Skill-设计里，把“能问就问”写进去"><a href="#3-在-Agent-Skill-设计里，把“能问就问”写进去" class="headerlink" title="3. 在 Agent / Skill 设计里，把“能问就问”写进去"></a>3. 在 Agent / Skill 设计里，把“能问就问”写进去</h3><p>仅仅有 AskUserQuestion 还不够，要在 Agent / Skill 设计里把规则写死，比如：</p>
+<ul>
+<li>在 <code>AGENTS.md</code> 里写：<ul>
+<li>“当你对关键条件不确定时，请优先调用 AskUserQuestion，而不是自己做假设。”</li>
+</ul>
+</li>
+<li>在某些 Skill 的 <code>skill.md</code> 里写：<ul>
+<li>“如果遇到权限问题 / 生产环境配置问题 / 多条相互矛盾的约定，<br> 请调用 AskUserQuestion，请求人类确认。”<br>这样你等于在原来的“对/错评分”机制之外，<br> 用工作流的方式再加上一条：</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>“不确定就问人”，是一个被鼓励的正确行为。</strong></p>
+</blockquote>
+<p>这也是“减少幻觉”的一个关键方向：<br> 不仅是靠模型本身变强，还要靠 Agent / Skill / 工具 / HIL（Human‑in‑the‑loop）整体协作。</p>
+<h2 id="Spec-Kit-DSL：用结构化需求降低“瞎猜空间”"><a href="#Spec-Kit-DSL：用结构化需求降低“瞎猜空间”" class="headerlink" title="Spec Kit / DSL：用结构化需求降低“瞎猜空间”"></a>Spec Kit / DSL：用结构化需求降低“瞎猜空间”</h2><p>再看一个常见需求：</p>
+<div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#6F42C1">agent</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"帮我写一个贪吃蛇小游戏"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent &#x22;帮我写一个贪吃蛇小游戏&#x22;"><div></div></button></div></figure></div>
+<p>如果直接丢给模型，它要猜：</p>
+<ul>
+<li>平台：web / terminal / mobile？</li>
+<li>技术栈：React / Vue / 原生 / Canvas？</li>
+<li>控制方式：键盘 / 触屏？</li>
+<li>功能：记分、暂停、关卡、皮肤……？</li>
+</ul>
+<p>熵非常高，自然容易瞎编。<br>更稳的方式是：</p>
+<blockquote>
+<p>先一起把需求捏成一个 Spec 文件，再根据 Spec 写代码。</p>
+</blockquote>
+<p>例如：</p>
+<div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#6F42C1">agent</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"我们先一起把贪吃蛇需求写成一个 spec.yaml，不要直接写代码"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent &#x22;我们先一起把贪吃蛇需求写成一个 spec.yaml，不要直接写代码&#x22;"><div></div></button></div></figure></div>
+<p>经过几轮问答/选项后，得到类似：</p>
+<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#1E7734">name</span><span style="--0:#24292E">: </span><span style="--0:#032F62">"Snake Game"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#1E7734">project_type</span><span style="--0:#24292E">: </span><span style="--0:#032F62">"web"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#1E7734">language</span><span style="--0:#24292E">: </span><span style="--0:#032F62">"TypeScript"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#1E7734">framework</span><span style="--0:#24292E">: </span><span style="--0:#032F62">"React"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#1E7734">rendering</span><span style="--0:#24292E">: </span><span style="--0:#032F62">"Canvas"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#1E7734">grid</span><span style="--0:#24292E">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#1E7734">rows</span><span style="--0:#24292E">: </span><span style="--0:#005CC5">20</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#1E7734">cols</span><span style="--0:#24292E">: </span><span style="--0:#005CC5">20</span></div></div><div class="ec-line"><div class="code"><span style="--0:#1E7734">control_scheme</span><span style="--0:#24292E">: </span><span style="--0:#032F62">"WASD"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#1E7734">speed</span><span style="--0:#24292E">: </span><span style="--0:#032F62">"medium"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#1E7734">features</span><span style="--0:#24292E">:</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E">  </span></span><span style="--0:#24292E">- </span><span style="--0:#032F62">"score-board"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E">  </span></span><span style="--0:#24292E">- </span><span style="--0:#032F62">"pause"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292E">  </span></span><span style="--0:#24292E">- </span><span style="--0:#032F62">"auto-restart"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="name: &#x22;Snake Game&#x22;project_type: &#x22;web&#x22;language: &#x22;TypeScript&#x22;framework: &#x22;React&#x22;rendering: &#x22;Canvas&#x22;grid:  rows: 20  cols: 20control_scheme: &#x22;WASD&#x22;speed: &#x22;medium&#x22;features:  - &#x22;score-board&#x22;  - &#x22;pause&#x22;  - &#x22;auto-restart&#x22;"><div></div></button></div></figure></div>
+<p>存成：</p>
+<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#24292e">specs/snake-game.yaml</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="specs/snake-game.yaml"><div></div></button></div></figure></div>
+<p>之后所有相关任务，都指向它：</p>
+<div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#6F42C1">agent</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"根据 specs/snake-game.yaml，实现核心渲染和键盘控制逻辑"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent &#x22;根据 specs/snake-game.yaml，实现核心渲染和键盘控制逻辑&#x22;"><div></div></button></div></figure></div>
+<p>每次构造 Prompt 时，Agent 会把这份 Spec 读进上下文，让模型在一个<strong>已约束好的实现空间</strong>里搜索，而不是凭空想象。<br>Spec + AskUserQuestion 的组合大概是：</p>
+<ul>
+<li>Spec 负责把不确定项“显式暴露出来”</li>
+<li>AskUserQuestion 负责在关键字段填不满时，问你要真相</li>
+<li>然后基于这个 Spec 做后续所有实现 / 测试 / 文档生成</li>
+</ul>
+<h2 id="Plan-模式-Skill-模式：让-Agent-工作方式“可预测”"><a href="#Plan-模式-Skill-模式：让-Agent-工作方式“可预测”" class="headerlink" title="Plan 模式 &#x26; Skill 模式：让 Agent 工作方式“可预测”"></a>Plan 模式 &#x26; Skill 模式：让 Agent 工作方式“可预测”</h2><h3 id="1-Plan-模式：慢就是快"><a href="#1-Plan-模式：慢就是快" class="headerlink" title="1. Plan 模式：慢就是快"></a>1. Plan 模式：慢就是快</h3><blockquote>
+<p>针对项目情况识别需求</p>
+</blockquote>
+<p>很多人用 Agent 修 bug 的时候是这样：</p>
+<div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#6F42C1">agent</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"帮我修一下 payment 模块的 bug，报错信息在某个 MR 的 CI 日志里"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent &#x22;帮我修一下 payment 模块的 bug，报错信息在某个 MR 的 CI 日志里&#x22;"><div></div></button></div></figure></div>
+<p>然后人和 Agent 一起在迷雾里乱跑，更稳的方式是：</p>
+<ol>
+<li>先用 Plan 模式，让 Agent 帮你看清局面：</li>
+</ol>
+<ul>
+<li>“根据当前仓库和 issue，列出几类适合今天做的小任务，让我选一个”</li>
+<li>“为 healthz 这个需求写一份小 RFC，不要直接写代码”</li>
+</ul>
+<ol>
+<li>你在 RFC 层面修改 / 确认完之后，再让它动手实现：</li>
+</ol>
+<div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#6F42C1">agent</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"现在按照这份 RFC，帮我在 user-service 里实现 /healthz，并补上测试。"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent &#x22;现在按照这份 RFC，帮我在 user-service 里实现 /healthz，并补上测试。&#x22;"><div></div></button></div></figure></div>
+<p>Plan 的好处：</p>
+<ul>
+<li>在 Spec / RFC 层先消灭歧义，再写代码，幻觉自然下降</li>
+<li>你的意图变成一个文件，可复用、可 review，而不是飘在对话里</li>
+<li>中间不确定点，可以统一通过 AskUserQuestion 暴露出来</li>
+</ul>
+<h3 id="2-Skill-模式：可执行-SOP，消灭重复工作"><a href="#2-Skill-模式：可执行-SOP，消灭重复工作" class="headerlink" title="2. Skill 模式：可执行 SOP，消灭重复工作"></a>2. Skill 模式：可执行 SOP，消灭重复工作</h3><blockquote>
+<p>让重复工作不再发生</p>
+</blockquote>
+<ul>
+<li>找到 mr -> 经过多层打开查看错误日志-> 滚动好久找到错误日志 -> 复制给模型</li>
+</ul>
+<p>前面已经说了 Skill 的结构和定位，这里强调它对效率的贡献：</p>
+<ul>
+<li><p>把“重复三次以上的流程”固化成 Skill：</p>
+<ul>
+<li>CI debug</li>
+<li>MR review checklist</li>
+<li>模块重构步骤</li>
+<li>安全扫描 / 依赖检查 / changelog 生成</li>
+</ul>
+</li>
+<li><p>你只需要：</p>
+</li>
+</ul>
+<div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#6F42C1">agent</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"ci-debug mr-1234"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent &#x22;ci-debug mr-1234&#x22;"><div></div></button></div></figure></div>
+<ul>
+<li>Skill 里包含：<ul>
+<li>文档（skill.md）</li>
+<li>可执行脚本（run.sh / parse_log.py …）</li>
+</ul>
+</li>
+<li>Skill 内部负责：<ul>
+<li>拉 CI 状态</li>
+<li>定位失败 job</li>
+<li>抽取关键日志</li>
+<li>调用模型分析</li>
+<li>在必要时 AskUserQuestion 让你拍板<br>结果是：</li>
+</ul>
+</li>
+<li>重复劳动被自动化</li>
+<li>Agent 的行为变得“有章可循、可审计”</li>
+<li>幻觉空间被 SOP 和脚本硬生生压小了一大块</li>
+</ul>
+<h2 id="构建自己的工作流：从-agent-到“插件化”"><a href="#构建自己的工作流：从-agent-到“插件化”" class="headerlink" title="构建自己的工作流：从 .agent/ 到“插件化”"></a>构建自己的工作流：从 <code>.agent/</code> 到“插件化”</h2><p>最后一块，是把这些东西变成 <strong>可分享的工作流</strong>。</p>
+<h3 id="1-用-agent-描述-Agent-Skill-Command"><a href="#1-用-agent-描述-Agent-Skill-Command" class="headerlink" title="1. 用 .agent/ 描述 Agent / Skill / Command"></a>1. 用 <code>.agent/</code> 描述 Agent / Skill / Command</h3><p>你可以在项目里约定一个配置目录：</p>
+<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#24292e">.agent/</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">agents/</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">    </span></span><span style="--0:#24292e">planner.yaml        # 规划 Agent</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">    </span></span><span style="--0:#24292e">worker.yaml         # 执行 Agent</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">    </span></span><span style="--0:#24292e">reviewer.yaml       # 审查 Agent</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">skills/</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">    </span></span><span style="--0:#24292e">ci-debug/           # 一个完整 Skill 文件夹</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">    </span></span><span style="--0:#24292e">generate-tests/</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">    </span></span><span style="--0:#24292e">refactor-module/</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">  </span></span><span style="--0:#24292e">commands/</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">    </span></span><span style="--0:#24292e">migrate-payment.yaml# 支付迁移整套流程</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#24292e">    </span></span><span style="--0:#24292e">fix-issue.yaml      # 根据 Issue ID 修 bug 的流程</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code=".agent/  agents/    planner.yaml        # 规划 Agent    worker.yaml         # 执行 Agent    reviewer.yaml       # 审查 Agent  skills/    ci-debug/           # 一个完整 Skill 文件夹    generate-tests/    refactor-module/  commands/    migrate-payment.yaml# 支付迁移整套流程    fix-issue.yaml      # 根据 Issue ID 修 bug 的流程"><div></div></button></div></figure></div>
+<ul>
+<li><code>agents/</code>：不同角色的 Agent（planner / worker / reviewer），<br> 定义它们的 System Prompt、默认工具集、AskUserQuestion 策略等</li>
+<li><code>skills/</code>：一组可执行文件夹，每个里面有 skill.md + 脚本</li>
+<li><code>commands/</code>：把多个 Agent / Skill 串成流水线，比如：<ul>
+<li><code>migrate-payment</code>：<ol>
+<li>调 planner 生成/更新 plan</li>
+<li>调多个 Sub Agent 并行 Explore 旧系统</li>
+<li>用 worker 按 plan 执行迁移</li>
+<li>用 reviewer 做审查</li>
+<li>中间关键步骤通过 AskUserQuestion 拉你确认<br>以后你只要敲一行：</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#6F42C1">agent</span><span style="--0:#24292E"> </span><span style="--0:#032F62">"migrate-payment 从旧网关迁到 v2 网关"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="agent &#x22;migrate-payment 从旧网关迁到 v2 网关&#x22;"><div></div></button></div></figure></div>
+<p>背后执行的是你设计好的整套工作流，而不是“临时拍脑袋的 prompt”。</p>
+<h3 id="2-打包成预设-插件，给别人用"><a href="#2-打包成预设-插件，给别人用" class="headerlink" title="2. 打包成预设 / 插件，给别人用"></a>2. 打包成预设 / 插件，给别人用</h3><p>当你把：</p>
+<ul>
+<li>AGENTS 宪法</li>
+<li>一组成熟的 Agent 配置</li>
+<li>多个 Skill 文件夹（CI / review / 重构 / 安全…）</li>
+<li>若干 commands（迁移 / 修 bug / 探索 / 设计…）</li>
+</ul>
+<p>打磨得差不多时，其实你已经做出了一个 <strong>团队级的 Agent 工作流预设</strong>。<br>下一步就是：</p>
+<ul>
+<li>把 <code>.agent/</code> 打包成一个模板 / 插件</li>
+<li>放到团队内部或公开“市场”里</li>
+<li>其他项目只要装上，就能直接复用你的整套工作流</li>
+</ul>
+<p>从此：</p>
+<blockquote>
+<p>“每个人自己写 prompt、自己踩坑”，<br>变成了<br>“团队 / 社区沉淀一套好用的 Agent 系统，一键复用”。</p>
+</blockquote>
+<h2 id="结语：从“用-Agent”到“设计-Agent-工具-人的系统”"><a href="#结语：从“用-Agent”到“设计-Agent-工具-人的系统”" class="headerlink" title="结语：从“用 Agent”到“设计 Agent + 工具 + 人的系统”"></a>结语：从“用 Agent”到“设计 Agent + 工具 + 人的系统”</h2><p>当你用 Coding Agent 时，你面对的已经不是一个“有点聪明的聊天机器人”，而是一套：</p>
+<ul>
+<li>有物理边界：Transformer + KV Cache + Prompt Cache</li>
+<li>有上下文结构：宪法区 / 过程区 / 短期记忆区</li>
+<li>有工具：文件读写 / bash / 搜索 / webfetch / LSP / CI …</li>
+<li>有分工：Agent / Sub Agent / Skill 各司其职</li>
+<li>有人类参与：AskUserQuestion 把“我不确定，先问人”变成一等公民</li>
+<li>有工作流：Plan / Spec / snapshot / <code>.agent/</code> / commands / 插件</li>
+</ul>
+<p>的协作系统。</p>
+<ul>
+<li>Transformer + KV Cache 决定了“唯快不破”的物理约束；</li>
+<li>Prompt Cache 让稳定前缀变快、变便宜；</li>
+<li>上下文管理（snapshot/spec/todo）让信息密度更高、噪音更少；</li>
+<li>合适的工具集（File/Bash/Search/Webfetch + 良好反馈）拉高模型的物理上限；</li>
+<li>Sub Agent / Skill / Plan 模式，让复杂任务拆成多个“干净的小上下文”，还可以并行；</li>
+<li>AskUserQuestion / HIL 把“不确定时瞎编”改造成“不确定时先问人”；</li>
+<li><code>.agent/</code> 下的配置，让你的经验可以沉淀、复用、分享。</li>
+</ul>
+<p>当你开始按这个视角去思考和配置 Agent 时，你就不再只是一个 Agent 使用者，而是真正在 <strong>设计一套“模型 + 工具 + 人”的工程系统</strong>。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/writing-tools-for-agents">Writing effective tools for AI agents</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2307.03172">Lost in the Middle: How Language Models Use Long Contexts</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2509.04664">Why Language Models Hallucinate</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Let’s build GPT: from scratch, in code, spelled out</a></li>
+</ul>
+<p>相关分享：<a href="/talks/harness-engineering/">从上下文工程到 Harness Engineering</a>。</p>
+
+  <div class="tag-list"><a href="/tags/Context-Engineering/">Context Engineering</a><a href="/tags/Agent-Harness/">Agent Harness</a><a href="/tags/Developer-Tools/">Developer Tools</a></div>
+</article>
+</main>
+    <footer><a href="/">Xiao Zhou</a><span>© 2026</span></footer>
+  </div>
+</body>
+</html>

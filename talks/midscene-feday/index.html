@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Midscene.js：用 AI 构建下一代 E2E 测试工具 · Xiao Zhou</title>
+<meta name="description" content="Feday 2024 分享：多模态 UI 自动化的架构、任务报告与评测实践。">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Midscene.js：用 AI 构建下一代 E2E 测试工具">
+<meta property="og:description" content="Feday 2024 分享：多模态 UI 自动化的架构、任务报告与评测实践。">
+<link rel="icon" href="/images/monogram.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/editorial.css">
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <a class="skip-link" href="#main"> 跳到正文</a>
+  <div class="site-shell">
+    <header class="site-header">
+  <div class="site-name">
+    <a href="/">晓</a>
+  </div>
+  <nav aria-label="Main navigation">
+    
+      <a href="/projects/" >Projects</a>
+    
+      <a href="/archives/" aria-current="page">Writing</a>
+    
+      <a href="/about/" >About</a>
+    
+    <span aria-hidden="true">|</span>
+    <a class="github-link" href="https://github.com/zhoushaw" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.14.68-3.8-1.34-3.8-1.34-.51-1.31-1.25-1.66-1.25-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.74.4-1.23.72-1.51-2.51-.29-5.15-1.26-5.15-5.57 0-1.23.44-2.23 1.17-3.02-.12-.29-.51-1.43.11-2.99 0 0 .95-.31 3.1 1.15a10.7 10.7 0 0 1 5.64 0c2.15-1.46 3.1-1.15 3.1-1.15.62 1.56.23 2.7.11 2.99.73.79 1.17 1.79 1.17 3.02 0 4.32-2.64 5.28-5.16 5.56.41.36.77 1.05.77 2.12v3.1c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+    </a>
+  </nav>
+</header>
+
+    <main id="main"><article class="prose">
+  <h1>Midscene.js：用 AI 构建下一代 E2E 测试工具</h1>
+  <p><strong>Feday · 2024</strong></p>
+<p>这次分享从传统 UI 自动化的维护问题出发，介绍 Midscene 如何将多模态模型接入测试工作流，以及 AI 工具需要哪些工程能力才能进入实际使用。</p>
+<h2 id="从-Selector-与视觉检查的难点出发"><a href="#从-Selector-与视觉检查的难点出发" class="headerlink" title="从 Selector 与视觉检查的难点出发"></a>从 Selector 与视觉检查的难点出发</h2><p>传统测试需要理解框架的事件语法、选择器和 DOM 结构。页面变化容易带来脚本维护成本，而白屏、布局异常等视觉问题又不容易只用 DOM 状态表达。</p>
+<p>我结合 Puppeteer、Cypress、Playwright 和 Appium 等工具的使用场景，讨论多模态模型在文本提取、页面元素识别和视觉理解上的机会与边界。</p>
+<h2 id="分享中的能力演示"><a href="#分享中的能力演示" class="headerlink" title="分享中的能力演示"></a>分享中的能力演示</h2><ul>
+<li><strong>自然语言操作</strong>：通过描述步骤操作页面，表达测试意图。</li>
+<li><strong>页面信息提取</strong>：提取页面内容，供后续逻辑和断言使用。</li>
+<li><strong>页面状态断言</strong>：判断当前界面是否符合自然语言描述的预期。</li>
+<li><strong>任务报告</strong>：回看操作过程、模型判断和信息提取结果，定位失败步骤。</li>
+<li><strong>Chrome 插件</strong>：在浏览器中直接体验操作、提取和断言，再进入测试工程。</li>
+</ul>
+<h2 id="架构与工程设计"><a href="#架构与工程设计" class="headerlink" title="架构与工程设计"></a>架构与工程设计</h2><p>框架通过 UI 抽象层连接 Web 测试框架、Chrome 工具和其他界面场景；核心层组织 Agent、缓存与报告生成。规划和执行需要与页面反馈配合，模型能力也需要用评测验证。</p>
+<h2 id="落地经验"><a href="#落地经验" class="headerlink" title="落地经验"></a>落地经验</h2><p>分享最后强调了三件事：理解模型在特定任务中的边界；从具体业务问题判断可行性；建立评价体系，让更换模型和调整实现后的效果可以比较。</p>
+<p>这场演讲发生在 2024 年。演讲中的模型比较与能力描述属于当时的实践，不作为当前模型性能结论。</p>
+<p><em>依据 Feday 分享介绍、v2 PPT 大纲与逐字稿整理。</em></p>
+<p><a href="/projects/midscene/">相关项目：Midscene.js</a> · <a target="_blank" rel="noopener" href="https://github.com/web-infra-dev/midscene">开源仓库</a></p>
+
+</article>
+</main>
+    <footer><a href="/">Xiao Zhou</a><span>© 2026</span></footer>
+  </div>
+</body>
+</html>
